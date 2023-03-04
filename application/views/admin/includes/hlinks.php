@@ -17,5 +17,48 @@
 <link href="<?= base_url('assets/') ?>css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
 <!-- icons -->
 <link href="<?= base_url('assets/') ?>css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<style>
+	label.error{
+		color:red;
+	}
+	form.error{
+		color:red;
+	}
+</style>
 <!-- Head js -->
+<script src="<?= base_url('assets/') ?>js/jquery-3.6.0.js"></script>
+<script src="<?= base_url('assets/') ?>js/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/') ?>js/head.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.validate.min.js"></script>
+
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+	function success_message(title,text){
+		Swal.fire({
+			title: title,
+			text: text,
+			icon: "success",
+			button: "Okay!",
+		});
+	}
+	function error_message(title,text){
+		Swal.fire({
+			title: title,
+			text: text,
+			icon: "error",
+			button: "Okay!",
+		});
+	}
+	<?php if ($this->session->flashdata('success') != '') { ?>
+		success_message('',<?= $this->session->flashdata('success') ?>);
+	<?php } ?>
+	<?php if ($this->session->flashdata('error') != '') { ?>
+		error_message('',<?= $this->session->flashdata('error') ?>);
+	<?php } ?>
+</script>

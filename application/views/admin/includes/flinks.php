@@ -10,5 +10,10 @@
 <!-- Dashboar 1 init js-->
 <script src="<?= base_url('assets/') ?>js/pages/dashboard-1.init.js"></script>
 
+<script src="<?= base_url('assets/') ?>js/jquery.bootstrap.wizard.min.js"></script>
+
+<!-- Init js-->
+<script src="<?= base_url('assets/') ?>js/form-wizard.init.js"></script>
+
 <!-- App js-->
 <script src="<?= base_url('assets/') ?>js/app.min.js"></script>
