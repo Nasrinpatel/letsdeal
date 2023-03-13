@@ -29,7 +29,7 @@
 									<i class="fe-aperture me-1"></i>
 									<span>How can I help you?</span>
 								</a>
-					
+
 								<!-- item-->
 								<a href="javascript:void(0);" class="dropdown-item notify-item">
 									<i class="fe-settings me-1"></i>
@@ -65,11 +65,11 @@
 									</a>
 								</div>
 
-							</div>  
+							</div>
 						</div>
 					</form>
 				</li>
-	<!-- 
+				<!-- 
 				<li class="dropdown d-inline-block d-lg-none">
 					<a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 						<i class="fe-search noti-icon"></i>
@@ -88,7 +88,7 @@
 				</li>
 
 
-			
+
 
 				<li class="dropdown notification-list topbar-dropdown">
 					<a class="nav-link dropdown-toggle waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -113,7 +113,8 @@
 							<!-- item-->
 							<a href="javascript:void(0);" class="dropdown-item notify-item active">
 								<div class="notify-icon">
-									<img src="<?= base_url('assets/') ?>images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+									<img src="<?= base_url('assets/') ?>images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" />
+								</div>
 								<p class="notify-details">Cristina Pride</p>
 								<p class="text-muted mb-0 user-msg">
 									<small>Hi, How are you? What about our next meeting</small>
@@ -133,7 +134,8 @@
 							<!-- item-->
 							<a href="javascript:void(0);" class="dropdown-item notify-item">
 								<div class="notify-icon">
-									<img src="<?= base_url('assets/') ?>images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+									<img src="<?= base_url('assets/') ?>images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" />
+								</div>
 								<p class="notify-details">Karen Robinson</p>
 								<p class="text-muted mb-0 user-msg">
 									<small>Wow ! this admin looks good and awesome design</small>
@@ -185,7 +187,7 @@
 					<a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 						<img src="<?= base_url('assets/') ?>images/users/user-1.jpg" alt="user-image" class="rounded-circle">
 						<span class="pro-user-name ms-1">
-							Geneva <i class="mdi mdi-chevron-down"></i> 
+							Geneva <i class="mdi mdi-chevron-down"></i>
 						</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -223,7 +225,7 @@
 					</div>
 				</li>
 
-				
+
 			</ul>
 
 			<!-- LOGO -->
@@ -266,10 +268,10 @@
 						</div>
 					</a>
 					<!-- End mobile menu toggle-->
-				</li>   
+				</li>
 
 
-			
+
 			</ul>
 			<div class="clearfix"></div>
 		</div>
@@ -287,39 +289,45 @@
 							<a class="nav-link" href="<?= base_url('admin/dashboard') ?>" id="topnav-dashboard">
 								<i class="fe-airplay me-1"></i> Dashboard
 							</a>
-							
+
 						</li>
-						
+
 						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button"
-								data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fe-grid me-1"></i> Moduls<div class="arrow-down"></div>
+							<a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fe-grid me-1"></i> Manage Properties<div class="arrow-down"></div>
 							</a>
 							<div class="dropdown-menu" aria-labelledby="topnav-apps">
-							<a href="<?= base_url('admin/Masters') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Masters</a>
 
-								<!-- <a href="<?= base_url('admin/Propertytype') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Property type</a> -->
 								<a href="<?= base_url('admin/Propertycategory') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Property Category</a>
 
 								<a href="<?= base_url('admin/Prosubcategory') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Property Sub Category</a>
-								<!-- <a href="<?= base_url('admin/Formmaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Form Master</a> -->
-								<a href="<?= base_url('admin/Questionmaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Question Master</a>
-								<a href="<?= base_url('admin/Sourcecategory') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Source Master</a>
 
 								<a href="<?= base_url('admin/Propertymaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Property Master</a>
 
-								
+
+							</div>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fe-grid me-1"></i>Masters<div class="arrow-down"></div>
+							</a>
+							<div class="dropdown-menu" aria-labelledby="topnav-apps">
+								<a href="<?= base_url('admin/Masters') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Masters</a>
+								<a href="<?= base_url('admin/Questionmaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Question Master</a>
+								<a href="<?= base_url('admin/Sourcecategory') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Source Master</a>
+								<a href="<?= base_url('admin/Position') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Position</a>
+
 							</div>
 						</li>
 
-							<li >
+						<li>
 							<a class="nav-link" href="<?= base_url('admin/Formmaster') ?>" id="topnav-dashboard">
-									<i class="fe-airplay me-1"></i>Form Master
-								</a>
+								<i class="fe-bookmark me-1"></i>Form Master
+							</a>
 
-							</li>
+						</li>
 
-					
+
 					</ul> <!-- end navbar-->
 				</div> <!-- end .collapsed-->
 			</nav>

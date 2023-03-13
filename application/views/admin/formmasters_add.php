@@ -158,6 +158,7 @@
 														<label class="form-label" style='width:100%'>&nbsp;</label>
 														<a class="btn btn-success waves-effect waves-light add-button">Add </a>
 													</div>
+													
 												</div>
 											</div>
 											<div class="row">
@@ -245,5 +246,8 @@
 						$(this).parent().parent('div').remove();
 					});
 
+				
+					
+					
 				});
 			</script>

@@ -99,20 +99,21 @@ class Propertymaster extends CI_Controller
 														<label class="col-md-3 col-form-label" for="userName1">'.$que['question'].'</label>
 														<input type="hidden" name="question_'.$phase['id'].'[]" value="'.$que['question'].'">
 														<input type="hidden" name="question_id_'.$phase['id'].'[]" value="'.$que['id'].'">
-														<input type="hidden" name="answer_type_'.$phase['id'].'_'.$que['id'].'[]" value="'.$que['question_answer_inputtype'].'">
+														<input type="hidden" name="answer_type_'.$phase['id'].'_'.$que['id'].'" value="'.$que['question_answer_inputtype'].'">
 														<div class="col-md-9">';
 															if($que['source_id'] != ''){
 																$source_options=$this->db->get_where('source_option_master',array('source_cat_id'=>$que['source_id']))->result_array();
 																foreach($source_options as $source_option){
 																	$html .= '<input type="hidden" name="answer_options_'.$phase['id'].'_'.$que['id'].'[]" value="'.$source_option['name'].'">';
+																	$html .= '<input type="hidden" name="answer_option_ids_'.$phase['id'].'_'.$que['id'].'[]" value="'.$source_option['id'].'">';
 																}
 															}else{
 																$source_options=[];
 															}
 															if($que['question_answer_inputtype']=='Textbox'){
-																$html .= '<input type="text" name="answer_'.$phase['id'].'_'.$que['id'].'" class="form-control" id="userName1" name="userName1" value="Coderthemes">';
+																$html .= '<input type="text" name="answer_'.$phase['id'].'_'.$que['id'].'" class="form-control" id="userName1" name="userName1" value="" required>';
 															}elseif($que['question_answer_inputtype']=='Dropdown'){
-																$html .= '<select class="form-select" name="answer_'.$phase['id'].'_'.$que['id'].'">
+																$html .= '<select class="form-select" name="answer_'.$phase['id'].'_'.$que['id'].'" required>
 																		<option>Select Option</option>';
 																	foreach($source_options as $source_option){
 																		$html .= '<option value="'.$source_option['id'].'">'.$source_option['name'].'</option>';
@@ -120,26 +121,26 @@ class Propertymaster extends CI_Controller
 																	$html .= '</select>';														
 															}elseif($que['question_answer_inputtype']=='Checkbox'){	
 																foreach($source_options as $source_option){
-																	$html .= '<div class="form-check">';
+																	$html .= '<div class="form-check form-check-inline">';
 																		$html .= '<input class="form-check-input" type="checkbox" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="'.$source_option['id'].'">';
 																		$html .= '<label class="form-check-label" for="userName1">'.$source_option['name'].'</label><br>';              								 
 																	$html .= '</div>';
 																}                						
 															}elseif($que['question_answer_inputtype']=='Radio'){														
 																foreach($source_options as $source_option){
-																	$html .= '<div class="form-check">';
+																	$html .= '<div class="form-check form-check-inline">';
 																		$html .= '<input class="form-check-input" type="radio" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="'.$source_option['id'].'">';
 																		$html .= '<label class="form-check-label" for="userName1">'.$source_option['name'].'</label><br>';										
 																	$html .= '</div>';
 																}					
 															}elseif($que['question_answer_inputtype']=='Date'){	
-																$html .= '<input type="date" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="Coderthemes">';
+																$html .= '<input type="date" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';
 															}elseif($que['question_answer_inputtype']=='Textarea'){	
-																$html .= '<textarea class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="Coderthemes">';
+																$html .= '<textarea class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" required></textarea>';
 															}elseif($que['question_answer_inputtype']=='File'){	
-																$html .= '<input type="file" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="Coderthemes">';
+																$html .= '<input type="file" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';
 															}elseif($que['question_answer_inputtype']=='Number'){	
-																$html .= '<input type="number" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="Coderthemes">';                                                                                       
+																$html .= '<input type="number" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                       
 															}  
 
 													$html .='</div>
@@ -218,10 +219,9 @@ class Propertymaster extends CI_Controller
 		$data['property'] = $propertymaster;
 		// $data['question'] = $this->mas->getQuestion();
 		$data['master'] = $this->promast->getPromaster();
-
 		$data['category'] = $this->promast->getCategory();
 		$data['subcategory'] = $this->promast->getSubcategory();
-
+		$data['phases'] = $this->db->get_where('tb_phase_master',['status'=>1])->result_array();
 
 		$data['page_name'] = 'property_master_edit';
 		$this->load->view('admin/index', $data);
@@ -241,12 +241,13 @@ class Propertymaster extends CI_Controller
 			$this->edit($id);
 		} else {
 
-			$formArray = array();
+			$formArray = $_POST;
+			// $formArray = array();
 
-			$formArray['pro_master_id'] = $this->input->post('pro_master_id');
-			$formArray['pro_category_id'] = $this->input->post('pro_category_id');
-			$formArray['pro_subcategory_id'] = $this->input->post('pro_subcategory_id');
-			$formArray['status'] = $this->input->post('status');
+			// $formArray['pro_master_id'] = $this->input->post('pro_master_id');
+			// $formArray['pro_category_id'] = $this->input->post('pro_category_id');
+			// $formArray['pro_subcategory_id'] = $this->input->post('pro_subcategory_id');
+			// $formArray['status'] = $this->input->post('status');
 
 			$response = $this->promast->updaterecords($id, $formArray);
 			if ($response == true) {

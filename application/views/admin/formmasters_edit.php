@@ -102,30 +102,30 @@
 
 											</div>
 											<!-- <div id="questions">
-									<?php $questions = explode(',', $forms->question_ids);
-									foreach ($questions as $que) {
-									?>
-										<div class="row">
-											<div class="col-lg-6">
-												<div class="mb-3">
-													<label for="question" class="form-label">Select Question</label>
-												
-													<select class="form-select" name="question_ids[]" id="question">
-														<option value="">Select Question</option>
-														<?php foreach ($question as $q) : ?>
-															<option value="<?php echo $q['id']; ?>" <?= ($que == $q['id']) ? 'selected' : '' ?>><?php echo $q['question']; ?></option>
-														<?php endforeach; ?>
-													</select>
-												</div>
-											</div>
-											
-											<div class="col-lg-1">
-												<label class="form-label" style='width:100%'>&nbsp;</label>
-												<a class="btn btn-success waves-effect waves-light add-button">Add </a>
-											</div>
-										</div>
-									<?php } ?>
-								</div> -->
+												<?php $questions = explode(',', $forms->question_ids);
+												foreach ($questions as $que) {
+												?>
+													<div class="row">
+														<div class="col-lg-6">
+															<div class="mb-3">
+																<label for="question" class="form-label">Select Question</label>
+															
+																<select class="form-select" name="question_ids[]" id="question">
+																	<option value="">Select Question</option>
+																	<?php foreach ($question as $q) : ?>
+																		<option value="<?php echo $q['id']; ?>" <?= ($que == $q['id']) ? 'selected' : '' ?>><?php echo $q['question']; ?></option>
+																	<?php endforeach; ?>
+																</select>
+															</div>
+														</div>
+														
+														<div class="col-lg-1">
+															<label class="form-label" style='width:100%'>&nbsp;</label>
+															<a class="btn btn-success waves-effect waves-light add-button">Add </a>
+														</div>
+													</div>
+												<?php } ?>
+											</div> -->
 											<div id="questions">
 												<?php $questions = explode(',', $forms->question_ids);
 												for ($i = 0; $i < count($questions); $i++) { ?>
@@ -154,8 +154,6 @@
 												<?= form_error('question_ids[]') ?>
 											</div>
 
-
-
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="mb-3">
@@ -176,7 +174,7 @@
 													</div>
 												</div>
 											</div>
-											</form>
+										</form>
 									</div> <!-- end card-body -->
 								</div> <!-- end card-->
 							</div> <!-- end col -->

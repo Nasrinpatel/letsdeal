@@ -20,6 +20,7 @@
 <link href="<?= base_url('assets/') ?>css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+
 <style>
 	label.error{
 		color:red;
@@ -32,12 +33,13 @@
 <script src="<?= base_url('assets/') ?>js/jquery-3.6.0.js"></script>
 <script src="<?= base_url('assets/') ?>js/sweetalert2.all.min.js"></script>
 <script src="<?= base_url('assets/') ?>js/head.js"></script>
+
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.validate.min.js"></script>
 
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.dataTables.min.js"></script>
+
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.bootstrap5.min.js"></script>
-
 <script>
 	function success_message(title,text){
 		Swal.fire({
@@ -62,3 +64,4 @@
 		error_message('',<?= $this->session->flashdata('error') ?>);
 	<?php } ?>
 </script>
+

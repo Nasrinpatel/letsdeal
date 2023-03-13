@@ -17,7 +17,7 @@
 							</div>
 							<div class="mb-3">
 								<label for="question_answer" class="form-label">Q&A Input type</label>
-								<select class="form-select" name="question_answer_inputtype" id="question_answer">
+								<select class="form-select js-example-disabled-results" name="question_answer_inputtype" id="question_answer">
 									<option selected="">Select Q&A Input type</option>
 									<option value="Textbox">Textbox</option>
 									<option value="Dropdown">Dropdown</option>
