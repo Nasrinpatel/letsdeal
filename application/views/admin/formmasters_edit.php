@@ -38,7 +38,7 @@
 												<div class="col-lg-6">
 													<div class="mb-3">
 														<label for="masters" class="form-label">Select Master</label>
-														<select class="form-select" name="master_id" id="masters">
+														<select class="form-select select2" name="master_id" id="masters">
 															<option value="">Select Master</option>
 															<?php foreach ($master as $mas) : ?>
 
@@ -133,7 +133,7 @@
 														<div class="col-lg-6">
 															<div class="mb-3">
 																<label for="question" class="form-label">Select Question</label>
-																<select class="form-select" name="question_ids[]" id="question">
+																<select class="form-select select2" name="question_ids[]" id="question">
 																	<option value="">Select Question</option>
 																	<?php foreach ($question as $q) : ?>
 																		<option value="<?php echo $q['id']; ?>" <?= ($questions[$i] == $q['id']) ? 'selected' : '' ?>><?php echo $q['question']; ?></option>
@@ -219,7 +219,7 @@
 							"<div class='col-lg-6'>" +
 							"<div class='mb-3'>" +
 							"<label for='question' class='form-label'>Select Question</label>" +
-							"<select class='form-select' name='question_ids[]' id='question'>" +
+							"<select class='form-select select2' name='question_ids[]' id='question'>" +
 							"<option value=''>Select Question</option>" +
 							"<?php foreach ($question as $q) : ?>" +
 							"<option value='<?php echo $q['id']; ?>'><?php echo $q['question']; ?></option>" +

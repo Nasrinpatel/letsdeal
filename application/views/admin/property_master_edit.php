@@ -38,7 +38,7 @@
 												<div class="col-lg-6">
 													<div class="mb-3">
 														<label for="masters" class="form-label">Select Master</label>
-														<select class="form-select" name="pro_master_id" id="masters">
+														<select class="form-select select2" name="pro_master_id" id="masters">
 															<option value="">Select Master</option>
 															<?php foreach ($master as $mas) : ?>
 

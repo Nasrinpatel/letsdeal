@@ -20,7 +20,12 @@
 <link href="<?= base_url('assets/') ?>css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/select2.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/select2-bootstrap-5-theme.min.css" rel="stylesheet" type="text/css" />
 
+<link href="<?= base_url('assets/') ?>css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+<!-- <link href="<?php echo base_url(); ?>assets/css/select2/select2-bootstrap.min.css" rel="stylesheet"> -->
 <style>
 	label.error{
 		color:red;

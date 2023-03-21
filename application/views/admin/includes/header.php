@@ -316,6 +316,16 @@
 								<a href="<?= base_url('admin/Questionmaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Question Master</a>
 								<a href="<?= base_url('admin/Sourcecategory') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Source Master</a>
 								<a href="<?= base_url('admin/Position') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Position</a>
+								<!-- <a href="<?= base_url('admin/Customermaster') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Customer Master</a> -->
+								<a href="<?= base_url('admin/Country') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Country</a>
+								<a href="<?= base_url('admin/State') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> State</a>
+								<a href="<?= base_url('admin/City') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> City</a>
+								<a href="<?= base_url('admin/Phase') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Phase master</a>
+								<a href="<?= base_url('admin/Status') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Status master</a>
+								<a href="<?= base_url('admin/Source') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Source master</a>
+
+
+
 
 							</div>
 						</li>
@@ -326,6 +336,19 @@
 							</a>
 
 						</li>
+						<li>
+							<a class="nav-link" href="<?= base_url('admin/Customermaster') ?>" id="topnav-dashboard">
+								<i class="fe-bookmark me-1"></i> Customer Master
+							</a>
+
+						</li>
+						<!-- <li>
+							
+							<a href="<?= base_url('admin/Customermaster') ?>" class="dropdown-item">
+								<i class="fe-bookmark me-1"></i> Customer Master
+							</a>
+
+						</li> -->
 
 
 					</ul> <!-- end navbar-->

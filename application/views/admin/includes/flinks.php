@@ -17,3 +17,19 @@
 
 <!-- App js-->
 <script src="<?= base_url('assets/') ?>js/app.min.js"></script>
+
+<script src="<?= base_url('assets/') ?>js/select2.min.js"></script>
+
+
+<script src="<?= base_url('assets/') ?>js/select2.full.min.js"></script>
+<script>
+	$('.select2').select2();
+	$('.select2').select2({
+		theme:'bootstrap-5'
+		// dropdownParent: $('#state-modal'),
+	});
+	// $('#city-modal').select2({
+	// 	theme:'bootstrap-5'
+	// 	// dropdownParent: $('#state-modal'),
+	// });
+</script>
