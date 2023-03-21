@@ -170,8 +170,6 @@
 													send you the order's invoice.</p> -->
 
 												<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/store'; ?>">
-
-
 													<div class="row">
 														<div class="col-md-6">
 															<div class="mb-3">
@@ -252,9 +250,50 @@
 													</div>
 												</form>
 												<!-- end row-->
+												<div class="row my-4">
+													<div class="col-12">
+														<div class="card">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<?php if ($this->session->flashdata('success')) { ?>
+																			<div class="alert alert-success" role="alert">
+																				<?php
+																				echo $this->session->flashdata('success');
+																				?>
+																			</div>
+																		<?php } ?>
+																		<?php if ($this->session->flashdata('error')) { ?>
+																			<div class="alert alert-danger" role="alert">
+																				<?php
+																				echo $this->session->flashdata('error');
+																				?>
+																			</div>
+																		<?php } ?>
+																	</div>
+																</div>
 
-
-
+																<div class="table-responsive">
+																	<table class="table table-centered table-nowrap table-striped" id="formmaster_datatable">
+																		<thead>
+																			<tr>
+																				<th>#</th>
+																				<th>First Name</th>
+																				<th>Last Name</th>
+																				<th>Position</th>
+																				<th>Company Name</th>
+																				<th>Email</th>
+																				<th>Phone</th>
+																				<th>Status</th>
+																				<th style="width: 85px;">Action</th>
+																			</tr>
+																		</thead>							
+																	</table>
+																</div>
+															</div> <!-- end card-body-->
+														</div> <!-- end card-->
+													</div> <!-- end col -->
+												</div>
 											</div>
 										</div>
 										<div class="tab-pane fade" id="custom-v-pills-payment" role="tabpanel" aria-labelledby="custom-v-pills-payment-tab">
