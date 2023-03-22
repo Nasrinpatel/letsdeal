@@ -45,10 +45,12 @@
 									<tr>
 										<th>#</th>
 										<th>Name</th>
-										<th>Category</th>
 										<th>Phone</th>
-										<th>Company</th>
 										<th>Email</th>
+										<th>Company</th>
+										<th>Position</th>
+										<th>Source</th>
+										<th>Status</th>
 										<th style="width: 85px;">Action</th>
 									</tr>
 									</thead>
@@ -130,4 +132,22 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<script>
+	var table = $('#formmaster_datatable').DataTable({
+		responsive: true,
+		ajax: "<?php echo base_url('admin/Customermaster/all'); ?>",
+		"columnDefs": [
+			{
+				"targets": 7,
+				"createdCell": function(td, cellData, rowData, row, col) {
+					if (rowData[7] == '1') {							
+						$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
+					} else if (rowData[7] == '0') {
+						$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
+					}
+				}
+			},
+		]
+	});
 
+</script>

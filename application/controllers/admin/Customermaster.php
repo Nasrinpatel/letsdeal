@@ -17,13 +17,41 @@ class Customermaster extends CI_Controller
 		$this->load->view('admin/index', $data);
 	}
 
+	public function all()
+	{
+		$customer = $this->customermaster->all();
+		$result = array('data'=>[]);
+		$i=1;
+		foreach ($customer as $value) { 
+			$source_data = $this->db->get_where('tb_source_master',array('id'=>$value['source_id']))->row();
+			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
+			
+			$button = '<a href="'.base_url('admin/customermaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/customermaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$result['data'][] = array(
+				$i++,
+				$value['first_name'].' '.$value['last_name'],
+				$value['phone'],
+				$value['email'],
+				$value['company_name'],
+				$source_data->name,
+				$position_data->name,
+				$value['status'],
+				$button
+			);
+		}
+		echo json_encode($result);
+	}
+
 	public function add()
 	{
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
+		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
 		$data['page_name'] = 'customer_master_add';
 		$this->load->view('admin/index', $data);
 	}
+
 	public function store()
 	{		
 		// $this->form_validation->set_rules('source_id', 'Source','required');
@@ -64,6 +92,76 @@ class Customermaster extends CI_Controller
 		// }
 		
 	}
+
+	public function store_contact()
+	{	
+		$formArray = array();			
+		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['first_name'] = $this->input->post('first_name');
+		$formArray['last_name'] = $this->input->post('last_name');
+		$formArray['position_id'] = $this->input->post('position_id');
+		$formArray['company_name'] = $this->input->post('company_name');
+		$formArray['email'] = $this->input->post('email');
+		$formArray['phone'] = $this->input->post('phone');
+		$formArray['description'] = $this->input->post('description');
+		$formArray['status'] = $this->input->post('status');
+	
+		$response = $this->customermaster->save_contact_records($formArray);
+
+		if ($response == true) {
+			$this->session->set_flashdata('success', 'Customer Contact Added Successfully.');
+		} else {
+			$this->session->set_flashdata('error', 'Something went wrong. Please try again');
+		}
+		return redirect('admin/Customermaster/');		
+	}
+
+	public function edit($id)
+	{
+		$data['customer'] = $this->customermaster->getCustomer($id);
+		$data['contacts'] = $this->customermaster->getCustomerContact($id);
+		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
+		$data['source'] = $this->customermaster->getSource();
+		$data['position'] = $this->customermaster->getPosition();
+		$data['page_name'] = 'customer_master_edit';
+		$this->load->view('admin/index', $data);
+	}
+
+	public function update($id){
+
+		// $this->form_validation->set_rules('master_id', 'Master','required');
+		// $this->form_validation->set_rules('category_ids[]', 'Category','required');
+		// $this->form_validation->set_rules('sub_category_ids[]', 'Sub Category','required');
+		// $this->form_validation->set_rules('phase_id', 'Phase','required');
+		// $this->form_validation->set_rules('question_ids[]', 'Question','required');
+		// $this->form_validation->set_rules('status', 'Status','required');
+
+		// if ($this->form_validation->run() == false) {
+		// 	$this->edit($id);
+		// }else{
+			$formArray = array();
+			$formArray['source_id'] = $this->input->post('source_id');
+			$formArray['assigned_id'] = $this->input->post('assigned_id');
+			$formArray['position_id'] = $this->input->post('position_id');
+			$formArray['first_name'] = $this->input->post('first_name');
+			$formArray['last_name'] = $this->input->post('last_name');
+			$formArray['phone'] = $this->input->post('phone');
+			$formArray['email'] = $this->input->post('email');
+			$formArray['company_name'] = $this->input->post('company_name');
+			$formArray['description'] = $this->input->post('description');
+			$formArray['status'] = $this->input->post('status');
+		
+			$response = $this->customermaster->updaterecords($id,$formArray);
+
+			if ($response == true) {
+				$this->session->set_flashdata('success', 'Customer Master Updated Successfully.');
+			} else {
+				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
+			}
+			return redirect('admin/Customermaster/');
+		// }
+	}
+
 	public function delete($id)
 	{
 		$response = $this->customermaster->delete($id);
