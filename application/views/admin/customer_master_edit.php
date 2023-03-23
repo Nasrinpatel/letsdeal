@@ -1,3 +1,94 @@
+
+<div class="modal fade" id="customer-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" id="myCenterModalLabel">Add Contacts</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body p-4">
+				<form method="post" id="store-contact" action="<?php echo base_url() . 'admin/Customermaster/store_contact'; ?>">
+					<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="billing-first-name" class="form-label">First Name</label>
+								<input class="form-control" type="text" placeholder="Enter your first name" name="first_name" id="billing-first-name" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="billing-last-name" class="form-label">Last Name</label>
+								<input class="form-control" type="text" placeholder="Enter your last name" name="last_name" id="billing-last-name" />
+							</div>
+						</div>
+					</div> <!-- end row -->
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label class="form-label">Position</label>
+								<select data-toggle="select2" title="Position" class="form-control select2" name="position_id" data-width="100%">
+									<option>Select Position</option>
+									<?php foreach ($position as $pos) { ?>
+										<option value="<?= $pos['id'] ?>"><?= $pos['name'] ?></option>
+									<?php }
+									?>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="company" class="form-label">Company Name</label>
+								<input type="text" maxlength="14" class="form-control" name="company_name" id="company" placeholder="Enter Company Name">
+							</div>
+						</div>
+					</div> <!-- end row -->
+					<div class="row">
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="billing-email-address" class="form-label">Email Address <span class="text-danger"></span></label>
+								<input class="form-control" type="email" name="email" placeholder="Enter your email" id="billing-email-address" />
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="mb-3">
+								<label for="billing-phone" class="form-label">Phone <span class="text-danger">*</span></label>
+								<input class="form-control" type="text" name="phone" placeholder="(xx) xxx xxxx xxx" id="billing-phone" />
+							</div>
+						</div>
+					</div> <!-- end row -->
+
+
+
+					<div class="row">
+						<div class="col-12">
+							<div class="mb-3">
+								<label for="description" class="form-label">Description</label>
+								<textarea class="form-control" name="description" id="description"></textarea>
+							</div>
+						</div>
+					</div> <!-- end row -->
+					<div class="mb-3">
+						<label for="city_status" class="form-label">Status</label>
+						<select class="form-select" name="status" id="city_status">
+							<option selected="">Select Status</option>
+							<option value="1" selected>Active</option>
+							<option value="0">Inactive</option>
+						</select>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-end">
+								<button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
+								<button type="button" class="btn btn-danger waves-effect waves-light" onclick="Custombox.close();">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 <div class="content-page">
 	<div class="content">
 		<!-- Start Content-->
@@ -181,88 +272,16 @@
 										</div>
 										<div class="tab-pane fade" id="customer-contacts" role="tabpanel" aria-labelledby="customer-contacts-tab">
 											<div>
-												<h4 class="header-title">Contact</h4>
-
-												<!-- <p class="sub-header">Fill the form below in order to
-													send you the order's invoice.</p> -->
-
-												<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/store_contact'; ?>">
-													<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
-													<div class="row">
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label for="billing-first-name" class="form-label">First Name</label>
-																<input class="form-control" type="text" placeholder="Enter your first name" name="first_name" id="billing-first-name" />
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label for="billing-last-name" class="form-label">Last Name</label>
-																<input class="form-control" type="text" placeholder="Enter your last name" name="last_name" id="billing-last-name" />
-															</div>
-														</div>
-													</div> <!-- end row -->
-													<div class="row">
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label class="form-label">Position</label>
-																<select data-toggle="select2" title="Position" class="form-control select2" name="position_id" data-width="100%">
-																	<option>Select Position</option>
-																	<?php foreach ($position as $pos) { ?>
-																		<option value="<?= $pos['id'] ?>" <?= ($pos['id'] == $customer->position_id)?'selected':'' ?>><?= $pos['name'] ?></option>
-																	<?php }
-																	?>
-																</select>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label for="company" class="form-label">Company Name</label>
-																<input type="text" maxlength="14" class="form-control" name="company_name" id="company" placeholder="Enter Company Name">
-															</div>
-														</div>
-													</div> <!-- end row -->
-													<div class="row">
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label for="billing-email-address" class="form-label">Email Address <span class="text-danger"></span></label>
-																<input class="form-control" type="email" name="email" placeholder="Enter your email" id="billing-email-address" />
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="mb-3">
-																<label for="billing-phone" class="form-label">Phone <span class="text-danger">*</span></label>
-																<input class="form-control" type="text" name="phone" placeholder="(xx) xxx xxxx xxx" id="billing-phone" />
-															</div>
-														</div>
-													</div> <!-- end row -->
-
-
-
-													<div class="row">
-														<div class="col-12">
-															<div class="mb-3">
-																<label for="description" class="form-label">Description</label>
-																<textarea class="form-control" name="description" id="description"></textarea>
-															</div>
-														</div>
-													</div> <!-- end row -->
-													<div class="mb-3">
-														<label for="city_status" class="form-label">Status</label>
-														<select class="form-select" name="status" id="city_status">
-															<option selected="">Select Status</option>
-															<option value="1" selected>Active</option>
-															<option value="0">Inactive</option>
-														</select>
+												<div class="row justify-content-between mb-2">
+													<div class="col-auto">
+														<h4 class="header-title">Contact</h4>
 													</div>
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="text">
-																<button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
-															</div>
+													<div class="col-sm-6">
+														<div class="text-sm-end">
+															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#customer-contact-modal">Add Contact</button>
 														</div>
 													</div>
-												</form>
+												</div>												
 												<!-- end row-->
 												<div class="row my-4">
 													<div class="col-12">
@@ -288,7 +307,7 @@
 																</div>
 
 																<div class="table-responsive">
-																	<table class="table table-centered table-nowrap table-striped" id="conact_formmaster_datatable">
+																	<table class="table table-centered table-nowrap table-striped" id="customer_contact_datatable">
 																		<thead>
 																			<tr>
 																				<th>#</th>
@@ -460,5 +479,37 @@
 
 		var triggerEl = document.querySelector('#v-pills-tab a[href="'+hash+'"]')
 		bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
+	});
+	//all contact
+	var contact_table = $('#customer_contact_datatable').DataTable({
+		responsive: true,
+		ajax: "<?php echo base_url('admin/Customermaster/all_contact/'.$customer->id); ?>",
+		"columnDefs": [{
+			"targets": 6,
+			"createdCell": function(td, cellData, rowData, row, col) {
+				if (rowData[6] == '1') {
+					$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
+				} else if (rowData[6] == '0') {
+					$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
+				}
+			}
+		}, ]
+	});
+	//add contact 
+	$("#store-contact").submit(function(o) {
+		o.preventDefault();
+		var url = $(this).attr("action");
+		$.ajax({
+			url: url,
+			type: "POST",
+			data: $(this).serialize(),
+			dataType: "json",
+			success: function(response) {
+				$('.btn-close').trigger('click');
+				$("#store-contact").trigger("reset");
+				success_message('', response.message);
+				contact_table.ajax.reload(null, false);
+			}
+		});
 	});
 </script>

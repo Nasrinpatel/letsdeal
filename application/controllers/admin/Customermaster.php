@@ -45,6 +45,30 @@ class Customermaster extends CI_Controller
 		echo json_encode($result);
 	}
 
+	public function all_contact($id)
+	{
+		$contacts = $this->customermaster->getCustomerContact($id);
+		$result = array('data'=>[]);
+		$i=1;
+		foreach ($contacts as $value) { 
+			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
+
+			$button = '<a href="'.base_url('admin/customermaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-contact-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$result['data'][] = array(
+				$i++,
+				$value['first_name'].' '.$value['last_name'],				
+				($position_data != null)?$position_data->name:'',				
+				$value['company_name'],
+				$value['email'],
+				$value['phone'],
+				$value['status'],
+				$button
+			);
+		}
+		echo json_encode($result);
+	}
+
 	public function add()
 	{
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
@@ -110,11 +134,10 @@ class Customermaster extends CI_Controller
 		$response = $this->customermaster->save_contact_records($formArray);
 
 		if ($response == true) {
-			$this->session->set_flashdata('success', 'Customer Contact Added Successfully.');
+			echo json_encode(array('success'=>true,'message'=>'Customer Contact Added Successfully.'));
 		} else {
-			$this->session->set_flashdata('error', 'Something went wrong. Please try again');
-		}
-		return redirect('admin/Customermaster/');		
+			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
+		}	
 	}
 	// public function edit_contact($id)
 	// {
