@@ -25,7 +25,8 @@ class Customermaster extends CI_Controller
 		foreach ($customer as $value) { 
 			$source_data = $this->db->get_where('tb_source_master',array('id'=>$value['source_id']))->row();
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
-			
+			$staff_data = $this->db->get_where('tbl_staff_master',array('id'=>$value['assigned_id']))->row();
+
 			$button = '<a href="'.base_url('admin/customermaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
 			<a href="'.base_url('admin/customermaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
@@ -34,8 +35,9 @@ class Customermaster extends CI_Controller
 				$value['phone'],
 				$value['email'],
 				$value['company_name'],
-				$source_data->name,
-				$position_data->name,
+				($source_data != null)?$source_data->name:'',
+				($position_data != null)?$position_data->name:'',
+				($staff_data != null)?$staff_data->first_name.' '.$staff_data->last_name:'',
 				$value['status'],
 				$button
 			);
@@ -48,27 +50,26 @@ class Customermaster extends CI_Controller
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
+		$data['staff'] = $this->customermaster->getStaff();
 		$data['page_name'] = 'customer_master_add';
 		$this->load->view('admin/index', $data);
 	}
 
 	public function store()
 	{		
-		// $this->form_validation->set_rules('source_id', 'Source','required');
-		// $this->form_validation->set_rules('assigned_id	', 'Assigned','required');
-		// $this->form_validation->set_rules('position_id', 'Position','required');
-		// $this->form_validation->set_rules('first_name', 'First name','required');
-		// $this->form_validation->set_rules('last_name', 'Last name','required');
-		
-		// $this->form_validation->set_rules('phone', 'Phone','required');
-		// $this->form_validation->set_rules('email', 'Email','required');
-		// $this->form_validation->set_rules('company_name', 'Company name','required');
-		// $this->form_validation->set_rules('description', 'Description','required');
-		// $this->form_validation->set_rules('status', 'Status','required');
-		// if ($this->form_validation->run() == false) {
-		// //echo validation_errors();die;
-		// 	$this->add();
-		// } else {
+		$this->form_validation->set_rules('source_id', 'Source','required');
+		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
+		$this->form_validation->set_rules('position_id', 'Position','required');
+		$this->form_validation->set_rules('first_name', 'First name','required');
+		$this->form_validation->set_rules('last_name', 'Last name','required');		
+		$this->form_validation->set_rules('phone', 'Phone','required');
+		$this->form_validation->set_rules('email', 'Email','required');
+		$this->form_validation->set_rules('company_name', 'Company name','required');
+		$this->form_validation->set_rules('description', 'Description','required');
+		$this->form_validation->set_rules('status', 'Status','required');
+		if ($this->form_validation->run() == false) {
+			$this->add();
+		} else {
 			$formArray = array();
 			$formArray['source_id'] = $this->input->post('source_id');
 			$formArray['assigned_id'] = $this->input->post('assigned_id');
@@ -89,7 +90,7 @@ class Customermaster extends CI_Controller
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
 			return redirect('admin/Customermaster/');
-		// }
+		}
 		
 	}
 
@@ -115,6 +116,14 @@ class Customermaster extends CI_Controller
 		}
 		return redirect('admin/Customermaster/');		
 	}
+	// public function edit_contact($id)
+	// {
+	
+		// 	$data['position'] = $this->customermaster->getPosition();
+	
+	// 	$data['page_name'] = 'customer_master_edit';
+	// 	$this->load->view('admin/index', $data);
+	// }
 
 	public function edit($id)
 	{
@@ -123,22 +132,26 @@ class Customermaster extends CI_Controller
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
+		$data['staff'] = $this->customermaster->getStaff();
 		$data['page_name'] = 'customer_master_edit';
 		$this->load->view('admin/index', $data);
 	}
 
 	public function update($id){
+		$this->form_validation->set_rules('source_id', 'Source','required');
+		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
+		$this->form_validation->set_rules('position_id', 'Position','required');
+		$this->form_validation->set_rules('first_name', 'First name','required');
+		$this->form_validation->set_rules('last_name', 'Last name','required');		
+		$this->form_validation->set_rules('phone', 'Phone','required');
+		$this->form_validation->set_rules('email', 'Email','required');
+		$this->form_validation->set_rules('company_name', 'Company name','required');
+		$this->form_validation->set_rules('description', 'Description','required');
+		$this->form_validation->set_rules('status', 'Status','required');
 
-		// $this->form_validation->set_rules('master_id', 'Master','required');
-		// $this->form_validation->set_rules('category_ids[]', 'Category','required');
-		// $this->form_validation->set_rules('sub_category_ids[]', 'Sub Category','required');
-		// $this->form_validation->set_rules('phase_id', 'Phase','required');
-		// $this->form_validation->set_rules('question_ids[]', 'Question','required');
-		// $this->form_validation->set_rules('status', 'Status','required');
-
-		// if ($this->form_validation->run() == false) {
-		// 	$this->edit($id);
-		// }else{
+		if ($this->form_validation->run() == false) {
+			$this->edit($id);
+		}else{
 			$formArray = array();
 			$formArray['source_id'] = $this->input->post('source_id');
 			$formArray['assigned_id'] = $this->input->post('assigned_id');
@@ -159,12 +172,26 @@ class Customermaster extends CI_Controller
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
 			return redirect('admin/Customermaster/');
-		// }
+		}
 	}
 
 	public function delete($id)
 	{
 		$response = $this->customermaster->delete($id);
+
+		if($response == true)
+		{
+			$this->session->set_flashdata('success', 'Customer Master Deleted Successfully.');
+		}else{
+			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
+		}
+		return redirect('admin/Customermaster/');
+		
+
+	}
+	public function delete_contact($id)
+	{
+		$response = $this->customermaster->delete_contact_records($id);
 
 		if($response == true)
 		{

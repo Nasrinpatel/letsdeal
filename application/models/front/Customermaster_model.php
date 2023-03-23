@@ -29,6 +29,13 @@ class Customermaster_model extends CI_model{
 		$this->db->delete($this->db_name);
 		return true;
 	}
+	
+	function delete_contact_records($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('tbl_customer_contact_master');
+		return true;
+	}
 	function getCustomer($id){
 		$data = $this->db->get_where('tb_customer_master',['id'=>$id])->row();
 		return $data;
@@ -47,6 +54,10 @@ class Customermaster_model extends CI_model{
 	}
 	function getSource(){
 		$data = $this->db->get('tb_source_master')->result_array();
+		return $data;
+	}
+	function getStaff(){
+		$data = $this->db->get('tbl_staff_master')->result_array();
 		return $data;
 	}
 	function updaterecords($id,$formArray)

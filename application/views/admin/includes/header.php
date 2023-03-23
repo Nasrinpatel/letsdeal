@@ -320,10 +320,12 @@
 								<a href="<?= base_url('admin/Country') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Country</a>
 								<a href="<?= base_url('admin/State') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> State</a>
 								<a href="<?= base_url('admin/City') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> City</a>
-								<a href="<?= base_url('admin/Phase') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Phase master</a>
+								<!-- <a href="<?= base_url('admin/Phase') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Phase master</a>
 								<a href="<?= base_url('admin/Status') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Status master</a>
-								<a href="<?= base_url('admin/Source') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Source master</a>
+								<a href="<?= base_url('admin/Source') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Source master</a> -->
+								<a href="<?= base_url('admin/Staff') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Staff master</a>
 
+								
 
 
 

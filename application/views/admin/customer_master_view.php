@@ -48,8 +48,9 @@
 										<th>Phone</th>
 										<th>Email</th>
 										<th>Company</th>
-										<th>Position</th>
 										<th>Source</th>
+										<th>Position</th>
+										<th>Staff Name</th>
 										<th>Status</th>
 										<th style="width: 85px;">Action</th>
 									</tr>
@@ -138,11 +139,11 @@
 		ajax: "<?php echo base_url('admin/Customermaster/all'); ?>",
 		"columnDefs": [
 			{
-				"targets": 7,
+				"targets": 8,
 				"createdCell": function(td, cellData, rowData, row, col) {
-					if (rowData[7] == '1') {							
+					if (rowData[8] == '1') {							
 						$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-					} else if (rowData[7] == '0') {
+					} else if (rowData[8] == '0') {
 						$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
 					}
 				}
