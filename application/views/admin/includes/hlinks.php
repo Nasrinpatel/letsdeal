@@ -18,8 +18,8 @@
 <!-- icons -->
 <link href="<?= base_url('assets/') ?>css/icons.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
-<link href="<?= base_url('assets/') ?>css/responsive.dataTables.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/select2.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/select2-bootstrap-5-theme.min.css" rel="stylesheet" type="text/css" />
 
@@ -43,9 +43,9 @@
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.validate.min.js"></script>
 
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/jquery.dataTables.min.js"></script>
-
-<script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.responsive.min.js"></script>
 <script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/') ?>js/responsive.bootstrap5.min.js"></script>
 <script>
 	function success_message(title,text){
 		Swal.fire({

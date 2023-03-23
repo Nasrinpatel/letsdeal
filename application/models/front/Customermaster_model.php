@@ -44,6 +44,10 @@ class Customermaster_model extends CI_model{
 		$data = $this->db->get_where('tbl_customer_contact_master',['customer_id'=>$id])->result_array();
 		return $data;
 	}
+	function getContact($id){
+		$data = $this->db->get_where('tbl_customer_contact_master',['id'=>$id])->row();
+		return $data;
+	}
 	function getSourceMaster(){
 		$data = $this->db->get('source_category_master')->result_array();
 		return $data;
@@ -64,6 +68,13 @@ class Customermaster_model extends CI_model{
 	{
 		$this->db->where('id',$id);
 		$this->db->update($this->db_name,$formArray);
+		return true;
+	}
+
+	function update_contact_records($id,$formArray)
+	{
+		$this->db->where('id',$id);
+		$this->db->update('tbl_customer_contact_master',$formArray);
 		return true;
 	}
 }

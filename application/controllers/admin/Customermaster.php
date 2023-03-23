@@ -54,7 +54,7 @@ class Customermaster extends CI_Controller
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
 
 			$button = '<a href="'.base_url('admin/customermaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-contact-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id'].'/'.$id).'#customer-contacts" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['first_name'].' '.$value['last_name'],				
@@ -139,25 +139,23 @@ class Customermaster extends CI_Controller
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}	
 	}
-	// public function edit_contact($id)
-	// {
-	
-		// 	$data['position'] = $this->customermaster->getPosition();
-	
-	// 	$data['page_name'] = 'customer_master_edit';
-	// 	$this->load->view('admin/index', $data);
-	// }
 
 	public function edit($id)
 	{
 		$data['customer'] = $this->customermaster->getCustomer($id);
-		$data['contacts'] = $this->customermaster->getCustomerContact($id);
+		// $data['contacts'] = $this->customermaster->getCustomerContact($id);
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
 		$data['staff'] = $this->customermaster->getStaff();
 		$data['page_name'] = 'customer_master_edit';
 		$this->load->view('admin/index', $data);
+	}
+	
+	public function edit_contact($id)
+	{	
+		$data = $this->customermaster->getContact($id);
+		echo json_encode($data);
 	}
 
 	public function update($id){
@@ -198,6 +196,27 @@ class Customermaster extends CI_Controller
 		}
 	}
 
+	public function update_contact($id)
+	{	
+		$formArray = array();			
+		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['first_name'] = $this->input->post('first_name');
+		$formArray['last_name'] = $this->input->post('last_name');
+		$formArray['position_id'] = $this->input->post('position_id');
+		$formArray['company_name'] = $this->input->post('company_name');
+		$formArray['email'] = $this->input->post('email');
+		$formArray['phone'] = $this->input->post('phone');
+		$formArray['description'] = $this->input->post('description');
+		$formArray['status'] = $this->input->post('status');
+
+		$response = $this->customermaster->update_contact_records($id,$formArray);
+		if ($response == true) {
+			echo json_encode(array('success'=>true,'message'=>'Customer Contact Updated Successfully.'));
+		} else {
+			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
+		}
+	}
+
 	public function delete($id)
 	{
 		$response = $this->customermaster->delete($id);
@@ -212,18 +231,16 @@ class Customermaster extends CI_Controller
 		
 
 	}
-	public function delete_contact($id)
+	public function delete_contact($id,$customer_id)
 	{
 		$response = $this->customermaster->delete_contact_records($id);
 
 		if($response == true)
 		{
-			$this->session->set_flashdata('success', 'Customer Master Deleted Successfully.');
+			$this->session->set_flashdata('success', 'Customer Contact Deleted Successfully.');
 		}else{
 			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
 		}
-		return redirect('admin/Customermaster/');
-		
-
+		return redirect('admin/Customermaster/edit/'.$customer_id.'#customer-contacts');
 	}
 }

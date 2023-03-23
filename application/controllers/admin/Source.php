@@ -90,8 +90,7 @@ class Source extends CI_Controller {
 		}else{
 			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
 		}
-		return redirect('admin/source/');
-		
+		return redirect('admin/source/');	
 
 	}
 	
