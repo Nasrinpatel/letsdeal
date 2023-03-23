@@ -25,14 +25,14 @@
 							<div class="row">
 								<div class="col-lg-4">
 									<div class="nav nav-pills flex-column navtab-bg nav-pills-tab text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-										<a class="nav-link active show py-2" id="custom-v-pills-billing-tab" data-bs-toggle="pill" href="#custom-v-pills-billing" role="tab" aria-controls="custom-v-pills-billing" aria-selected="true">
+										<a class="nav-link py-2" id="customer-tab" data-bs-toggle="pill" href="#customer" role="tab" aria-controls="customer" aria-selected="false">
 											<i class="mdi mdi-account-circle d-block font-24"></i>
 											Customer Master
 										</a>
-										<a class="nav-link mt-2 py-2" id="custom-v-pills-shipping-tab" data-bs-toggle="pill" href="#custom-v-pills-shipping" role="tab" aria-controls="custom-v-pills-shipping" aria-selected="false">
+										<a class="nav-link mt-2 py-2" id="customer-contacts-tab" data-bs-toggle="pill" href="#customer-contacts" role="tab" aria-controls="customer-contacts" aria-selected="false">
 											<i class="mdi mdi-contacts d-block font-24"></i>
 											Contact</a>
-										<a class="nav-link mt-2 py-2" id="custom-v-pills-payment-tab" data-bs-toggle="pill" href="#custom-v-pills-payment" role="tab" aria-controls="custom-v-pills-payment" aria-selected="false">
+										<a class="nav-link mt-2 py-2" id="customer-notes-tab" data-bs-toggle="pill" href="#customer-notes" role="tab" aria-controls="customer-notes" aria-selected="false">
 											<i class="mdi mdi-note d-block font-24"></i>
 											Note</a>
 									</div>
@@ -41,7 +41,7 @@
 								</div> <!-- end col-->
 								<div class="col-lg-8">
 									<div class="tab-content p-3">
-										<div class="tab-pane fade active show" id="custom-v-pills-billing" role="tabpanel" aria-labelledby="custom-v-pills-billing-tab">
+										<div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
 											<div>
 												<h4 class="header-title">Customer Information</h4>
 
@@ -67,7 +67,7 @@
 																<select data-toggle="select2" title="Assigned" class="form-control select2" name="assigned_id" data-width="100%">
 																	<option value=''>Select Assigned</option>
 																	<?php foreach ($staff as $sta) { ?>
-																		<option value="<?= $sta['id'] ?>"><?= $sta['first_name'] ?>  <?= $sta['last_name'] ?></option>
+																		<option value="<?= $sta['id'] ?>" <?= ($sta['id'] == $customer->assigned_id)?'selected':'' ?>><?= $sta['first_name'] ?>  <?= $sta['last_name'] ?></option>
 																	<?php }
 																	?>
 																</select>
@@ -179,7 +179,7 @@
 												</form>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="custom-v-pills-shipping" role="tabpanel" aria-labelledby="custom-v-pills-shipping-tab">
+										<div class="tab-pane fade" id="customer-contacts" role="tabpanel" aria-labelledby="customer-contacts-tab">
 											<div>
 												<h4 class="header-title">Contact</h4>
 
@@ -326,7 +326,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="custom-v-pills-payment" role="tabpanel" aria-labelledby="custom-v-pills-payment-tab">
+										<div class="tab-pane fade" id="customer-notes" role="tabpanel" aria-labelledby="customer-notes-tab">
 											<div>
 											<h4 class="header-title">Note</h4>
 
@@ -441,5 +441,24 @@
 		$('.js-example-basic-single').select2({
 			theme: "bootstrap"
 		});
+	});
+	$(function(){
+		var hash = window.location.hash;
+		hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+		
+		var triggerTabList = [].slice.call(document.querySelectorAll('#v-pills-tab a'))
+			triggerTabList.forEach(function (triggerEl) {
+			var tabTrigger = new bootstrap.Tab(triggerEl)
+
+			triggerEl.addEventListener('click', function (event) {
+				event.preventDefault()
+				tabTrigger.show()
+			})
+		});
+		var triggerFirstTabEl = document.querySelector('#v-pills-tab a:first-child')
+		bootstrap.Tab.getInstance(triggerFirstTabEl).show() // Select first tab
+
+		var triggerEl = document.querySelector('#v-pills-tab a[href="'+hash+'"]')
+		bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
 	});
 </script>
