@@ -229,7 +229,7 @@
 				data: $(this).serialize(),
 				dataType: "json",
 				success: function(response) {
-					$('#prosubcategoryedit-modal').modal('hide');
+					$('.btn-close').trigger('click');
 					success_message('', response.message);
 					table.ajax.reload(null,false);
 				}

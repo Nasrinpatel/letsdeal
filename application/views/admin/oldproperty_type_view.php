@@ -222,7 +222,7 @@
 			data: $(this).serialize(),
 			dataType: "json",
 			success: function(response) {
-				$('#propertyedit-modal').modal('hide');		
+				$('.btn-close').trigger('click');
 				success_message('',response.message);
 			}
 		});

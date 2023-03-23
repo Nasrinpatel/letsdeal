@@ -246,7 +246,7 @@
 					data: $(form).serialize(),
 					dataType: "json",
 					success: function(response) {
-						$('#mastersedit-modal').modal('hide');		
+						$('.btn-close').trigger('click');	
 						success_message('',response.message);
 						table.ajax.reload(null,false);
 					//$("#subcategory_datatable").load("#subcategory_datatable");
