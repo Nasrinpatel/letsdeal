@@ -612,7 +612,7 @@
 	//add contact 
 	$("#store-contact").validate({
 		rules: {
-			first_name: "bb required",
+			first_name: "required",
 			last_name: "required",
 			position_id: "required",
 			// company_name: "required",
