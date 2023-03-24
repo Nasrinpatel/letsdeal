@@ -10,7 +10,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" class="store-phase" action="<?php echo base_url() . 'admin/phase/store'; ?>">
+					<form method="post" id="store-phase" action="<?php echo base_url() . 'admin/phase/store'; ?>">
 
 						<div class="mb-3">
 							<label for="name" class="form-label">Name</label>
@@ -44,7 +44,7 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" class="update_phase" action="#">
+					<form method="post" id="update_phase" action="#">
 						<input type="hidden" name="id" id="edit_phase_id" />
 						<div class="mb-3">
 							<label for="name" class="form-label">Name</label>
@@ -184,23 +184,7 @@
 				}
 			});
 		});
-		$("#update_phase").submit(function(o) {
-			o.preventDefault();
-			var id = $('#edit_phase_id').val();
-			$.ajax({
-				url: '<?php echo base_url() ?>admin/Phase/update/' + id,
-				type: "POST",
-				data: $(this).serialize(),
-				dataType: "json",
-				success: function(response) {
-					$('.btn-close').trigger('click');
-					success_message('', response.message);
-					table.ajax.reload(null, false);
-				}
-			});
-
-		});
-		$('.store-phase').validate({
+		$('#store-phase').validate({
 			rules: {
 				name: "required",
 				status: "required"
@@ -209,13 +193,28 @@
 
 			}
 		});
-		$('.update_phase').validate({
+		$('#update_phase').validate({
 			rules: {
 				name: "required",
 				status: "required"
 			},
 			message: {
 
+			},
+			submitHandler: function(form,e) {
+				e.preventDefault();
+				var id = $('#edit_phase_id').val();
+				$.ajax({
+					url: '<?php echo base_url() ?>admin/Phase/update/' + id,
+					type: "POST",
+					data: $(form).serialize(),
+					dataType: "json",
+					success: function(response) {
+						$('.btn-close').trigger('click');
+						success_message('', response.message);
+						table.ajax.reload(null, false);
+					}
+				});
 			}
 		});
 	</script>
