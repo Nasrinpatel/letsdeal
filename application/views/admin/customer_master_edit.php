@@ -1,4 +1,4 @@
-
+<!-- contact add -->
 <div class="modal fade" id="customer-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
@@ -28,7 +28,7 @@
 							<div class="mb-3">
 								<label class="form-label">Position</label>
 								<select data-toggle="select2" title="Position" class="form-control select2" name="position_id" data-width="100%">
-									<option>Select Position</option>
+									<option value="">Select Position</option>
 									<?php foreach ($position as $pos) { ?>
 										<option value="<?= $pos['id'] ?>"><?= $pos['name'] ?></option>
 									<?php }
@@ -180,7 +180,89 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
+<!-- notes add -->
 <div class="content-page">
+<div class="modal fade" id="customer-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" id="myCenterModalLabel">Add Notes</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body p-4">
+				<form method="post" id="store-notes" action="<?php echo base_url() . 'admin/Customermaster/store_note'; ?>">
+					<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+					
+					<div class="row">
+						<div class="col-12">
+							<div class="mb-3">
+								<label for="name" class="form-label">Note</label>
+								<textarea class="form-control" name="name" id="name"></textarea>
+							</div>
+						</div>
+					</div>
+					<div class="mb-3">
+						<label for="city_status" class="form-label">Status</label>
+						<select class="form-select" name="status" id="city_status">
+							<option selected="">Select Status</option>
+							<option value="1" selected>Active</option>
+							<option value="0">Inactive</option>
+						</select>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-end">
+								<button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
+								<button type="button" class="btn btn-danger waves-effect waves-light" onclick="Custombox.close();">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="edit-customer-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header bg-light">
+				<h4 class="modal-title" id="myCenterModalLabel">Edit Notes</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body p-4">
+				<form method="post" id="update-note" action="<?php echo base_url() . 'admin/Customermaster/update_note'; ?>">
+					<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+					<input type="hidden" name="note_id" id="note_id">
+					<div class="row">
+						<div class="col-12">
+							<div class="mb-3">
+								<label for="name" class="form-label">Note</label>
+								<textarea class="form-control" name="name" id="name"></textarea>
+							</div>
+						</div>
+					</div>
+				
+					<div class="mb-3">
+						<label for="note_status" class="form-label">Status</label>
+						<select class="form-select" name="status" id="note_status">
+							<option selected="">Select Status</option>
+							<option value="1" selected>Active</option>
+							<option value="0">Inactive</option>
+						</select>
+					</div>
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-end">
+								<button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
+								<button type="button" class="btn btn-danger waves-effect waves-light" onclick="Custombox.close();">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 	<div class="content">
 		<!-- Start Content-->
 		<div class="container-fluid">
@@ -421,102 +503,60 @@
 										</div>
 										<div class="tab-pane fade" id="customer-notes" role="tabpanel" aria-labelledby="customer-notes-tab">
 											<div>
-											<h4 class="header-title">Note</h4>
-
-											<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/store'; ?>">
-
-												<div class="row">
-
-
-													<div class="row">
-														<div class="col-12">
-															<div class="mb-3">
-																<label for="description" class="form-label">Description</label>
-																<textarea class="form-control" name="description" id="description"></textarea>
-															</div>
-														</div>
-													</div> <!-- end row -->
-													<div class="mb-3">
-														<label for="city_status" class="form-label">Status</label>
-														<select class="form-select" name="status" id="city_status">
-															<option selected="">Select Status</option>
-															<option value="1" selected>Active</option>
-															<option value="0">Inactive</option>
-														</select>
+												<div class="row justify-content-between mb-2">
+													<div class="col-auto">
+														<h4 class="header-title">Note</h4>
 													</div>
-													<div class="row">
-														<div class="col-lg-6">
-															<div class="text">
-																<button type="submit" class="btn btn-success waves-effect waves-light">Submit</button>
-															</div>
+													<div class="col-sm-6">
+														<div class="text-sm-end">
+															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#customer-notes-modal">Add Note</button>
 														</div>
 													</div>
-											</form>
-												<div class="content-page">
-													<div class="container-fluid">
-														<!-- start page title -->
-														<div class="row">
-															<div class="col-12">
-																<div class="page-title-box">
-																	<div class="page-title-right">
-																		<ol class="breadcrumb m-0">
-																			<a href="<?= base_url('admin/Customermaster/add') ?>" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i> Add New</a>
-																		</ol>
-																	</div>
-																	<h4 class="page-title">Note Master</h4>
-																</div>
-															</div>
-														</div>
-														<!-- end page title -->
-														<div class="row">
-															<div class="col-12">
-																<div class="card">
-																	<div class="card-body">
-																		<div class="row">
-																			<div class="col-sm-12">
-																				<?php if ($this->session->flashdata('success')) { ?>
-																					<div class="alert alert-success" role="alert">
-																						<?php
-																						echo $this->session->flashdata('success');
-																						?>
-																					</div>
-																				<?php } ?>
-																				<?php if ($this->session->flashdata('error')) { ?>
-																					<div class="alert alert-danger" role="alert">
-																						<?php
-																						echo $this->session->flashdata('error');
-																						?>
-																					</div>
-																				<?php } ?>
+												</div>												
+												<!-- end row-->
+												<div class="row my-4">
+													<div class="col-12">
+														<div class="card">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<?php if ($this->session->flashdata('success')) { ?>
+																			<div class="alert alert-success" role="alert">
+																				<?php
+																				echo $this->session->flashdata('success');
+																				?>
 																			</div>
-																		</div>
+																		<?php } ?>
+																		<?php if ($this->session->flashdata('error')) { ?>
+																			<div class="alert alert-danger" role="alert">
+																				<?php
+																				echo $this->session->flashdata('error');
+																				?>
+																			</div>
+																		<?php } ?>
+																	</div>
+																</div>
 
-																		<div class="table-responsive">
-																			<table class="table table-centered table-nowrap table-striped" id="formmaster_datatable">
-																				<thead>
-																					<tr>
-																						<th>#</th>
-																						<th>Name</th>
-																						<th>Category</th>
-																						<th>Phone</th>
-																						<th>Company</th>
-																						<th>Email</th>
-																						<th style="width: 85px;">Action</th>
-																					</tr>
-																				</thead>
-																			</table>
-																		</div>
-																	</div> <!-- end card-body-->
-																</div> <!-- end card-->
-															</div> <!-- end col -->
-														</div>
-														<!-- end row -->
-													</div> <!-- container -->
-													
-
+																<div class="table-responsive">
+																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="customer_notes_datatable">
+																		<thead>
+																			<tr>
+																				<th>#</th>
+																				<th>Note</th>
+																				<th>Crate</th>
+																				<th>Status</th>
+																				<th style="width: 85px;">Action</th>
+																			</tr>
+																		</thead>							
+																	</table>
+																</div>
+															</div> <!-- end card-body-->
+														</div> <!-- end card-->
+													</div> <!-- end col -->
 												</div>
 											</div>
 										</div>
+									
 									</div> <!-- end col-->
 								</div> <!-- end row-->
 
@@ -570,21 +610,33 @@
 		}, ]
 	});
 	//add contact 
-	$("#store-contact").submit(function(o) {
-		o.preventDefault();
-		var url = $(this).attr("action");
-		$.ajax({
-			url: url,
-			type: "POST",
-			data: $(this).serialize(),
-			dataType: "json",
-			success: function(response) {
-				$('.btn-close').trigger('click');
-				$("#store-contact").trigger("reset");
-				success_message('', response.message);
-				contact_table.ajax.reload(null, false);
-			}
-		});
+	$("#store-contact").validate({
+		rules: {
+			first_name: "bb required",
+			last_name: "required",
+			position_id: "required",
+			// company_name: "required",
+			email: "required",
+			phone: "required",
+			description: "required",
+			status: "required"
+		},
+		submitHandler: function(form,e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					$("#store-contact").trigger("reset");
+					success_message('', response.message);
+					contact_table.ajax.reload(null, false);
+				}
+			});
+		}
 	});
 	//edit contact
 	$(document).on('click', ".edit-btn", function() {
@@ -607,20 +659,109 @@
 		});
 	});
 	//update contact
-	$("#update-contact").submit(function(o) {
-		o.preventDefault();
-		var id = $('#edit-customer-contact-modal #contact_id').val();
-		debugger;
+	$("#update-contact").validate({
+		rules: {
+			first_name: "required",
+			last_name: "required",
+			position_id: "required",
+			// company_name: "required",
+			email: "required",
+			phone: "required",
+			description: "required",
+			status: "required"
+		},
+		submitHandler: function(form,e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			var id = $('#edit-customer-contact-modal #contact_id').val();
+			$.ajax({
+				url: url + '/' + id,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					success_message('', response.message);
+					contact_table.ajax.reload(null, false);
+				}
+			});
+		}
+	});
+	
+		//all Notes
+		var note_table = $('#customer_notes_datatable').DataTable({
+		responsive: true,
+		ajax: "<?php echo base_url('admin/Customermaster/all_note/'.$customer->id); ?>",
+		"columnDefs": [{
+			"targets": 3,
+			"createdCell": function(td, cellData, rowData, row, col) {
+				if (rowData[3] == '1') {
+					$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
+				} else if (rowData[3] == '0') {
+					$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
+				}
+			}
+		}, ]
+	});
+	//add Notes 
+	$("#store-notes").validate({
+		rules: {
+			name: "required",
+			
+			status: "required"
+		},
+		submitHandler: function(form,e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					$("#store-notes").trigger("reset");
+					success_message('', response.message);
+					note_table.ajax.reload(null, false);
+				}
+			});
+		}
+	});
+	//edit Notes
+	$(document).on('click', ".edit-btn", function() {
+		var id = $(this).attr('data-id');
 		$.ajax({
-			url: '<?php echo base_url() ?>admin/Customermaster/update_contact/' + id,
+			url: '<?php echo base_url() ?>admin/Customermaster/edit_note/' + id,
 			type: "POST",
-			data: $(this).serialize(),
 			dataType: "json",
-			success: function(response) {
-				$('.btn-close').trigger('click');
-				success_message('', response.message);
-				contact_table.ajax.reload(null, false);
+			success: function(data) {
+				$("#edit-customer-notes-modal #note_id").val(data.id);
+				$('#edit-customer-notes-modal #name').val(data.name);
+				$("#edit-customer-notes-modal #contact_status").val(data.status);
 			}
 		});
+	});
+	//update Notes
+	$("#update-note").validate({
+		rules: {
+			name: "required",
+			status: "required"
+		},
+		submitHandler: function(form,e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			var id = $('#edit-customer-notes-modal #note_id').val();
+			$.ajax({
+				url: url + '/' + id,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					success_message('', response.message);
+					contact_table.ajax.reload(null, false);
+				}
+			});
+		}
 	});
 </script>

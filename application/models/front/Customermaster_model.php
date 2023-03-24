@@ -23,6 +23,11 @@ class Customermaster_model extends CI_model{
 		 $this->db->insert('tbl_customer_contact_master',$formArray);
 		 return true;
 	}
+	function save_note_records($formArray)
+	{
+		 $this->db->insert('tbl_note_master',$formArray);
+		 return true;
+	}
 	function delete($id)
 	{
 		$this->db->where('id',$id);
@@ -36,12 +41,26 @@ class Customermaster_model extends CI_model{
 		$this->db->delete('tbl_customer_contact_master');
 		return true;
 	}
+	function delete_note_records($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('tbl_note_master');
+		return true;
+	}
 	function getCustomer($id){
 		$data = $this->db->get_where('tb_customer_master',['id'=>$id])->row();
 		return $data;
 	}
 	function getCustomerContact($id){
 		$data = $this->db->get_where('tbl_customer_contact_master',['customer_id'=>$id])->result_array();
+		return $data;
+	}
+	function getCustomerNote($id){
+		$data = $this->db->get_where('tbl_note_master',['customer_id'=>$id])->result_array();
+		return $data;
+	}
+	function getNote($id){
+		$data = $this->db->get_where('tbl_note_master',['id'=>$id])->row();
 		return $data;
 	}
 	function getContact($id){
@@ -75,6 +94,12 @@ class Customermaster_model extends CI_model{
 	{
 		$this->db->where('id',$id);
 		$this->db->update('tbl_customer_contact_master',$formArray);
+		return true;
+	}
+	function update_note_records($id,$formArray)
+	{
+		$this->db->where('id',$id);
+		$this->db->update('tbl_note_master',$formArray);
 		return true;
 	}
 }

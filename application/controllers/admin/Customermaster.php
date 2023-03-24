@@ -68,6 +68,25 @@ class Customermaster extends CI_Controller
 		}
 		echo json_encode($result);
 	}
+	public function all_note($id)
+	{
+		$notes = $this->customermaster->getCustomerNote($id);
+		$result = array('data'=>[]);
+		$i=1;
+		foreach ($notes as $value) { 
+
+			$button = '<a href="'.base_url('admin/customermaster/edit_note/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-notes-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/customermaster/delete_note/' .$value['id'].'/'.$id).'#customer-notes" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$result['data'][] = array(
+				$i++,			
+				$value['name'],
+				date('d M Y h:i:s a',strtotime($value['created_date'])),
+				$value['status'],
+				$button
+			);
+		}
+		echo json_encode($result);
+	}
 
 	public function add()
 	{
@@ -78,7 +97,7 @@ class Customermaster extends CI_Controller
 		$data['page_name'] = 'customer_master_add';
 		$this->load->view('admin/index', $data);
 	}
-
+//Customer master
 	public function store()
 	{		
 		$this->form_validation->set_rules('source_id', 'Source','required');
@@ -117,7 +136,7 @@ class Customermaster extends CI_Controller
 		}
 		
 	}
-
+	//Contact master
 	public function store_contact()
 	{	
 		$formArray = array();			
@@ -216,7 +235,53 @@ class Customermaster extends CI_Controller
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}
 	}
+	//Note master
+	public function store_note()
+	{	
+		$formArray = array();			
+		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['name'] = $this->input->post('name');
+		$formArray['status'] = $this->input->post('status');
+	
+		$response = $this->customermaster->save_note_records($formArray);
 
+		if ($response == true) {
+			echo json_encode(array('success'=>true,'message'=>'Customer Note Added Successfully.'));
+		} else {
+			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
+		}	
+	}
+	public function edit_note($id)
+	{	
+		$data = $this->customermaster->getNote($id);
+		echo json_encode($data);
+	}
+	public function update_note($id)
+	{	
+		$formArray = array();			
+		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['name'] = $this->input->post('name');
+		$formArray['status'] = $this->input->post('status');
+
+		$response = $this->customermaster->update_note_records($id,$formArray);
+		if ($response == true) {
+			echo json_encode(array('success'=>true,'message'=>'Customer Note Updated Successfully.'));
+		} else {
+			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
+		}
+	}
+	public function delete_note($id,$customer_id)
+	{
+		$response = $this->customermaster->delete_note_records($id);
+
+		if($response == true)
+		{
+			$this->session->set_flashdata('success', 'Customer Note Deleted Successfully.');
+		}else{
+			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
+		}
+		return redirect('admin/Customermaster/edit/'.$customer_id.'#customer-notes');
+	}
 	public function delete($id)
 	{
 		$response = $this->customermaster->delete($id);

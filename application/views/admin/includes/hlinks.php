@@ -64,10 +64,10 @@
 		});
 	}
 	<?php if ($this->session->flashdata('success') != '') { ?>
-		success_message('',<?= $this->session->flashdata('success') ?>);
+		success_message('','<?= $this->session->flashdata('success') ?>');
 	<?php } ?>
 	<?php if ($this->session->flashdata('error') != '') { ?>
-		error_message('',<?= $this->session->flashdata('error') ?>);
+		error_message('','<?= $this->session->flashdata('error') ?>');
 	<?php } ?>
 </script>
 
