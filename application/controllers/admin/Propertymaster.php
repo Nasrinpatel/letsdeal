@@ -160,25 +160,7 @@ class Propertymaster extends CI_Controller
 																$html .= '<div class="row"><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Latitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Longitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div></div>';
 															}
 															elseif($que['question_answer_inputtype'] == 'Image Gallery') {
-																$html .= '<div class="card-body">
-																	<h4 class="header-title">Image Gallery Upload</h4>
-										
-																	<form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-																		data-upload-preview-template="#uploadPreviewTemplate">
-																		<div class="fallback">
-																			<input name="answer_'.$phase['id'].'_'.$que['id'].'" type="file" multiple />
-																		</div>
-							
-																		<div class="dz-message needsclick">
-																			<i class="h1 text-muted dripicons-cloud-upload"></i>
-																			<h3>Drop files here or click to upload.</h3>
-																		</div>
-																	</form>
-							
-																	<!-- Preview -->
-																	<div class="dropzone-previews mt-3" id="file-previews"></div>  
-							
-																</div> <!-- end card-body-->';
+																$html .= '<input class="image_gallery" name="answer_'.$phase['id'].'_'.$que['id'].'[]" type="file" multiple>';
 															}
 															
 															
@@ -229,7 +211,6 @@ class Propertymaster extends CI_Controller
 	}
 	public function store()
 	{
-
 		$this->form_validation->set_rules('pro_master_id', 'Property Master', 'required');
 		$this->form_validation->set_rules('pro_category_id', 'Property Category', 'required');
 		$this->form_validation->set_rules('pro_subcategory_id', 'Property Sub Category', 'required');
@@ -238,7 +219,7 @@ class Propertymaster extends CI_Controller
 			$this->add();
 		} else {
 			$formArray = $_POST;
-
+			
 			$response = $this->promast->saverecords($formArray);
 
 			if ($response == true) {

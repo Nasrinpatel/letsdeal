@@ -24,7 +24,7 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-body">
-							<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/propertymaster/store'; ?>">
+							<form method="post" id="store-promas" enctype="multipart/form-data" action="<?php echo base_url() . 'admin/propertymaster/store'; ?>">
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="mb-3">
@@ -104,7 +104,7 @@
 										</div>
 									</div>
 								</div>
-							</from>
+							</form>
 							
 						</div> <!-- end card-body -->
 					</div> <!-- end card-->
@@ -115,7 +115,7 @@
 	</div> <!-- content -->
 </div>
 
-<script>
+<script>	
 	$(document).ready(function() {
 		$('#property_category').change(function() {
 			var categoryId = $(this).val();
@@ -166,8 +166,8 @@
 					debugger;
 					if(data.success == true){						
 						$('#form_genrator').html(data.html);
-						Dropzone.discover();
-						form_init();
+						form_init();						
+						$(".image_gallery").fileinput();
 					}
 				}
 			});
