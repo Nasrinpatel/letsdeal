@@ -350,6 +350,12 @@
 							</a>
 
 						</li>
+						<li>
+							<a class="nav-link" href="<?= base_url('admin/Agentmaster') ?>" id="topnav-dashboard">
+								<i class="fe-bookmark me-1"></i> Agent Master
+							</a>
+
+						</li>
 						<!-- <li>
 							
 							<a href="<?= base_url('admin/Customermaster') ?>" class="dropdown-item">

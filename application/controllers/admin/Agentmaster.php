@@ -1,34 +1,34 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Customermaster extends CI_Controller
+class Agentmaster extends CI_Controller
 {
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('front/Customermaster_model', 'customermaster');
+		$this->load->model('front/Agentmaster_model', 'agentmaster');
 		$this->form_validation->set_error_delimiters('<div class="bg-red-dark m-1 rounded-sm shadow-xl text-center line-height-xs font-10 py-1 text-uppercase mb-0 font-700">', '</div>');
 	}
 
 	public function index()
 	{
-		$data['page_name'] = 'customer_master_view';
+		$data['page_name'] = 'agent_master_view';
 		$this->load->view('admin/index', $data);
 	}
 
 	public function all()
 	{
-		$customer = $this->customermaster->all();
+		$agent = $this->agentmaster->all();
 		$result = array('data'=>[]);
 		$i=1;
-		foreach ($customer as $value) { 
+		foreach ($agent as $value) { 
 			$source_data = $this->db->get_where('tb_source_master',array('id'=>$value['source_id']))->row();
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
 			$staff_data = $this->db->get_where('tbl_staff_master',array('id'=>$value['assigned_id']))->row();
 
-			$button = '<a href="'.base_url('admin/customermaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/agentmaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/agentmaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['first_name'].' '.$value['last_name'],
@@ -47,14 +47,14 @@ class Customermaster extends CI_Controller
 
 	public function all_contact($id)
 	{
-		$contacts = $this->customermaster->getCustomerContact($id);
+		$contacts = $this->agentmaster->getAgentContact($id);
 		$result = array('data'=>[]);
 		$i=1;
 		foreach ($contacts as $value) { 
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
 
-			$button = '<a href="'.base_url('admin/customermaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-contact-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id'].'/'.$id).'#customer-contacts" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/agentmaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-agent-contact-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/agentmaster/delete_contact/' .$value['id'].'/'.$id).'#agent-contacts" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['first_name'].' '.$value['last_name'],				
@@ -70,13 +70,13 @@ class Customermaster extends CI_Controller
 	}
 	public function all_note($id)
 	{
-		$notes = $this->customermaster->getCustomerNote($id);
+		$notes = $this->agentmaster->getAgentNote($id);
 		$result = array('data'=>[]);
 		$i=1;
 		foreach ($notes as $value) { 
 
-			$button = '<a href="'.base_url('admin/customermaster/edit_note/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-notes-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete_note/' .$value['id'].'/'.$id).'#customer-notes" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/agentmaster/edit_note/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-agent-notes-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="'.base_url('admin/agentmaster/delete_note/' .$value['id'].'/'.$id).'#agent-notes" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
 				$i++,			
 				$value['name'],
@@ -90,18 +90,18 @@ class Customermaster extends CI_Controller
 
 	public function add()
 	{
-		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
-		$data['source'] = $this->customermaster->getSource();
-		$data['position'] = $this->customermaster->getPosition();
-		$data['staff'] = $this->customermaster->getStaff();
-		$data['page_name'] = 'customer_master_add';
+		$data['sourcemaster'] = $this->agentmaster->getSourceMaster();
+		$data['source'] = $this->agentmaster->getSource();
+		$data['position'] = $this->agentmaster->getPosition();
+		$data['staff'] = $this->agentmaster->getStaff();
+		$data['page_name'] = 'agent_master_add';
 		$this->load->view('admin/index', $data);
 	}
-//Customer master
+//Agent master
 	public function store()
 	{		
 		
-		$this->form_validation->set_rules('inquiry_type', 'Inquiry type','required');
+		
 		$this->form_validation->set_rules('source_id', 'Source','required');
 		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
 		$this->form_validation->set_rules('position_id', 'Position','required');
@@ -116,7 +116,7 @@ class Customermaster extends CI_Controller
 			$this->add();
 		} else {
 			$formArray = array();
-			$formArray['inquiry_type'] = $this->input->post('inquiry_type');
+			
 			$formArray['source_id'] = $this->input->post('source_id');
 			$formArray['assigned_id'] = $this->input->post('assigned_id');
 			$formArray['position_id'] = $this->input->post('position_id');
@@ -128,14 +128,14 @@ class Customermaster extends CI_Controller
 			$formArray['description'] = $this->input->post('description');
 			$formArray['status'] = $this->input->post('status');
 		
-			$response = $this->customermaster->saverecords($formArray);
+			$response = $this->agentmaster->saverecords($formArray);
 
 			if ($response == true) {
-				$this->session->set_flashdata('success', 'Customer Master Added Successfully.');
+				$this->session->set_flashdata('success', 'Agent Master Added Successfully.');
 			} else {
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
-			return redirect('admin/Customermaster/');
+			return redirect('admin/Agentmaster/');
 		}
 		
 	}
@@ -143,7 +143,7 @@ class Customermaster extends CI_Controller
 	public function store_contact()
 	{	
 		$formArray = array();			
-		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['agent_id'] = $this->input->post('agent_id');	
 		$formArray['first_name'] = $this->input->post('first_name');
 		$formArray['last_name'] = $this->input->post('last_name');
 		$formArray['position_id'] = $this->input->post('position_id');
@@ -153,10 +153,10 @@ class Customermaster extends CI_Controller
 		$formArray['description'] = $this->input->post('description');
 		$formArray['status'] = $this->input->post('status');
 	
-		$response = $this->customermaster->save_contact_records($formArray);
+		$response = $this->agentmaster->save_contact_records($formArray);
 
 		if ($response == true) {
-			echo json_encode(array('success'=>true,'message'=>'Customer Contact Added Successfully.'));
+			echo json_encode(array('success'=>true,'message'=>'Agent Contact Added Successfully.'));
 		} else {
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}	
@@ -164,24 +164,24 @@ class Customermaster extends CI_Controller
 
 	public function edit($id)
 	{
-		$data['customer'] = $this->customermaster->getCustomer($id);
-		// $data['contacts'] = $this->customermaster->getCustomerContact($id);
-		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
-		$data['source'] = $this->customermaster->getSource();
-		$data['position'] = $this->customermaster->getPosition();
-		$data['staff'] = $this->customermaster->getStaff();
-		$data['page_name'] = 'customer_master_edit';
+		$data['agent'] = $this->agentmaster->getAgent($id);
+		// $data['contacts'] = $this->agentmaster->getAgentContact($id);
+		$data['sourcemaster'] = $this->agentmaster->getSourceMaster();
+		$data['source'] = $this->agentmaster->getSource();
+		$data['position'] = $this->agentmaster->getPosition();
+		$data['staff'] = $this->agentmaster->getStaff();
+		$data['page_name'] = 'agent_master_edit';
 		$this->load->view('admin/index', $data);
 	}
 	
 	public function edit_contact($id)
 	{	
-		$data = $this->customermaster->getContact($id);
+		$data = $this->agentmaster->getContact($id);
 		echo json_encode($data);
 	}
 
 	public function update($id){
-		$this->form_validation->set_rules('inquiry_type', 'Inquiry type','required');
+	
 		$this->form_validation->set_rules('source_id', 'Source','required');
 		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
 		$this->form_validation->set_rules('position_id', 'Position','required');
@@ -197,7 +197,7 @@ class Customermaster extends CI_Controller
 			$this->edit($id);
 		}else{
 			$formArray = array();
-			$formArray['inquiry_type'] = $this->input->post('inquiry_type');
+		
 			$formArray['source_id'] = $this->input->post('source_id');
 			$formArray['assigned_id'] = $this->input->post('assigned_id');
 			$formArray['position_id'] = $this->input->post('position_id');
@@ -209,21 +209,21 @@ class Customermaster extends CI_Controller
 			$formArray['description'] = $this->input->post('description');
 			$formArray['status'] = $this->input->post('status');
 		
-			$response = $this->customermaster->updaterecords($id,$formArray);
+			$response = $this->agentmaster->updaterecords($id,$formArray);
 
 			if ($response == true) {
-				$this->session->set_flashdata('success', 'Customer Master Updated Successfully.');
+				$this->session->set_flashdata('success', 'Agent Master Updated Successfully.');
 			} else {
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
-			return redirect('admin/Customermaster/');
+			return redirect('admin/Agentmaster/');
 		}
 	}
 
 	public function update_contact($id)
 	{	
 		$formArray = array();			
-		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['agent_id'] = $this->input->post('agent_id');	
 		$formArray['first_name'] = $this->input->post('first_name');
 		$formArray['last_name'] = $this->input->post('last_name');
 		$formArray['position_id'] = $this->input->post('position_id');
@@ -233,9 +233,9 @@ class Customermaster extends CI_Controller
 		$formArray['description'] = $this->input->post('description');
 		$formArray['status'] = $this->input->post('status');
 
-		$response = $this->customermaster->update_contact_records($id,$formArray);
+		$response = $this->agentmaster->update_contact_records($id,$formArray);
 		if ($response == true) {
-			echo json_encode(array('success'=>true,'message'=>'Customer Contact Updated Successfully.'));
+			echo json_encode(array('success'=>true,'message'=>'Agent Contact Updated Successfully.'));
 		} else {
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}
@@ -244,73 +244,73 @@ class Customermaster extends CI_Controller
 	public function store_note()
 	{	
 		$formArray = array();			
-		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['agent_id'] = $this->input->post('agent_id');	
 		$formArray['name'] = $this->input->post('name');
 		$formArray['status'] = $this->input->post('status');
 	
-		$response = $this->customermaster->save_note_records($formArray);
+		$response = $this->agentmaster->save_note_records($formArray);
 
 		if ($response == true) {
-			echo json_encode(array('success'=>true,'message'=>'Customer Note Added Successfully.'));
+			echo json_encode(array('success'=>true,'message'=>'Agent Note Added Successfully.'));
 		} else {
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}	
 	}
 	public function edit_note($id)
 	{	
-		$data = $this->customermaster->getNote($id);
+		$data = $this->agentmaster->getNote($id);
 		echo json_encode($data);
 	}
 	public function update_note($id)
 	{	
 		$formArray = array();			
-		$formArray['customer_id'] = $this->input->post('customer_id');	
+		$formArray['agent_id'] = $this->input->post('agent_id');	
 		$formArray['name'] = $this->input->post('name');
 		$formArray['status'] = $this->input->post('status');
 
-		$response = $this->customermaster->update_note_records($id,$formArray);
+		$response = $this->agentmaster->update_note_records($id,$formArray);
 		if ($response == true) {
-			echo json_encode(array('success'=>true,'message'=>'Customer Note Updated Successfully.'));
+			echo json_encode(array('success'=>true,'message'=>'Agent Note Updated Successfully.'));
 		} else {
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}
 	}
-	public function delete_note($id,$customer_id)
+	public function delete_note($id,$agent_id)
 	{
-		$response = $this->customermaster->delete_note_records($id);
+		$response = $this->agentmaster->delete_note_records($id);
 
 		if($response == true)
 		{
-			$this->session->set_flashdata('success', 'Customer Note Deleted Successfully.');
+			$this->session->set_flashdata('success', 'Agent Note Deleted Successfully.');
 		}else{
 			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
 		}
-		return redirect('admin/Customermaster/edit/'.$customer_id.'#customer-notes');
+		return redirect('admin/Agentmaster/edit/'.$agent_id.'#agent-notes');
 	}
 	public function delete($id)
 	{
-		$response = $this->customermaster->delete($id);
+		$response = $this->agentmaster->delete($id);
 
 		if($response == true)
 		{
-			$this->session->set_flashdata('success', 'Customer Master Deleted Successfully.');
+			$this->session->set_flashdata('success', 'Agent Master Deleted Successfully.');
 		}else{
 			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
 		}
-		return redirect('admin/Customermaster/');
+		return redirect('admin/Agentmaster/');
 		
 
 	}
-	public function delete_contact($id,$customer_id)
+	public function delete_contact($id,$agent_id)
 	{
-		$response = $this->customermaster->delete_contact_records($id);
+		$response = $this->agentmaster->delete_contact_records($id);
 
 		if($response == true)
 		{
-			$this->session->set_flashdata('success', 'Customer Contact Deleted Successfully.');
+			$this->session->set_flashdata('success', 'Agent Contact Deleted Successfully.');
 		}else{
 			$this->sesssion->set_flashdata('error','Something went wrong. Please try again');
 		}
-		return redirect('admin/Customermaster/edit/'.$customer_id.'#customer-contacts');
+		return redirect('admin/Agentmaster/edit/'.$agent_id.'#agent-contacts');
 	}
 }

@@ -1,5 +1,5 @@
 <!-- contact add -->
-<div class="modal fade" id="customer-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="agent-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header bg-light">
@@ -7,8 +7,8 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body p-4">
-				<form method="post" id="store-contact" action="<?php echo base_url() . 'admin/Customermaster/store_contact'; ?>">
-					<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+				<form method="post" id="store-contact" action="<?php echo base_url() . 'admin/Agentmaster/store_contact'; ?>">
+					<input type="hidden" name="agent_id" value="<?= $agent->id ?>">
 					<div class="row">
 						<div class="col-md-6">
 							<div class="mb-3">
@@ -89,7 +89,7 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
-<div class="modal fade" id="edit-customer-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="edit-agent-contact-modal" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header bg-light">
@@ -97,8 +97,8 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body p-4">
-				<form method="post" id="update-contact" action="<?php echo base_url() . 'admin/Customermaster/update_contact'; ?>">
-					<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+				<form method="post" id="update-contact" action="<?php echo base_url() . 'admin/Agentmaster/update_contact'; ?>">
+					<input type="hidden" name="agent_id" value="<?= $agent->id ?>">
 					<input type="hidden" name="contact_id" id="contact_id">
 					<div class="row">
 						<div class="col-md-6">
@@ -182,7 +182,7 @@
 </div>
 <!-- notes add -->
 <div class="content-page">
-	<div class="modal fade" id="customer-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="agent-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
@@ -190,8 +190,8 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" id="store-notes" action="<?php echo base_url() . 'admin/Customermaster/store_note'; ?>">
-						<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+					<form method="post" id="store-notes" action="<?php echo base_url() . 'admin/Agentmaster/store_note'; ?>">
+						<input type="hidden" name="agent_id" value="<?= $agent->id ?>">
 
 						<div class="row">
 							<div class="col-12">
@@ -222,7 +222,7 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div>
-	<div class="modal fade" id="edit-customer-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="edit-agent-notes-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
@@ -230,8 +230,8 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" id="update-note" action="<?php echo base_url() . 'admin/Customermaster/update_note'; ?>">
-						<input type="hidden" name="customer_id" value="<?= $customer->id ?>">
+					<form method="post" id="update-note" action="<?php echo base_url() . 'admin/Agentmaster/update_note'; ?>">
+						<input type="hidden" name="agent_id" value="<?= $agent->id ?>">
 						<input type="hidden" name="note_id" id="note_id">
 						<div class="row">
 							<div class="col-12">
@@ -272,10 +272,10 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
-								<a type="button" href="<?= base_url('admin/Customermaster') ?>" class="btn btn-success" style="float:right;">Back</a>
+								<a type="button" href="<?= base_url('admin/Agentmaster') ?>" class="btn btn-success" style="float:right;">Back</a>
 							</ol>
 						</div>
-						<h4 class="page-title">Customer Master</h4>
+						<h4 class="page-title">Agent Master</h4>
 					</div>
 				</div>
 			</div>
@@ -289,14 +289,14 @@
 							<div class="row">
 								<div class="col-lg-4">
 									<div class="nav nav-pills flex-column navtab-bg nav-pills-tab text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-										<a class="nav-link py-2" id="customer-tab" data-bs-toggle="pill" href="#customer" role="tab" aria-controls="customer" aria-selected="false">
+										<a class="nav-link py-2" id="agent-tab" data-bs-toggle="pill" href="#agent" role="tab" aria-controls="agent" aria-selected="false">
 											<i class="mdi mdi-account-circle d-block font-24"></i>
-											Customer Master
+											Agent Master
 										</a>
-										<a class="nav-link mt-2 py-2" id="customer-contacts-tab" data-bs-toggle="pill" href="#customer-contacts" role="tab" aria-controls="customer-contacts" aria-selected="false">
+										<a class="nav-link mt-2 py-2" id="agent-contacts-tab" data-bs-toggle="pill" href="#agent-contacts" role="tab" aria-controls="agent-contacts" aria-selected="false">
 											<i class="mdi mdi-contacts d-block font-24"></i>
 											Contact</a>
-										<a class="nav-link mt-2 py-2" id="customer-notes-tab" data-bs-toggle="pill" href="#customer-notes" role="tab" aria-controls="customer-notes" aria-selected="false">
+										<a class="nav-link mt-2 py-2" id="agent-notes-tab" data-bs-toggle="pill" href="#agent-notes" role="tab" aria-controls="agent-notes" aria-selected="false">
 											<i class="mdi mdi-note d-block font-24"></i>
 											Note</a>
 									</div>
@@ -305,53 +305,23 @@
 								</div> <!-- end col-->
 								<div class="col-lg-8">
 									<div class="tab-content p-3">
-										<div class="tab-pane fade" id="customer" role="tabpanel" aria-labelledby="customer-tab">
+										<div class="tab-pane fade" id="agent" role="tabpanel" aria-labelledby="agent-tab">
 											<div>
-												<h4 class="header-title">Customer Information</h4><br>
+												<h4 class="header-title">Agent Information</h4><br>
 
 												<!-- <p class="sub-header">Fill the form below in order to
                                                                 send you the order's invoice.</p> -->
-												<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/update/' . $customer->id; ?>">
+												<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Agentmaster/update/' . $agent->id; ?>">
 
-													<div class="row">
-														<div class="col-md-5">
-															<div class="mb-3">
-																
-																<input class="form-check-input" type="radio" id="direct" name="inquiry_type"  <?= $customer->inquiry_type=='direct' ? 'checked' : ''; ?> value="direct">
-																<label class="form-check-label" for="direct">Direct</label>
-															</div>
-
-														</div>
-														<div class="col-md-5">
-														<div class="mb-3">
-																<input class="form-check-input" type="radio" id="agent" name="inquiry_type"  <?= $customer->inquiry_type=='agent' ? 'checked' : ''; ?> value="agent">
-																<label class="form-check-label" for="agent">Via Agent</label>
-															</div>
-															
-														</div>
-													</div>
-													<div id='agent_div' style='display:none'>
-														<div class="col-md-5">
-															<div class="mb-3">
-																<label class="form-label">Agents<span class="text-danger">*</span></label>
-																<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
-																	<option value=''>Select Agents</option>
-																	<option value="Mohit soni">Mohit soni</option>
-																	<option value="Nihar soni">Nihar soni</option>
-																	<option value="Nasrin Patel">Nasrin Patel</option>
-																</select>
-
-
-															</div>
-														</div>
-													</div>
+													
+													
 														<div class="row">
 															<div class="col-md-4">
 																<label class="form-label">Source<span class="text-danger">*</span></label>
 																<select data-toggle="select2" class="form-control select2" name="source_id" data-width="100%">
 																	<option value=''>Select Source</option>
 																	<?php foreach ($source as $sou) { ?>
-																		<option value="<?= $sou['id'] ?>" <?= ($sou['id'] == $customer->source_id) ? 'selected' : '' ?>><?= $sou['name'] ?></option>
+																		<option value="<?= $sou['id'] ?>" <?= ($sou['id'] == $agent->source_id) ? 'selected' : '' ?>><?= $sou['name'] ?></option>
 																	<?php } ?>
 																</select>
 																<span style="color: red;"><?= form_error('source_id') ?></span>
@@ -363,7 +333,7 @@
 																	<select data-toggle="select2" title="Assigned" class="form-control select2" name="assigned_id" data-width="100%">
 																		<option value=''>Select Assigned</option>
 																		<?php foreach ($staff as $sta) { ?>
-																			<option value="<?= $sta['id'] ?>" <?= ($sta['id'] == $customer->assigned_id) ? 'selected' : '' ?>><?= $sta['first_name'] ?> <?= $sta['last_name'] ?></option>
+																			<option value="<?= $sta['id'] ?>" <?= ($sta['id'] == $agent->assigned_id) ? 'selected' : '' ?>><?= $sta['first_name'] ?> <?= $sta['last_name'] ?></option>
 																		<?php }
 																		?>
 																	</select>
@@ -387,7 +357,7 @@
 																	<select data-toggle="select2" title="Position" class="form-control select2" name="position_id" data-width="100%">
 																		<option value=''>Select Position</option>
 																		<?php foreach ($position as $pos) { ?>
-																			<option value="<?= $pos['id'] ?>" <?= ($pos['id'] == $customer->position_id) ? 'selected' : '' ?>><?= $pos['name'] ?></option>
+																			<option value="<?= $pos['id'] ?>" <?= ($pos['id'] == $agent->position_id) ? 'selected' : '' ?>><?= $pos['name'] ?></option>
 																		<?php }
 																		?>
 																	</select>
@@ -400,7 +370,7 @@
 															<div class="col-md-6">
 																<div class="mb-3">
 																	<label for="billing-first-name" class="form-label">First Name<span class="text-danger">*</span></label>
-																	<input class="form-control" type="text" placeholder="Enter your first name" name="first_name" id="billing-first-name" value="<?= $customer->first_name ?>" />
+																	<input class="form-control" type="text" placeholder="Enter your first name" name="first_name" id="billing-first-name" value="<?= $agent->first_name ?>" />
 																</div>
 																<span style="color: red;"><?= form_error('first_name') ?></span>
 
@@ -408,7 +378,7 @@
 															<div class="col-md-6">
 																<div class="mb-3">
 																	<label for="billing-last-name" class="form-label">Last Name<span class="text-danger">*</span></label>
-																	<input class="form-control" type="text" placeholder="Enter your last name" name="last_name" id="billing-last-name" value="<?= $customer->last_name ?>" />
+																	<input class="form-control" type="text" placeholder="Enter your last name" name="last_name" id="billing-last-name" value="<?= $agent->last_name ?>" />
 																</div>
 																<span style="color: red;"><?= form_error('last_name') ?></span>
 
@@ -419,7 +389,7 @@
 															<div class="col-md-6">
 																<div class="mb-3">
 																	<label for="billing-phone" class="form-label">Phone <span class="text-danger">*</span></label>
-																	<input class="form-control" type="text" name="phone" placeholder="(xx) xxx xxxx xxx" id="billing-phone" value="<?= $customer->phone ?>" />
+																	<input class="form-control" type="text" name="phone" placeholder="(xx) xxx xxxx xxx" id="billing-phone" value="<?= $agent->phone ?>" />
 																</div>
 																<span style="color: red;"><?= form_error('phone') ?></span>
 
@@ -427,7 +397,7 @@
 															<div class="col-md-6">
 																<div class="mb-3">
 																	<label for="billing-email-address" class="form-label">Email Address <span class="text-danger">*</span></label>
-																	<input class="form-control" type="email" name="email" placeholder="Enter your email" id="billing-email-address" value="<?= $customer->email ?>" />
+																	<input class="form-control" type="email" name="email" placeholder="Enter your email" id="billing-email-address" value="<?= $agent->email ?>" />
 																</div>
 																<span style="color: red;"><?= form_error('email') ?></span>
 
@@ -437,7 +407,7 @@
 															<div class="col-12">
 																<div class="mb-3">
 																	<label for="company" class="form-label">Company Name</label>
-																	<input type="text" maxlength="14" class="form-control" name="company_name" id="company" placeholder="Enter Company Name" value="<?= $customer->company_name ?>">
+																	<input type="text" maxlength="14" class="form-control" name="company_name" id="company" placeholder="Enter Company Name" value="<?= $agent->company_name ?>">
 																</div>
 																<!-- <span style="color: red;"><?= form_error('company_name') ?></span> -->
 
@@ -449,7 +419,7 @@
 															<div class="col-12">
 																<div class="mb-3">
 																	<label for="description" class="form-label">Description<span class="text-danger">*</span></label>
-																	<textarea class="form-control" name="description" id="description"><?= $customer->description ?></textarea>
+																	<textarea class="form-control" name="description" id="description"><?= $agent->description ?></textarea>
 																</div>
 																<span style="color: red;"><?= form_error('description') ?></span>
 
@@ -459,8 +429,8 @@
 															<label for="city_status" class="form-label">Status</label>
 															<select class="form-select" name="status" id="city_status">
 																<option selected="">Select Status</option>
-																<option value="1" <?= ($customer->status == 1) ? 'selected' : '' ?>>Active</option>
-																<option value="0" <?= ($customer->status == 0) ? 'selected' : '' ?>>Inactive</option>
+																<option value="1" <?= ($agent->status == 1) ? 'selected' : '' ?>>Active</option>
+																<option value="0" <?= ($agent->status == 0) ? 'selected' : '' ?>>Inactive</option>
 															</select>
 															<span style="color: red;"><?= form_error('status') ?></span>
 
@@ -475,7 +445,7 @@
 												</form>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="customer-contacts" role="tabpanel" aria-labelledby="customer-contacts-tab">
+										<div class="tab-pane fade" id="agent-contacts" role="tabpanel" aria-labelledby="agent-contacts-tab">
 											<div>
 												<div class="row justify-content-between mb-2">
 													<div class="col-auto">
@@ -483,7 +453,7 @@
 													</div>
 													<div class="col-sm-6">
 														<div class="text-sm-end">
-															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#customer-contact-modal">Add Contact</button>
+															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#agent-contact-modal">Add Contact</button>
 														</div>
 													</div>
 												</div>
@@ -512,7 +482,7 @@
 																</div>
 
 																<div class="table-responsive">
-																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="customer_contact_datatable">
+																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="agent_contact_datatable">
 																		<thead>
 																			<tr>
 																				<th>#</th>
@@ -533,7 +503,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="tab-pane fade" id="customer-notes" role="tabpanel" aria-labelledby="customer-notes-tab">
+										<div class="tab-pane fade" id="agent-notes" role="tabpanel" aria-labelledby="agent-notes-tab">
 											<div>
 												<div class="row justify-content-between mb-2">
 													<div class="col-auto">
@@ -541,7 +511,7 @@
 													</div>
 													<div class="col-sm-6">
 														<div class="text-sm-end">
-															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#customer-notes-modal">Add Note</button>
+															<button type="button" class="btn btn-danger waves-effect waves-light mb-2" data-bs-toggle="modal" data-bs-target="#agent-notes-modal">Add Note</button>
 														</div>
 													</div>
 												</div>
@@ -570,7 +540,7 @@
 																</div>
 
 																<div class="table-responsive">
-																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="customer_notes_datatable">
+																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="agent_notes_datatable">
 																		<thead>
 																			<tr>
 																				<th>#</th>
@@ -601,75 +571,12 @@
 			</div> <!-- container -->
 		</div> <!-- content -->
 	</div>
-<script>
-	$(document).ready(function() {
-		$('.js-example-basic-single').select2({
-			theme: "bootstrap"
-		});
-	});
-	$(function(){
-		var hash = window.location.hash;
-		hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-		
-		var triggerTabList = [].slice.call(document.querySelectorAll('#v-pills-tab a'))
-			triggerTabList.forEach(function (triggerEl) {
-			var tabTrigger = new bootstrap.Tab(triggerEl)
-
-			triggerEl.addEventListener('click', function (event) {
-				event.preventDefault()
-				tabTrigger.show()
-			})
-		});
-		var triggerFirstTabEl = document.querySelector('#v-pills-tab a:first-child')
-		bootstrap.Tab.getInstance(triggerFirstTabEl).show() // Select first tab
-
-		var triggerEl = document.querySelector('#v-pills-tab a[href="'+hash+'"]')
-		bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
-	});
-	//all contact
-	var contact_table = $('#customer_contact_datatable').DataTable({
-		responsive: true,
-		ajax: "<?php echo base_url('admin/Customermaster/all_contact/'.$customer->id); ?>",
-		"columnDefs": [{
-			"targets": 6,
-			"createdCell": function(td, cellData, rowData, row, col) {
-				if (rowData[6] == '1') {
-					$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-				} else if (rowData[6] == '0') {
-					$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
-				}
-			}
-		}, ]
-	});
-	//add contact 
-	$("#store-contact").validate({
-		rules: {
-			first_name: "required",
-			last_name: "required",
-			position_id: "required",
-			// company_name: "required",
-			email: "required",
-			phone: "required",
-			description: "required",
-			status: "required"
-		},
-		submitHandler: function(form,e) {
-			e.preventDefault();
-			var url = $(form).attr("action");
-			$.ajax({
-				url: url,
-				type: "POST",
-				data: $(form).serialize(),
-				dataType: "json",
-				success: function(response) {
-					$('.btn-close').trigger('click');
-					$("#store-contact").trigger("reset");
-					success_message('', response.message);
-					contact_table.ajax.reload(null, false);
-				}
+	<script>
+		$(document).ready(function() {
+			$('.js-example-basic-single').select2({
+				theme: "bootstrap"
 			});
-		}
-	});
+		});
 		$(function() {
 			var hash = window.location.hash;
 			hash && $('ul.nav a[href="' + hash + '"]').tab('show');
@@ -690,9 +597,9 @@
 			bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
 		});
 		//all contact
-		var contact_table = $('#customer_contact_datatable').DataTable({
+		var contact_table = $('#agent_contact_datatable').DataTable({
 			responsive: true,
-			ajax: "<?php echo base_url('admin/Customermaster/all_contact/' . $customer->id); ?>",
+			ajax: "<?php echo base_url('admin/Agentmaster/all_contact/' . $agent->id); ?>",
 			"columnDefs": [{
 				"targets": 6,
 				"createdCell": function(td, cellData, rowData, row, col) {
@@ -707,7 +614,7 @@
 		//add contact 
 		$("#store-contact").validate({
 			rules: {
-				first_name: "bb required",
+				first_name: "required",
 				last_name: "required",
 				position_id: "required",
 				// company_name: "required",
@@ -737,19 +644,19 @@
 		$(document).on('click', ".edit-btn", function() {
 			var id = $(this).attr('data-id');
 			$.ajax({
-				url: '<?php echo base_url() ?>admin/Customermaster/edit_contact/' + id,
+				url: '<?php echo base_url() ?>admin/Agentmaster/edit_contact/' + id,
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
-					$("#edit-customer-contact-modal #contact_id").val(data.id);
-					$('#edit-customer-contact-modal #first_name').val(data.first_name);
-					$('#edit-customer-contact-modal #last_name').val(data.last_name);
-					$('#edit-customer-contact-modal #position_id').val(data.position_id).trigger('change');
-					$('#edit-customer-contact-modal #company_name').val(data.company_name);
-					$('#edit-customer-contact-modal #email').val(data.email);
-					$('#edit-customer-contact-modal #phone').val(data.phone);
-					$('#edit-customer-contact-modal #description').val(data.description);
-					$("#edit-customer-contact-modal #contact_status").val(data.status);
+					$("#edit-agent-contact-modal #contact_id").val(data.id);
+					$('#edit-agent-contact-modal #first_name').val(data.first_name);
+					$('#edit-agent-contact-modal #last_name').val(data.last_name);
+					$('#edit-agent-contact-modal #position_id').val(data.position_id).trigger('change');
+					$('#edit-agent-contact-modal #company_name').val(data.company_name);
+					$('#edit-agent-contact-modal #email').val(data.email);
+					$('#edit-agent-contact-modal #phone').val(data.phone);
+					$('#edit-agent-contact-modal #description').val(data.description);
+					$("#edit-agent-contact-modal #contact_status").val(data.status);
 				}
 			});
 		});
@@ -768,7 +675,7 @@
 			submitHandler: function(form, e) {
 				e.preventDefault();
 				var url = $(form).attr("action");
-				var id = $('#edit-customer-contact-modal #contact_id').val();
+				var id = $('#edit-agent-contact-modal #contact_id').val();
 				$.ajax({
 					url: url + '/' + id,
 					type: "POST",
@@ -784,9 +691,9 @@
 		});
 
 		//all Notes
-		var note_table = $('#customer_notes_datatable').DataTable({
+		var note_table = $('#agent_notes_datatable').DataTable({
 			responsive: true,
-			ajax: "<?php echo base_url('admin/Customermaster/all_note/' . $customer->id); ?>",
+			ajax: "<?php echo base_url('admin/Agentmaster/all_note/' . $agent->id); ?>",
 			"columnDefs": [{
 				"targets": 3,
 				"createdCell": function(td, cellData, rowData, row, col) {
@@ -826,13 +733,13 @@
 		$(document).on('click', ".edit-btn", function() {
 			var id = $(this).attr('data-id');
 			$.ajax({
-				url: '<?php echo base_url() ?>admin/Customermaster/edit_note/' + id,
+				url: '<?php echo base_url() ?>admin/Agentmaster/edit_note/' + id,
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
-					$("#edit-customer-notes-modal #note_id").val(data.id);
-					$('#edit-customer-notes-modal #name').val(data.name);
-					$("#edit-customer-notes-modal #contact_status").val(data.status);
+					$("#edit-agent-notes-modal #note_id").val(data.id);
+					$('#edit-agent-notes-modal #name').val(data.name);
+					$("#edit-agent-notes-modal #contact_status").val(data.status);
 				}
 			});
 		});
@@ -845,7 +752,7 @@
 			submitHandler: function(form, e) {
 				e.preventDefault();
 				var url = $(form).attr("action");
-				var id = $('#edit-customer-notes-modal #note_id').val();
+				var id = $('#edit-agent-notes-modal #note_id').val();
 				$.ajax({
 					url: url + '/' + id,
 					type: "POST",
@@ -860,16 +767,16 @@
 			}
 		});
 	
-		$('input[name=inquiry_type]').click(function() {
+		// $('input[name=inquiry_type]').click(function() {
 
-		if (this.id == "agent") {
-			$("#agent_div").show('slow');
+		// if (this.id == "agent") {
+		// 	$("#agent_div").show('slow');
 			
-		} else {
-			$("#agent_div").hide('slow');
+		// } else {
+		// 	$("#agent_div").hide('slow');
 			
-		}
-		});
+		// }
+		// });
 
 		
 	</script>

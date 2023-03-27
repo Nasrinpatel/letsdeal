@@ -141,8 +141,47 @@ class Propertymaster extends CI_Controller
 																$html .= '<input type="file" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';
 															}elseif($que['question_answer_inputtype']=='Number'){	
 																$html .= '<input type="number" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                       
+															}elseif($que['question_answer_inputtype']=='Phone'){	
+																$html .= '<input type="tel" class="form-control" placeholder="Enter Phone number" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
 															}  
-
+															elseif($que['question_answer_inputtype']=='Email'){	
+																$html .= '<input type="email" class="form-control" id="userName1" placeholder="Enter Email Address"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
+															} 
+															elseif($que['question_answer_inputtype']=='Link'){	
+																$html .= '<input type="url" class="form-control" id="userName1" placeholder="Enter Link"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
+															} 
+															elseif($que['question_answer_inputtype'] == 'Image') {
+																$html .= '<input type="file" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="image/*" required>';
+															}
+															elseif($que['question_answer_inputtype'] == 'Video 360') {
+																$html .= '<input type="url" class="form-control" placeholder="Enter Vieo 360 Link" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="video/*" required>';
+															}
+															elseif($que['question_answer_inputtype'] == 'Google Map') {
+																$html .= '<div class="row"><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Latitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Longitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div></div>';
+															}
+															elseif($que['question_answer_inputtype'] == 'Image Gallery') {
+																$html .= '<div class="card-body">
+																	<h4 class="header-title">Image Gallery Upload</h4>
+										
+																	<form action="/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
+																		data-upload-preview-template="#uploadPreviewTemplate">
+																		<div class="fallback">
+																			<input name="answer_'.$phase['id'].'_'.$que['id'].'" type="file" multiple />
+																		</div>
+							
+																		<div class="dz-message needsclick">
+																			<i class="h1 text-muted dripicons-cloud-upload"></i>
+																			<h3>Drop files here or click to upload.</h3>
+																		</div>
+																	</form>
+							
+																	<!-- Preview -->
+																	<div class="dropzone-previews mt-3" id="file-previews"></div>  
+							
+																</div> <!-- end card-body-->';
+															}
+															
+															
 													$html .='</div>
 													</div>';
 												}

@@ -166,6 +166,7 @@
 					debugger;
 					if(data.success == true){						
 						$('#form_genrator').html(data.html);
+						Dropzone.discover();
 						form_init();
 					}
 				}

@@ -24,7 +24,7 @@
 <link href="<?= base_url('assets/') ?>css/select2-bootstrap-5-theme.min.css" rel="stylesheet" type="text/css" />
 
 <link href="<?= base_url('assets/') ?>css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
-
+<link href="<?= base_url('assets/') ?>css/dropzone.min.css" rel="stylesheet" type="text/css" />
 <!-- <link href="<?php echo base_url(); ?>assets/css/select2/select2-bootstrap.min.css" rel="stylesheet"> -->
 <style>
 	label.error{

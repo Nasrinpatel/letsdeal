@@ -15,9 +15,10 @@
 								<textarea type="text" class="form-control" name="question" id="question" placeholder="Enter question"></textarea>
 								<!-- <?= form_error('name')  ?> -->
 							</div>
+
 							<div class="mb-3">
-								<label for="question_answer" class="form-label">Q&A Input type</label>
-								<select class="form-select js-example-disabled-results" name="question_answer_inputtype" id="question_answer">
+								<label for="question_answer_inputtype" class="form-label">Q&A Input type</label>
+								<select data-toggle="select2" class="form-control select2" name="question_answer_inputtype" id="question_answer_inputtype" data-width="100%">
 									<option selected="">Select Q&A Input type</option>
 									<option value="Textbox">Textbox</option>
 									<option value="Dropdown">Dropdown</option>
@@ -27,9 +28,35 @@
 									<option value="Textarea">Textarea</option>
 									<option value="File">File</option>
 									<option value="Number">Number</option>
+									<option value="Link">Link</option>
+									<option value="Email">Email</option>
+									<option value="Phone">Phone</option>
+									<option value="Image">Image</option>
+									<option value="Video 360">Video 360</option>
+									<option value="Image Gallery">Image Gallery</option>
+									<option value="Video Gallery">Video Gallery</option>
+									<option value="Google Map">Google map</option>
 								</select>
+								<span style="color: red;"><?= form_error('source_id') ?></span>
 							</div>
-
+							<!-- <div class="mb-3">
+								<label for="question_answer" class="form-label">Q&A Input type</label>
+								<select data-toggle="select2" class="form-select select2" name="question_answer_inputtype" id="question_answer">
+									<option selected="">Select Q&A Input type</option>
+									<option value="Textbox">Textbox</option>
+									<option value="Dropdown">Dropdown</option>
+									<option value="Checkbox">Checkbox</option>
+									<option value="Radio">Radio</option>
+									<option value="Date">Date</option>
+									<option value="Textarea">Textarea</option>
+									<option value="File">File</option>
+									<option value="Number">Number</option>
+									<option value="Image">Image</option>
+									<option value="Video">Video</option>
+									<option value="Image">Image</option>
+									<option value="Link">Link</option>
+								</select>
+							</div> -->
 							<div class="mb-3">
 								<label for="source_type" class="form-label">Source Type</label>
 								<select class="form-select" name="source_id" id="source_type">
@@ -81,8 +108,8 @@
 							</div>
 
 							<div class="mb-3">
-								<label for="question_answer" class="form-label">Q&A Input type</label>
-								<select class="form-select" name="question_answer_inputtype" id="question_answer">
+								<label for="edit_question_answer_inputtype" class="form-label">Q&A Input type</label>
+								<select class="form-select select2" name="question_answer_inputtype" id="edit_question_answer_inputtype">
 									<option>Select Q&A Input type</option>
 									<option value="Textbox">Textbox</option>
 									<option value="Dropdown">Dropdown</option>
@@ -92,13 +119,21 @@
 									<option value="Textarea">Textarea</option>
 									<option value="File">File</option>
 									<option value="Number">Number</option>
+									<option value="Link">Link</option>
+									<option value="Email">Email</option>
+									<option value="Phone">Phone</option>
+									<option value="Image">Image</option>
+									<option value="Video 360">Video 360</option>
+									<option value="Image Gallery">Image Gallery</option>
+									<option value="Video Gallery">Video Gallery</option>
+									<option value="Google Map">Google map</option>
 								</select>
 							</div>
 
 							<div class="mb-3">
 								<label for="source_type" class="form-label">Source Type</label>
 								<select class="form-select" name="source_id" id="source_type">
-								<option>Select Source</option>
+									<option>Select Source</option>
 									<?php
 									foreach ($sourcecategory as $soucat) { ?>
 										<option value="<?= $soucat['id'] ?>"><?= $soucat['name'] ?></option>
@@ -238,12 +273,12 @@
 					success: function(data) {
 						$("#questionedit-modal #edit_question_id").val(data.id);
 						$('#questionedit-modal #question').val(data.question);
-						$('#questionedit-modal #question_answer').val(data.question_answer_inputtype);
+						$('#questionedit-modal #edit_question_answer_inputtype').val(data.question_answer_inputtype);
 						$("#questionedit-modal #question_status").val(data.status);
 
 						// Show/hide the Source Type dropdown based on the selected Q&A Input Type
-						$('#questionedit-modal #question_answer').trigger('change');
-						
+						$('#questionedit-modal #edit_question_answer_inputtype').trigger('change');
+
 						$('#questionedit-modal #source_type').val(data.source_id);
 
 					}
@@ -282,7 +317,7 @@
 				// Hide the Source Type dropdown by default
 				$('#question-modal #source_type').parent().hide();
 				// Show/hide the Source Type dropdown based on the selected Q&A Input Type
-				$('#question-modal #question_answer').on('change', function() {
+				$('#question-modal #question_answer_inputtype').on('change', function() {
 					var selectedValue = $(this).val();
 					if (selectedValue === 'Dropdown' || selectedValue === 'Checkbox' || selectedValue === 'Radio') {
 						$('#question-modal #source_type').parent().show();
@@ -294,7 +329,7 @@
 				// Hide the Source Type dropdown by default
 				$('#questionedit-modal #source_type').parent().hide();
 				// Show/hide the Source Type dropdown based on the selected Q&A Input Type
-				$('#questionedit-modal #question_answer').on('change', function() {
+				$('#questionedit-modal #edit_question_answer_inputtype').on('change', function() {
 					var selectedValue = $(this).val();
 					if (selectedValue === 'Dropdown' || selectedValue === 'Checkbox' || selectedValue === 'Radio') {
 						$('#questionedit-modal #source_type').parent().show();

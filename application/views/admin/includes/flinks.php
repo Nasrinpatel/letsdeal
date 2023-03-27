@@ -18,10 +18,12 @@
 <!-- App js-->
 <script src="<?= base_url('assets/') ?>js/app.min.js"></script>
 
-<script src="<?= base_url('assets/') ?>js/select2.min.js"></script>
-
+<script src="<?= base_url('assets/') ?>js/select2.min.js"></script> 
 
 <script src="<?= base_url('assets/') ?>js/select2.full.min.js"></script>
+
+<script src="<?= base_url('assets/') ?>js/dropzone.min.js"></script>
+<script src="<?= base_url('assets/') ?>js/form-fileuploads.init.js"></script>
 <script>
 	$('.select2').select2();
 	$('.select2').select2({

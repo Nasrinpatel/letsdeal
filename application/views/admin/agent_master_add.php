@@ -8,10 +8,10 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
-								<a type="button" href="<?=base_url('admin/Customermaster')?>" class="btn btn-success" style="float:right;" >Back</a>
+								<a type="button" href="<?=base_url('admin/Agentmaster')?>" class="btn btn-success" style="float:right;" >Back</a>
 							</ol>
 						</div>
-						<h4 class="page-title">Customer Master</h4>
+						<h4 class="page-title">Agent Master</h4>
 					</div>
 				</div>
 			</div>
@@ -20,42 +20,11 @@
 				<div class="col-12">
 					<div class="card">
 						<div class="card-body">
-							<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/store'; ?>">
+							<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Agentmaster/store'; ?>">
 								<!-- <?php 
 								print_r($_POST);
 								validation_errors(); ?> -->
-								<div class="row">
-														<div class="col-md-5">
-															<div class="mb-3">
-																
-																<input class="form-check-input" type="radio" id="direct" name="inquiry_type" checked value="direct">
-																<label class="form-check-label" for="direct">Direct</label>
-															</div>
-
-														</div>
-														<div class="col-md-5">
-														<div class="mb-3">
-																<input class="form-check-input" type="radio" id="agent" name="inquiry_type" value="agent">
-																<label class="form-check-label" for="agent">Via Agent</label>
-															</div>
-															
-														</div>
-													</div>
-													<div id='agent_div' style='display:none'>
-														<div class="col-md-5">
-															<div class="mb-3">
-																<label class="form-label">Agents<span class="text-danger">*</span></label>
-																<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
-																	<option value=''>Select Agents</option>
-																	<option value="Mohit soni">Mohit soni</option>
-																	<option value="Nihar soni">Nihar soni</option>
-																	<option value="Nasrin Patel">Nasrin Patel</option>
-																</select>
-
-
-															</div>
-														</div>
-													</div>
+								
 								<div class="row">
 									<div class="col-md-4">
 										<label class="form-label">Source<span class="text-danger">*</span></label>
@@ -189,16 +158,7 @@
 				}
 		);
 	});
-	$('input[name=inquiry_type]').click(function() {
 
-if (this.id == "agent") {
-	$("#agent_div").show('slow');
-	
-} else {
-	$("#agent_div").hide('slow');
-	
-}
-});
 </script>
 <script>
 	$(document).ready(function() {
