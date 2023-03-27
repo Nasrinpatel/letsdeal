@@ -211,6 +211,7 @@ class Propertymaster extends CI_Controller
 	}
 	public function store()
 	{
+		$this->load->library('upload');
 		$this->form_validation->set_rules('pro_master_id', 'Property Master', 'required');
 		$this->form_validation->set_rules('pro_category_id', 'Property Category', 'required');
 		$this->form_validation->set_rules('pro_subcategory_id', 'Property Sub Category', 'required');
@@ -219,7 +220,6 @@ class Propertymaster extends CI_Controller
 			$this->add();
 		} else {
 			$formArray = $_POST;
-			
 			$response = $this->promast->saverecords($formArray);
 
 			if ($response == true) {
