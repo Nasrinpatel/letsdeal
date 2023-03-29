@@ -66,18 +66,21 @@
 													<div class="mb-3">
 														<label class="form-label">Sub Category:</label>
 														<div class="row">
-															<div class="form-check-inline mb-1 subcategory-container" id="category-<?= $catchk->id ?>">
-															<label class="form-label me-3 text-decoration-underline text-blue" for="formControlReadonly"><?= $catchk->name ?></label>
+															<?php foreach ($categorychk as $catchk) { ?>
+																<div class="form-check-inline mb-1 subcategory-container" id="category-<?= $catchk->id ?>">
+																	<label class="form-label me-3 text-decoration-underline text-blue" for="formControlReadonly"><?= $catchk->name ?></label>
+																	<?php 
+																	$subcategorychk = $this->db->get_where('tb_property_subcategory', array('property_category_id' => $catchk->id , 'status' => '1'))->result();
+																	foreach ($subcategorychk as $subcatchk) { ?>
+																		<div class="form-check form-check-inline">
+																			<input type="checkbox" name="sub_category_ids[]" id="sub_category_ids" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>" <?= (in_array($subcatchk->id, explode(',', $forms->sub_category_ids)) && form_error('sub_category_ids[]') == '' ) ? 'checked' : '' ?> multiple>
+																			<!-- <input type="checkbox" name="checkbox[]" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>"> -->
 
-																<?php foreach ($subcategorychk as $subcatchk) { ?>
-																	<div class="form-check form-check-inline">
-																		<input type="checkbox" name="sub_category_ids[]" id="sub_category_ids" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>" <?= (in_array($subcatchk->id, explode(',', $forms->sub_category_ids)) && form_error('sub_category_ids[]') == '' ) ? 'checked' : '' ?>multiple>
-																		<!-- <input type="checkbox" name="checkbox[]" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>"> -->
-
-																		<label class="form-check-label" for="<?php echo $subcatchk->name; ?>"><?php echo $subcatchk->name; ?></label>
-																	</div>
-																<?php } ?>	
-															</div>
+																			<label class="form-check-label" for="<?php echo $subcatchk->name; ?>"><?php echo $subcatchk->name; ?></label>
+																		</div>
+																	<?php } ?>	
+																</div>
+															<?php } ?>
 															<span style="color: red;"><?= form_error('sub_category_ids[]') ?></span>
 															<div class="alert alert-danger" id="no-cat" style="display:none">Please Select Category</div>
 														</div>
