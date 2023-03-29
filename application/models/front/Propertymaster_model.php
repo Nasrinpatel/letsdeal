@@ -202,7 +202,7 @@ class Propertymaster_model extends CI_model{
 						}
 						$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id.''];
 					}
-					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image'){
+					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image' && !empty($_FILES['answer_'.$phase_id.'_'.$q_id]) ){
 						$config = array(
 							'upload_path' => "./uploads/property/",
 							'allowed_types' => "gif|jpg|png|jpeg|pdf",
@@ -220,6 +220,14 @@ class Propertymaster_model extends CI_model{
 					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
 						$given_answer=[];
 						$given_answer_id=[];
+						//existing files
+						if(!empty($formArray['answer_'.$phase_id.'_'.$q_id.''])){
+							foreach($formArray['answer_'.$phase_id.'_'.$q_id.''] as $answer){
+								$given_answer[]=$answer;
+								$given_answer_id[]=$answer;
+							}
+						}
+						//new files
 						$filesCount = count($_FILES['answer_'.$phase_id.'_'.$q_id]['name']); 
 						for($cnt = 0; $cnt < $filesCount; $cnt++){ 
 							$_FILES['file']['name']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['name'][$cnt]; 
@@ -257,14 +265,42 @@ class Propertymaster_model extends CI_model{
 					];
 					$options=[];
 					$option_ids=[];
-					if(!empty($formArray['answer_options_'.$phase_id.'_'.$q_id])){
+					if(!empty($formArray['answer_options_'.$phase_id.'_'.$q_id]) && !empty($_FILES['answer_'.$phase_id.'_'.$q_id]['name'])){
+						$remain_given_answer=$given_answer;
+						foreach($formArray['answer_options_'.$phase_id.'_'.$q_id] as $option){
+							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
+								if(in_array($option,$given_answer)){
+									$options[][$option]=true;
+								}else{
+									unlink('./uploads/property/'.$option);
+								}
+								$remain_given_answer=array_diff($remain_given_answer,[$option]);
+							}
+						}
+						foreach($remain_given_answer as $ans){
+							$options[][$ans]=true;
+						}
+					}
+					elseif(!empty($formArray['answer_options_'.$phase_id.'_'.$q_id])){
 						foreach($formArray['answer_options_'.$phase_id.'_'.$q_id] as $option){
 							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
 								$options[][$option]=((in_array($option,$given_answer))?true:false);
 							}elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Dropdown' || $formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Radio'){
 								$options[][$option]=(($given_answer == $option)?true:false);
-							}else{
-								$options[][$given_answer]=true;
+							}
+							elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
+								if(in_array($option,$given_answer)){
+									$options[][$option]=true;
+								}else{
+									unlink('./uploads/property/'.$option);
+								}			
+							}
+							else{
+								if(is_array($given_answer)){
+									$options[][$option]=true;
+								}else{
+									$options[][$given_answer]=true;
+								}
 							}
 						}
 					}else{
@@ -276,14 +312,44 @@ class Propertymaster_model extends CI_model{
 							$options[][$given_answer]=true;
 						}
 					}
-					if(!empty($formArray['answer_option_ids_'.$phase_id.'_'.$q_id])){
+					if(!empty($formArray['answer_option_ids_'.$phase_id.'_'.$q_id]) && !empty($_FILES['answer_'.$phase_id.'_'.$q_id]['name'])){
+						foreach($formArray['answer_option_ids_'.$phase_id.'_'.$q_id] as $option_id){
+							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
+								if(in_array($option,$given_answer)){
+									$option_ids[][$option_id]=true;
+								}else{
+									unlink('./uploads/property/'.$option);
+								}
+							}
+						}
+						foreach($given_answer as $ans){
+							if(!in_array($ans,$option_ids)){
+								$option_ids[][$ans]=true;
+							}
+						}
+					}
+					elseif(!empty($formArray['answer_option_ids_'.$phase_id.'_'.$q_id])){
 						foreach($formArray['answer_option_ids_'.$phase_id.'_'.$q_id] as $option_id){
 							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
 								$option_ids[][$option_id]=((in_array($option_id,$given_answer_id))?true:false);
 							}elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Dropdown' || $formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Radio'){
 								$option_ids[][$option_id]=(($given_answer_id == $option_id)?true:false);
-							}else{
-								$option_ids[][$given_answer]=true;
+							}
+							elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
+								if(in_array($option_id,$given_answer)){
+									$option_ids[][$option_id]=true;
+								}else{
+									if(!empty($_FILES['answer_'.$phase_id.'_'.$q_id]['name'])){
+										$option_ids[][$option_id]=true;
+									}
+								}
+							}
+							else{
+								if(is_array($given_answer_id)){
+									$option_ids[][$option_id]=true;
+								}else{
+									$option_ids[][$given_answer]=true;
+								}
 							}
 						}
 					}else{

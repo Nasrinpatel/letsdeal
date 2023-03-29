@@ -276,7 +276,6 @@ class Propertymaster extends CI_Controller
 
 			$formArray = $_POST;
 			// $formArray = array();
-
 			// $formArray['pro_master_id'] = $this->input->post('pro_master_id');
 			// $formArray['pro_category_id'] = $this->input->post('pro_category_id');
 			// $formArray['pro_subcategory_id'] = $this->input->post('pro_subcategory_id');

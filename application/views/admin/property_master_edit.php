@@ -31,7 +31,7 @@
 
 									<div class="card-body">
 
-										<form method="post" action="<?php echo base_url('admin/Propertymaster/update/' . $property->id); ?>">
+										<form method="post" action="<?php echo base_url('admin/Propertymaster/update/' . $property->id); ?>" enctype="multipart/form-data">
 
 											<input type="hidden" name="id" id="edit_propertymaster_id" />
 											<div class="row">
@@ -195,7 +195,9 @@
 																											<input type="url" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>">	
 																										<?php }
 																										elseif($que['question_answer_inputtype']=='Image'){ ?>
-																											<input type="file" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  accept="image/*" value="<?= array_keys($answers['options'][0])[0] ?>">
+																											<input type="file" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  accept="image/*">
+																											<a class="btn btn-primary mt-1" href="<?= base_url('uploads/property/').array_keys($answers['options'][0])[0] ?>" target="_blank">View Old File</a>
+																											<input type="hidden" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  value="<?= array_keys($answers['options'][0])[0] ?>">
 																										<?php }
 																										elseif($que['question_answer_inputtype']=='Video 360'){ ?>
 																											<input type="url" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  accept="video/*" value="<?= array_keys($answers['options'][0])[0] ?>">
@@ -204,28 +206,18 @@
 																											<div class="row"><div class="col-md-6"><input type="text" class="form-control"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>"></div><div class="col-md-6"><input type="text" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="<?= array_keys($answers['options'][1])[0] ?>"></div></div>
 																										<?php }
 																										elseif($que['question_answer_inputtype']=='Image Gallery'){ ?>
-																											<input class="image_gallery" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  value="<?= array_keys($answers['options'][0])[0] ?>" type="file" multiple>
-																											<script>
-																												$(document).ready(function() {
-																													var options = JSON.parse('<?php echo json_encode($answers['options']); ?>');
-																													urls = [];
-																													options.forEach(function(element,i) {
-																														for(let key in element) {
-																															urls.push(<?= base_url('uploads/property/') ?>key);
-																														}
-																														
-																													});
-																													debugger;
-																													$(".image_gallery").fileinput({
-																														initialPreview: urls,
-																														initialPreviewAsData: true,
-																														deleteUrl: "/site/file-delete",
-																														overwriteInitial: false,
-																														maxFileSize: 100,
-																														initialCaption: "The Moon and the Earth"
-																													});
-																												});
-																											</script>
+																											<input class="image_gallery" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>[]" type="file" multiple>
+																											<div class="row mt-3">
+																											<?php foreach($answers['options'] as $option){ ?>
+																												<div class="col-md-3">
+																													<div class="image-area">
+																														<a class="remove-image remove-button" href="#" onclick="return false;" style="display: inline;">&#215;</a>
+																														<img src="<?= base_url('uploads/property/').array_keys($option)[0] ?>" class="img-fluid">
+																														<input type="hidden" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>[]" value="<?= array_keys($option)[0] ?>">
+																													</div>
+																												</div>
+																											<?php } ?>
+																											</div>
 																										<?php }
 																										elseif($que['question_answer_inputtype']=='Video Gallery'){ ?>
 																											<div id="videogallery">
@@ -307,6 +299,7 @@
 
 <script>
 	$(document).ready(function() {
+		$(".image_gallery").fileinput();
 		$('#property_category').change(function() {
 			var categoryId = $(this).val();
 			if (categoryId != '') {
