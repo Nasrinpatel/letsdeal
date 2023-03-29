@@ -162,8 +162,21 @@ class Propertymaster extends CI_Controller
 															elseif($que['question_answer_inputtype'] == 'Image Gallery') {
 																$html .= '<input class="image_gallery" name="answer_'.$phase['id'].'_'.$que['id'].'[]" type="file" multiple>';
 															}
-															
-															
+															elseif($que['question_answer_inputtype'] == 'Video Gallery') {
+																$html .= '<div id="videogallery">';
+																$html .= '<div class="row">';
+																$html .= '<div class="col-lg-10">';
+																$html .= '<div class="mb-3">';
+																$html .= '<input type="url" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" id="videogallery" placeholder="Enter Video Link">';
+																$html .= '</div>';
+																$html .= '</div>';
+																$html .= '<div class="col-lg-2">';
+																$html .= '<a class="btn btn-success waves-effect waves-light add-button"  data-name="answer_'.$phase['id'].'_'.$que['id'].'[]">Add </a>';
+																$html .= '</div>';
+																$html .= '</div>';
+																$html .= '</div>';
+															}	
+							
 													$html .='</div>
 													</div>';
 												}
@@ -221,7 +234,7 @@ class Propertymaster extends CI_Controller
 		} else {
 			$formArray = $_POST;
 			$response = $this->promast->saverecords($formArray);
-
+			
 			if ($response == true) {
 				$this->session->set_flashdata('success', 'Property Master Added Successfully.');
 			} else {

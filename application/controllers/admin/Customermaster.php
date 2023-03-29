@@ -94,6 +94,7 @@ class Customermaster extends CI_Controller
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
 		$data['staff'] = $this->customermaster->getStaff();
+		$data['agent'] = $this->customermaster->getAgent();
 		$data['page_name'] = 'customer_master_add';
 		$this->load->view('admin/index', $data);
 	}
@@ -170,6 +171,7 @@ class Customermaster extends CI_Controller
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();
 		$data['staff'] = $this->customermaster->getStaff();
+		$data['agent'] = $this->customermaster->getAgent();
 		$data['page_name'] = 'customer_master_edit';
 		$this->load->view('admin/index', $data);
 	}

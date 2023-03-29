@@ -172,5 +172,25 @@
 				}
 			});
 		});
+		$(document).on('click','.add-button',function() {
+			// create a new select element
+			var name = $(this).attr('data-name');
+			var newSelect = $("<div id='videogallery'>" +
+				"<div class='row'>" +
+				"<div class='col-lg-10'>" +
+				"<div class='mb-3'>" +
+				"<input type='text' class='form-control' name='"+name+"' id='videogallery' placeholder='Enter Video Link'>" +
+				"</div>" +
+				"</div>" +
+				"<div class='col-lg-2'>" +
+				"<a class='btn btn-danger remove-button'><i class='fa fa-trash'></i></a>" + "</div>" +
+				"</div>" +
+				"</div>");
+			$("#videogallery").append(newSelect);
+		});
+		$(document).on('click', '.remove-button', function() {
+			// remove the select element with the id 'question'
+			$(this).parent().parent('div').remove();
+		});
 	});
 </script>

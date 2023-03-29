@@ -8,7 +8,7 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
-								<a type="button" href="<?=base_url('admin/Customermaster')?>" class="btn btn-success" style="float:right;" >Back</a>
+								<a type="button" href="<?= base_url('admin/Customermaster') ?>" class="btn btn-success" style="float:right;">Back</a>
 							</ol>
 						</div>
 						<h4 class="page-title">Customer Master</h4>
@@ -21,48 +21,53 @@
 					<div class="card">
 						<div class="card-body">
 							<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Customermaster/store'; ?>">
-								<!-- <?php 
-								print_r($_POST);
-								validation_errors(); ?> -->
+								<!-- <?php
+										print_r($_POST);
+										validation_errors(); ?> -->
 								<div class="row">
-														<div class="col-md-5">
-															<div class="mb-3">
-																
-																<input class="form-check-input" type="radio" id="direct" name="inquiry_type" checked value="direct">
-																<label class="form-check-label" for="direct">Direct</label>
-															</div>
+									<div class="col-md-5">
+										<div class="mb-3">
 
-														</div>
-														<div class="col-md-5">
-														<div class="mb-3">
-																<input class="form-check-input" type="radio" id="agent" name="inquiry_type" value="agent">
-																<label class="form-check-label" for="agent">Via Agent</label>
-															</div>
-															
-														</div>
-													</div>
-													<div id='agent_div' style='display:none'>
-														<div class="col-md-5">
-															<div class="mb-3">
-																<label class="form-label">Agents<span class="text-danger">*</span></label>
-																<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
-																	<option value=''>Select Agents</option>
-																	<option value="Mohit soni">Mohit soni</option>
-																	<option value="Nihar soni">Nihar soni</option>
-																	<option value="Nasrin Patel">Nasrin Patel</option>
-																</select>
+											<input class="form-check-input" type="radio" id="direct" name="inquiry_type" checked value="direct">
+											<label class="form-check-label" for="direct">Direct</label>
+										</div>
+
+									</div>
+									<div class="col-md-5">
+										<div class="mb-3">
+											<input class="form-check-input" type="radio" id="agent" name="inquiry_type" value="agent">
+											<label class="form-check-label" for="agent">Via Agent</label>
+										</div>
+
+									</div>
+								</div>
+								<div id='agent_div' style='display:none'>
+									<div class="col-md-5">
+										<div class="mb-3">
+											<label class="form-label">Agents<span class="text-danger">*</span></label>
+											<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
+												<!-- <option value=''>Select Agents</option>
+												<option value="Mohit soni">Mohit soni</option>
+												<option value="Nihar soni">Nihar soni</option>
+												<option value="Nasrin Patel">Nasrin Patel</option>
+												<option value=''>Select Source</option> -->
+
+												<?php foreach ($agent as $ag) { ?>
+													<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?> <?= $ag['last_name'] ?></option>
+												<?php } ?>
+											</select>
 
 
-															</div>
-														</div>
-													</div>
+										</div>
+									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-4">
 										<label class="form-label">Source<span class="text-danger">*</span></label>
 										<select data-toggle="select2" class="form-control select2" name="source_id" data-width="100%">
 											<option value=''>Select Source</option>
 											<?php foreach ($source as $sou) { ?>
-													<option value="<?= $sou['id'] ?>"><?= $sou['name'] ?></option>
+												<option value="<?= $sou['id'] ?>"><?= $sou['name'] ?></option>
 											<?php } ?>
 										</select>
 										<span style="color: red;"><?= form_error('source_id') ?></span>
@@ -79,7 +84,7 @@
 											<select data-toggle="select2" title="Assigned" class="form-control select2" name="assigned_id" data-width="100%">
 												<option value=''>Select Assigned</option>
 												<?php foreach ($staff as $sta) { ?>
-													<option value="<?= $sta['id'] ?>"><?= $sta['first_name'] ?>  <?= $sta['last_name'] ?></option>
+													<option value="<?= $sta['id'] ?>"><?= $sta['first_name'] ?> <?= $sta['last_name'] ?></option>
 												<?php }
 												?>
 											</select>
@@ -178,27 +183,25 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#firstname').bind('keyup blur', function () {
-					var node = $(this);
-					node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
-				}
-		);
-		$('#lastname').bind('keyup blur', function () {
-					var node = $(this);
-					node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
-				}
-		);
+		$('#firstname').bind('keyup blur', function() {
+			var node = $(this);
+			node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
+		});
+		$('#lastname').bind('keyup blur', function() {
+			var node = $(this);
+			node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
+		});
 	});
 	$('input[name=inquiry_type]').click(function() {
 
-if (this.id == "agent") {
-	$("#agent_div").show('slow');
-	
-} else {
-	$("#agent_div").hide('slow');
-	
-}
-});
+		if (this.id == "agent") {
+			$("#agent_div").show('slow');
+
+		} else {
+			$("#agent_div").hide('slow');
+
+		}
+	});
 </script>
 <script>
 	$(document).ready(function() {
@@ -208,7 +211,7 @@ if (this.id == "agent") {
 	});
 </script>
 <style>
-	.select2 .selection .select2-selection--single .select2-selection__rendered{
+	.select2 .selection .select2-selection--single .select2-selection__rendered {
 		line-height: 1.5rem;
 	}
 </style>

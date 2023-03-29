@@ -54,7 +54,7 @@
 												<label class="form-label">Category:</label>
 												<div class="form-check form-check-pink mb-1">
 													<?php foreach ($categorychk as $catchk) { ?>
-														<input type="checkbox" name="category_ids[]" id="category_ids" value="<?php echo $catchk->id; ?>" class="form-check-input category" <?= (in_array($catchk->id, explode(',', $forms->category_ids)) && form_error('category_ids[]') == '') ? 'checked' : '' ?>><?php echo $catchk->name; ?><br>
+														<input type="checkbox" name="category_ids[]" id="category_ids" value="<?php echo $catchk->id; ?>" class="form-check-input category" <?= (in_array($catchk->id, explode(',', $forms->category_ids)) && form_error('category_ids[]') == '') ? 'checked' : '' ?> multiple><?php echo $catchk->name; ?><br>
 														<!-- <input type="checkbox" name="checkbox[]" value="<?php echo $catchk->id; ?>" class="form-check-input category">  -->
 													<?php } ?>
 													<span style="color: red;"><?= form_error('category_ids[]') ?></span>
@@ -66,10 +66,12 @@
 													<div class="mb-3">
 														<label class="form-label">Sub Category:</label>
 														<div class="row">
-															<div class="form-check-inline mb-1 subcategory-container">
+															<div class="form-check-inline mb-1 subcategory-container" id="category-<?= $catchk->id ?>">
+															<label class="form-label me-3 text-decoration-underline text-blue" for="formControlReadonly"><?= $catchk->name ?></label>
+
 																<?php foreach ($subcategorychk as $subcatchk) { ?>
 																	<div class="form-check form-check-inline">
-																		<input type="checkbox" name="sub_category_ids[]" id="sub_category_ids" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>" <?= (in_array($subcatchk->id, explode(',', $forms->sub_category_ids)) && form_error('sub_category_ids[]') == '' ) ? 'checked' : '' ?>>
+																		<input type="checkbox" name="sub_category_ids[]" id="sub_category_ids" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>" <?= (in_array($subcatchk->id, explode(',', $forms->sub_category_ids)) && form_error('sub_category_ids[]') == '' ) ? 'checked' : '' ?>multiple>
 																		<!-- <input type="checkbox" name="checkbox[]" value="<?php echo $subcatchk->id; ?>" class="form-check-input subcategory" data-category="<?php echo $subcatchk->property_category_id; ?>"> -->
 
 																		<label class="form-check-label" for="<?php echo $subcatchk->name; ?>"><?php echo $subcatchk->name; ?></label>
@@ -193,13 +195,17 @@
 						// Get the ID of the checked category
 						var id = $(this).val();
 						// Show the selected subcategories and hide the others
-						subcategoryContainer.children().hide();
+						// subcategoryContainer.children().hide();
+						subcategoryContainer.hide();
 
 						var checkedCategory = $('.category:checked');
 						checkedCategory.each(function(index, item) {
 							// Select the subcategories that belong to the checked category
-							var subcategories = $('.subcategory[data-category="' + item.value + '"]');
-							subcategories.parent().show();
+							// var subcategories = $('.subcategory[data-category="' + item.value + '"]');
+							// subcategories.parent().show();
+
+							var subcategories = $('#category-'+item.value);
+							subcategories.show();
 						});
 
 						if (checkedCategory.length == 0) {

@@ -83,6 +83,10 @@ class Customermaster_model extends CI_model{
 		$data = $this->db->get('tbl_staff_master')->result_array();
 		return $data;
 	}
+	function getAgent(){
+		$data = $this->db->get('tb_customer_master')->result_array();
+		return $data;
+	}
 	function updaterecords($id,$formArray)
 	{
 		$this->db->where('id',$id);

@@ -335,10 +335,9 @@
 															<div class="mb-3">
 																<label class="form-label">Agents<span class="text-danger">*</span></label>
 																<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
-																	<option value=''>Select Agents</option>
-																	<option value="Mohit soni">Mohit soni</option>
-																	<option value="Nihar soni">Nihar soni</option>
-																	<option value="Nasrin Patel">Nasrin Patel</option>
+																<?php foreach ($agent as $ag) { ?>
+																<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?><?= $ag['last_name'] ?></option>
+															<?php } ?>
 																</select>
 
 

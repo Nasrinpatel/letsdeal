@@ -26,117 +26,119 @@ class Propertymaster_model extends CI_model{
 		
 		foreach($formArray['phase_ids'] as $phase_id){
 			$i=0;
-			foreach($formArray['question_id_'.$phase_id] as $q_id){
-				if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
-					$given_answer=[];
-					foreach($formArray['answer_'.$phase_id.'_'.$q_id.''] as $answer){
-						$given_answer[]=$this->db->get_where('source_option_master',['id'=>$answer])->row()->name;						
+			if(!empty($formArray['question_id_'.$phase_id])){
+				foreach($formArray['question_id_'.$phase_id] as $q_id){
+					if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
+						$given_answer=[];
+						foreach($formArray['answer_'.$phase_id.'_'.$q_id.''] as $answer){
+							$given_answer[]=$this->db->get_where('source_option_master',['id'=>$answer])->row()->name;						
+						}
+						$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id];
 					}
-					$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id];
-				}
-				elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image'){
-					$config = array(
-						'upload_path' => "./uploads/property/",
-						'allowed_types' => "gif|jpg|png|jpeg|pdf",
-						'overwrite' => TRUE,
-						'file_name' => time() . '-' . date("Y-m-d")
-					);
-					$this->upload->initialize($config);
-					if($this->upload->do_upload('answer_'.$phase_id.'_'.$q_id))
-					{
-						$upload_data=$this->upload->data();
-						$given_answer=$upload_data['file_name'];
-						$given_answer_id=$upload_data['file_name'];
-					}
-				}
-				elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
-					$given_answer=[];
-					$given_answer_id=[];
-					$filesCount = count($_FILES['answer_'.$phase_id.'_'.$q_id]['name']); 
-                	for($i = 0; $i < $filesCount; $i++){ 
-						$_FILES['file']['name']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['name'][$i]; 
-						$_FILES['file']['type']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['type'][$i]; 
-						$_FILES['file']['tmp_name'] = $_FILES['answer_'.$phase_id.'_'.$q_id]['tmp_name'][$i]; 
-						$_FILES['file']['error']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['error'][$i]; 
-						$_FILES['file']['size']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['size'][$i]; 
+					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image'){
 						$config = array(
 							'upload_path' => "./uploads/property/",
 							'allowed_types' => "gif|jpg|png|jpeg|pdf",
 							'overwrite' => TRUE,
-							'file_name' => time() . '-' . date("Y-m-d").$i
+							'file_name' => time() . '-' . date("Y-m-d")
 						);
 						$this->upload->initialize($config);
-						if($this->upload->do_upload('file'))
+						if($this->upload->do_upload('answer_'.$phase_id.'_'.$q_id))
 						{
 							$upload_data=$this->upload->data();
-							$given_answer[]=$upload_data['file_name'];
-							$given_answer_id[]=$upload_data['file_name'];
+							$given_answer=$upload_data['file_name'];
+							$given_answer_id=$upload_data['file_name'];
 						}
 					}
-				}
-				elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Dropdown' || $formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Radio'){
-					$given_answer=$this->db->get_where('source_option_master',['id'=>$formArray['answer_'.$phase_id.'_'.$q_id.'']])->row()->name;
-					$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id];
-				}else{
-					$given_answer=$formArray['answer_'.$phase_id.'_'.$q_id.''];
-					$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id.''];
-				}
-				$answers=[
-					'answer_type' => $formArray['answer_type_'.$phase_id.'_'.$q_id],
-				];
-				$answer_ids=[
-					'answer_type' => $formArray['answer_type_'.$phase_id.'_'.$q_id],
-				];
-				$options=[];
-				$option_ids=[];
-				if(!empty($formArray['answer_options_'.$phase_id.'_'.$q_id])){
-					foreach($formArray['answer_options_'.$phase_id.'_'.$q_id] as $option){
-						if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
-							$options[][$option]=((in_array($option,$given_answer))?true:false);
-						}else{
-							$options[][$option]=(($given_answer == $option)?true:false);
+					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Image Gallery'){
+						$given_answer=[];
+						$given_answer_id=[];
+						$filesCount = count($_FILES['answer_'.$phase_id.'_'.$q_id]['name']); 
+						for($cnt = 0; $cnt < $filesCount; $cnt++){ 
+							$_FILES['file']['name']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['name'][$cnt]; 
+							$_FILES['file']['type']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['type'][$cnt]; 
+							$_FILES['file']['tmp_name'] = $_FILES['answer_'.$phase_id.'_'.$q_id]['tmp_name'][$cnt]; 
+							$_FILES['file']['error']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['error'][$cnt]; 
+							$_FILES['file']['size']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['size'][$cnt]; 
+							$config = array(
+								'upload_path' => "./uploads/property/",
+								'allowed_types' => "gif|jpg|png|jpeg|pdf",
+								'overwrite' => TRUE,
+								'file_name' => time() . '-' . date("Y-m-d").$cnt
+							);
+							$this->upload->initialize($config);
+							if($this->upload->do_upload('file'))
+							{
+								$upload_data=$this->upload->data();
+								$given_answer[]=$upload_data['file_name'];
+								$given_answer_id[]=$upload_data['file_name'];
+							}
 						}
 					}
-				}else{
-					if(is_array($given_answer)){
-						foreach($given_answer as $option){
-							$options[][$option]=true;
+					elseif($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Dropdown' || $formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Radio'){
+						$given_answer=$this->db->get_where('source_option_master',['id'=>$formArray['answer_'.$phase_id.'_'.$q_id.'']])->row()->name;
+						$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id];
+					}else{
+						$given_answer=$formArray['answer_'.$phase_id.'_'.$q_id.''];
+						$given_answer_id=$formArray['answer_'.$phase_id.'_'.$q_id.''];
+					}
+					$answers=[
+						'answer_type' => $formArray['answer_type_'.$phase_id.'_'.$q_id],
+					];
+					$answer_ids=[
+						'answer_type' => $formArray['answer_type_'.$phase_id.'_'.$q_id],
+					];
+					$options=[];
+					$option_ids=[];
+					if(!empty($formArray['answer_options_'.$phase_id.'_'.$q_id])){
+						foreach($formArray['answer_options_'.$phase_id.'_'.$q_id] as $option){
+							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
+								$options[][$option]=((in_array($option,$given_answer))?true:false);
+							}else{
+								$options[][$option]=(($given_answer == $option)?true:false);
+							}
 						}
 					}else{
-						$options[][$given_answer]=true;
-					}
-					
-				}
-				if(!empty($formArray['answer_option_ids_'.$phase_id.'_'.$q_id])){
-					foreach($formArray['answer_option_ids_'.$phase_id.'_'.$q_id] as $option_id){
-						if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
-							$option_ids[][$option_id]=((in_array($option_id,$given_answer_id))?true:false);
+						if(is_array($given_answer)){
+							foreach($given_answer as $option){
+								$options[][$option]=true;
+							}
 						}else{
-							$option_ids[][$option_id]=(($given_answer_id == $option_id)?true:false);
+							$options[][$given_answer]=true;
 						}
+						
 					}
-				}else{
-					if(is_array($given_answer_id)){
-						foreach($given_answer_id as $option){
-							$option_ids[][$option]=true;
+					if(!empty($formArray['answer_option_ids_'.$phase_id.'_'.$q_id])){
+						foreach($formArray['answer_option_ids_'.$phase_id.'_'.$q_id] as $option_id){
+							if($formArray['answer_type_'.$phase_id.'_'.$q_id] == 'Checkbox'){
+								$option_ids[][$option_id]=((in_array($option_id,$given_answer_id))?true:false);
+							}else{
+								$option_ids[][$option_id]=(($given_answer_id == $option_id)?true:false);
+							}
 						}
 					}else{
-						$option_ids[][$given_answer_id]=true;
+						if(is_array($given_answer_id)){
+							foreach($given_answer_id as $option){
+								$option_ids[][$option]=true;
+							}
+						}else{
+							$option_ids[][$given_answer_id]=true;
+						}
 					}
-				}
-				$answers['options'] = $options;
-				$answer_ids['options'] = $option_ids;
-				$data=[
-					'property_id' => $property_id,
-					'phase_id' =>  $phase_id,
-					'question_id' => $q_id,
-					'answer_ids' => json_encode($answer_ids),
-					'question' => $formArray['question_'.$phase_id][$i],
-					'answers' => json_encode($answers)
-				];
-				$this->db->insert('tb_property_question_answer',$data);
-				$i++;
-			}			
+					$answers['options'] = $options;
+					$answer_ids['options'] = $option_ids;
+					$data=[
+						'property_id' => $property_id,
+						'phase_id' =>  $phase_id,
+						'question_id' => $q_id,
+						'answer_ids' => json_encode($answer_ids),
+						'question' => $formArray['question_'.$phase_id][$i],
+						'answers' => json_encode($answers)
+					];
+					$this->db->insert('tb_property_question_answer',$data);
+					$i++;
+				}	
+			}		
 		}
 		
 		return true;
@@ -219,17 +221,17 @@ class Propertymaster_model extends CI_model{
 						$given_answer=[];
 						$given_answer_id=[];
 						$filesCount = count($_FILES['answer_'.$phase_id.'_'.$q_id]['name']); 
-						for($i = 0; $i < $filesCount; $i++){ 
-							$_FILES['file']['name']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['name'][$i]; 
-							$_FILES['file']['type']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['type'][$i]; 
-							$_FILES['file']['tmp_name'] = $_FILES['answer_'.$phase_id.'_'.$q_id]['tmp_name'][$i]; 
-							$_FILES['file']['error']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['error'][$i]; 
-							$_FILES['file']['size']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['size'][$i]; 
+						for($cnt = 0; $cnt < $filesCount; $cnt++){ 
+							$_FILES['file']['name']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['name'][$cnt]; 
+							$_FILES['file']['type']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['type'][$cnt]; 
+							$_FILES['file']['tmp_name'] = $_FILES['answer_'.$phase_id.'_'.$q_id]['tmp_name'][$cnt]; 
+							$_FILES['file']['error']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['error'][$cnt]; 
+							$_FILES['file']['size']     = $_FILES['answer_'.$phase_id.'_'.$q_id]['size'][$cnt]; 
 							$config = array(
 								'upload_path' => "./uploads/property/",
 								'allowed_types' => "gif|jpg|png|jpeg|pdf",
 								'overwrite' => TRUE,
-								'file_name' => time() . '-' . date("Y-m-d").$i
+								'file_name' => time() . '-' . date("Y-m-d").$cnt
 							);
 							$this->upload->initialize($config);
 							if($this->upload->do_upload('file'))

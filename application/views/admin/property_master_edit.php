@@ -184,7 +184,70 @@
 																										<?php }
 																										elseif($que['question_answer_inputtype']=='Number'){ ?>
 																											<input type="number" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>">                                                                                       
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Phone'){ ?>
+																									    	<input type="tel" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Email'){ ?>
+																											<input type="email" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Link'){ ?>
+																											<input type="url" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>">	
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Image'){ ?>
+																											<input type="file" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  accept="image/*" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Video 360'){ ?>
+																											<input type="url" class="form-control" id="userName1"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  accept="video/*" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Google Map'){ ?>
+																											<div class="row"><div class="col-md-6"><input type="text" class="form-control"  name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($answers['options'][0])[0] ?>"></div><div class="col-md-6"><input type="text" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="<?= array_keys($answers['options'][1])[0] ?>"></div></div>
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Image Gallery'){ ?>
+																											<input class="image_gallery" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>"  value="<?= array_keys($answers['options'][0])[0] ?>" type="file" multiple>
+																											<script>
+																												$(document).ready(function() {
+																													var options = JSON.parse('<?php echo json_encode($answers['options']); ?>');
+																													urls = [];
+																													options.forEach(function(element,i) {
+																														for(let key in element) {
+																															urls.push(<?= base_url('uploads/property/') ?>key);
+																														}
+																														
+																													});
+																													debugger;
+																													$(".image_gallery").fileinput({
+																														initialPreview: urls,
+																														initialPreviewAsData: true,
+																														deleteUrl: "/site/file-delete",
+																														overwriteInitial: false,
+																														maxFileSize: 100,
+																														initialCaption: "The Moon and the Earth"
+																													});
+																												});
+																											</script>
+																										<?php }
+																										elseif($que['question_answer_inputtype']=='Video Gallery'){ ?>
+																											<div id="videogallery">
+																												<?php $i=0; foreach($answers['options'] as $option){  ?>
+																													<div class="row">
+																														<div class="col-lg-10">
+																															<div class="mb-3">
+																																<input type="url" class="form-control" name="answer_<?= $phase['id']?>_<?= $que['question_id']?>" value="<?= array_keys($option)[0] ?>" id="videogallery">
+																															</div>
+																														</div>
+																														<div class="col-lg-2">
+																															<?php if($i==0){ ?>
+																																<a class="btn btn-success waves-effect waves-light edit-button">Add </a>
+																															<?php }else{ ?>
+																																<a class='btn btn-danger remove-button'><i class='fa fa-trash'></i></a>
+																															<?php } ?>
+																														</div>
+																													</div>
+																												<?php $i++; } ?>
+																											</div>																									
 																										<?php } ?>
+										
 
 																									</div>
 																								</div>
@@ -296,6 +359,25 @@
 					}
 				}
 			});
+		});
+		$(document).on('click','.edit-button',function() {
+			// create a new select element
+			var newSelect = $("<div id='videogallery'>" +
+				"<div class='row'>" +
+				"<div class='col-lg-10'>" +
+				"<div class='mb-3'>" +
+				"<input type='text' class='form-control' name='videogallery[]' id='videogallery' placeholder='Enter Video Link'>" +
+				"</div>" +
+				"</div>" +
+				"<div class='col-lg-1'>" +
+				"<a class='btn btn-danger remove-button'><i class='fa fa-trash'></i></a>" + "</div>" +
+				"</div>" +
+				"</div>");
+			$("#videogallery").append(newSelect);
+		});
+		$(document).on('click', '.remove-button', function() {
+			// remove the select element with the id 'question'
+			$(this).parent().parent('div').remove();
 		});
 	});
 
