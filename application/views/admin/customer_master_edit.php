@@ -669,206 +669,141 @@
 			});
 		}
 	});
-		$(function() {
-			var hash = window.location.hash;
-			hash && $('ul.nav a[href="' + hash + '"]').tab('show');
-
-			var triggerTabList = [].slice.call(document.querySelectorAll('#v-pills-tab a'))
-			triggerTabList.forEach(function(triggerEl) {
-				var tabTrigger = new bootstrap.Tab(triggerEl)
-
-				triggerEl.addEventListener('click', function(event) {
-					event.preventDefault()
-					tabTrigger.show()
-				})
-			});
-			var triggerFirstTabEl = document.querySelector('#v-pills-tab a:first-child')
-			bootstrap.Tab.getInstance(triggerFirstTabEl).show() // Select first tab
-
-			var triggerEl = document.querySelector('#v-pills-tab a[href="' + hash + '"]')
-			bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
-		});
-		//all contact
-		var contact_table = $('#customer_contact_datatable').DataTable({
-			responsive: true,
-			ajax: "<?php echo base_url('admin/Customermaster/all_contact/' . $customer->id); ?>",
-			"columnDefs": [{
-				"targets": 6,
-				"createdCell": function(td, cellData, rowData, row, col) {
-					if (rowData[6] == '1') {
-						$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-					} else if (rowData[6] == '0') {
-						$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
-					}
-				}
-			}, ]
-		});
-		//add contact 
-		$("#store-contact").validate({
-			rules: {
-				first_name: "bb required",
-				last_name: "required",
-				position_id: "required",
-				// company_name: "required",
-				email: "required",
-				phone: "required",
-				description: "required",
-				status: "required"
-			},
-			submitHandler: function(form, e) {
-				e.preventDefault();
-				var url = $(form).attr("action");
-				$.ajax({
-					url: url,
-					type: "POST",
-					data: $(form).serialize(),
-					dataType: "json",
-					success: function(response) {
-						$('.btn-close').trigger('click');
-						$("#store-contact").trigger("reset");
-						success_message('', response.message);
-						contact_table.ajax.reload(null, false);
-					}
-				});
+	//edit contact
+	$(document).on('click', ".edit-btn", function() {
+		var id = $(this).attr('data-id');
+		$.ajax({
+			url: '<?php echo base_url() ?>admin/Customermaster/edit_contact/' + id,
+			type: "POST",
+			dataType: "json",
+			success: function(data) {
+				$("#edit-customer-contact-modal #contact_id").val(data.id);
+				$('#edit-customer-contact-modal #first_name').val(data.first_name);
+				$('#edit-customer-contact-modal #last_name').val(data.last_name);
+				$('#edit-customer-contact-modal #position_id').val(data.position_id).trigger('change');
+				$('#edit-customer-contact-modal #company_name').val(data.company_name);
+				$('#edit-customer-contact-modal #email').val(data.email);
+				$('#edit-customer-contact-modal #phone').val(data.phone);
+				$('#edit-customer-contact-modal #description').val(data.description);
+				$("#edit-customer-contact-modal #contact_status").val(data.status);
 			}
 		});
-		//edit contact
-		$(document).on('click', ".edit-btn", function() {
-			var id = $(this).attr('data-id');
+	});
+	//update contact
+	$("#update-contact").validate({
+		rules: {
+			first_name: "required",
+			last_name: "required",
+			position_id: "required",
+			// company_name: "required",
+			email: "required",
+			phone: "required",
+			description: "required",
+			status: "required"
+		},
+		submitHandler: function(form, e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			var id = $('#edit-customer-contact-modal #contact_id').val();
 			$.ajax({
-				url: '<?php echo base_url() ?>admin/Customermaster/edit_contact/' + id,
+				url: url + '/' + id,
 				type: "POST",
+				data: $(form).serialize(),
 				dataType: "json",
-				success: function(data) {
-					$("#edit-customer-contact-modal #contact_id").val(data.id);
-					$('#edit-customer-contact-modal #first_name').val(data.first_name);
-					$('#edit-customer-contact-modal #last_name').val(data.last_name);
-					$('#edit-customer-contact-modal #position_id').val(data.position_id).trigger('change');
-					$('#edit-customer-contact-modal #company_name').val(data.company_name);
-					$('#edit-customer-contact-modal #email').val(data.email);
-					$('#edit-customer-contact-modal #phone').val(data.phone);
-					$('#edit-customer-contact-modal #description').val(data.description);
-					$("#edit-customer-contact-modal #contact_status").val(data.status);
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					success_message('', response.message);
+					contact_table.ajax.reload(null, false);
 				}
 			});
-		});
-		//update contact
-		$("#update-contact").validate({
-			rules: {
-				first_name: "required",
-				last_name: "required",
-				position_id: "required",
-				// company_name: "required",
-				email: "required",
-				phone: "required",
-				description: "required",
-				status: "required"
-			},
-			submitHandler: function(form, e) {
-				e.preventDefault();
-				var url = $(form).attr("action");
-				var id = $('#edit-customer-contact-modal #contact_id').val();
-				$.ajax({
-					url: url + '/' + id,
-					type: "POST",
-					data: $(form).serialize(),
-					dataType: "json",
-					success: function(response) {
-						$('.btn-close').trigger('click');
-						success_message('', response.message);
-						contact_table.ajax.reload(null, false);
-					}
-				});
-			}
-		});
-
-		//all Notes
-		var note_table = $('#customer_notes_datatable').DataTable({
-			responsive: true,
-			ajax: "<?php echo base_url('admin/Customermaster/all_note/' . $customer->id); ?>",
-			"columnDefs": [{
-				"targets": 3,
-				"createdCell": function(td, cellData, rowData, row, col) {
-					if (rowData[3] == '1') {
-						$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-					} else if (rowData[3] == '0') {
-						$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
-					}
-				}
-			}, ]
-		});
-		//add Notes 
-		$("#store-notes").validate({
-			rules: {
-				name: "required",
-
-				status: "required"
-			},
-			submitHandler: function(form, e) {
-				e.preventDefault();
-				var url = $(form).attr("action");
-				$.ajax({
-					url: url,
-					type: "POST",
-					data: $(form).serialize(),
-					dataType: "json",
-					success: function(response) {
-						$('.btn-close').trigger('click');
-						$("#store-notes").trigger("reset");
-						success_message('', response.message);
-						note_table.ajax.reload(null, false);
-					}
-				});
-			}
-		});
-		//edit Notes
-		$(document).on('click', ".edit-btn", function() {
-			var id = $(this).attr('data-id');
-			$.ajax({
-				url: '<?php echo base_url() ?>admin/Customermaster/edit_note/' + id,
-				type: "POST",
-				dataType: "json",
-				success: function(data) {
-					$("#edit-customer-notes-modal #note_id").val(data.id);
-					$('#edit-customer-notes-modal #name').val(data.name);
-					$("#edit-customer-notes-modal #contact_status").val(data.status);
-				}
-			});
-		});
-		//update Notes
-		$("#update-note").validate({
-			rules: {
-				name: "required",
-				status: "required"
-			},
-			submitHandler: function(form, e) {
-				e.preventDefault();
-				var url = $(form).attr("action");
-				var id = $('#edit-customer-notes-modal #note_id').val();
-				$.ajax({
-					url: url + '/' + id,
-					type: "POST",
-					data: $(form).serialize(),
-					dataType: "json",
-					success: function(response) {
-						$('.btn-close').trigger('click');
-						success_message('', response.message);
-						contact_table.ajax.reload(null, false);
-					}
-				});
-			}
-		});
-	
-		$('input[name=inquiry_type]').click(function() {
-
-		if (this.id == "agent") {
-			$("#agent_div").show('slow');
-			
-		} else {
-			$("#agent_div").hide('slow');
-			
 		}
-		});
+	});
 
+	//all Notes
+	var note_table = $('#customer_notes_datatable').DataTable({
+		responsive: true,
+		ajax: "<?php echo base_url('admin/Customermaster/all_note/' . $customer->id); ?>",
+		"columnDefs": [{
+			"targets": 3,
+			"createdCell": function(td, cellData, rowData, row, col) {
+				if (rowData[3] == '1') {
+					$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
+				} else if (rowData[3] == '0') {
+					$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
+				}
+			}
+		}, ]
+	});
+	//add Notes 
+	$("#store-notes").validate({
+		rules: {
+			name: "required",
+
+			status: "required"
+		},
+		submitHandler: function(form, e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					$("#store-notes").trigger("reset");
+					success_message('', response.message);
+					note_table.ajax.reload(null, false);
+				}
+			});
+		}
+	});
+	//edit Notes
+	$(document).on('click', ".edit-btn", function() {
+		var id = $(this).attr('data-id');
+		$.ajax({
+			url: '<?php echo base_url() ?>admin/Customermaster/edit_note/' + id,
+			type: "POST",
+			dataType: "json",
+			success: function(data) {
+				$("#edit-customer-notes-modal #note_id").val(data.id);
+				$('#edit-customer-notes-modal #name').val(data.name);
+				$("#edit-customer-notes-modal #contact_status").val(data.status);
+			}
+		});
+	});
+	//update Notes
+	$("#update-note").validate({
+		rules: {
+			name: "required",
+			status: "required"
+		},
+		submitHandler: function(form, e) {
+			e.preventDefault();
+			var url = $(form).attr("action");
+			var id = $('#edit-customer-notes-modal #note_id').val();
+			$.ajax({
+				url: url + '/' + id,
+				type: "POST",
+				data: $(form).serialize(),
+				dataType: "json",
+				success: function(response) {
+					$('.btn-close').trigger('click');
+					success_message('', response.message);
+					contact_table.ajax.reload(null, false);
+				}
+			});
+		}
+	});
+
+	$('input[name=inquiry_type]').click(function() {
+
+	if (this.id == "agent") {
+		$("#agent_div").show('slow');
 		
-	</script>
+	} else {
+		$("#agent_div").hide('slow');
+		
+	}
+	});		
+</script>
