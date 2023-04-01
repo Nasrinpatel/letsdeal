@@ -629,7 +629,12 @@
 	var contact_table = $('#customer_contact_datatable').DataTable({
 		responsive: true,
 		ajax: "<?php echo base_url('admin/Customermaster/all_contact/'.$customer->id); ?>",
-		"columnDefs": [{
+		columnDefs: [
+		{ responsivePriority: 1, targets: 0 },
+		{ responsivePriority: 2, targets: 1},
+		{ responsivePriority: 3, targets: 6},
+		{ responsivePriority: 4, targets: 7},
+		{
 			"targets": 6,
 			"createdCell": function(td, cellData, rowData, row, col) {
 				if (rowData[6] == '1') {
@@ -718,12 +723,19 @@
 			});
 		}
 	});
-
+	$("#customer-contacts-tab").on('click',function(){
+		contact_table.ajax.reload(null, false);
+	});
 	//all Notes
 	var note_table = $('#customer_notes_datatable').DataTable({
 		responsive: true,
 		ajax: "<?php echo base_url('admin/Customermaster/all_note/' . $customer->id); ?>",
-		"columnDefs": [{
+		"columnDefs": [
+		{ responsivePriority: 1, targets: 0 },
+		{ responsivePriority: 2, targets: 1},
+		{ responsivePriority: 3, targets: 3},
+		{ responsivePriority: 4, targets: 4},
+		{
 			"targets": 3,
 			"createdCell": function(td, cellData, rowData, row, col) {
 				if (rowData[3] == '1') {
@@ -794,6 +806,9 @@
 				}
 			});
 		}
+	});
+	$("#customer-notes-tab").on('click',function(){
+		note_table.ajax.reload(null, false);
 	});
 
 	$('input[name=inquiry_type]').click(function() {
