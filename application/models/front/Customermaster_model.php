@@ -47,6 +47,7 @@ class Customermaster_model extends CI_model{
 		$this->db->delete('tbl_note_master');
 		return true;
 	}
+	
 	function getCustomer($id){
 		$data = $this->db->get_where('tb_customer_master',['id'=>$id])->row();
 		return $data;
@@ -57,6 +58,10 @@ class Customermaster_model extends CI_model{
 	}
 	function getCustomerNote($id){
 		$data = $this->db->get_where('tbl_note_master',['customer_id'=>$id])->result_array();
+		return $data;
+	}
+	function getCustomerProperty($id){
+		$data = $this->db->get_where('tb_property_master',['customer_id'=>$id])->result_array();
 		return $data;
 	}
 	function getNote($id){
@@ -87,6 +92,7 @@ class Customermaster_model extends CI_model{
 		$data = $this->db->get('tb_customer_master')->result_array();
 		return $data;
 	}
+	
 	function updaterecords($id,$formArray)
 	{
 		$this->db->where('id',$id);
@@ -106,5 +112,28 @@ class Customermaster_model extends CI_model{
 		$this->db->update('tbl_note_master',$formArray);
 		return true;
 	}
+	// function getAgents(){
+	// 	$data = $this->db->get('tb_agent_master')->result_array();
+	// 	return $data;
+	// }
+	// function getPromaster(){
+	// 	$data = $this->db->get('tb_master')->result_array();
+	// 	return $data;
+	// }
+	// function getCategory(){
+	// 	$data = $this->db->get('tb_property_category')->result_array();
+	// 	return $data;
+	// }
+	// function getSubcategory(){
+	// 	$data = $this->db->get('tb_property_subcategory')->result_array();
+	// 	return $data;
+	// }
+
+	// function getSubcategoryByCategory($category_id)
+	// {
+	// 	$this->db->where('property_category_id', $category_id);
+	// 	$data = $this->db->get('tb_property_subcategory')->result_array();
+	// 	return $data;
+	// }
 }
 ?>

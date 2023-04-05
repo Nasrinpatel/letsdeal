@@ -8,12 +8,17 @@ class Customermaster extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('front/Customermaster_model', 'customermaster');
+		// $this->load->model('front/Propertymaster_model', 'propertymaster');
 		$this->form_validation->set_error_delimiters('<div class="bg-red-dark m-1 rounded-sm shadow-xl text-center line-height-xs font-10 py-1 text-uppercase mb-0 font-700">', '</div>');
 	}
 
 	public function index()
 	{
 		$data['page_name'] = 'customer_master_view';
+		// $data['customers'] = $this->customermaster->getCustomer();
+		// $data['master'] = $this->customermaster->getPromaster();
+		// $data['category'] = $this->customermaster->getCategory();
+		// $data['subcategory'] = $this->customermaster->getSubcategory();
 		$this->load->view('admin/index', $data);
 	}
 
@@ -87,9 +92,41 @@ class Customermaster extends CI_Controller
 		}
 		echo json_encode($result);
 	}
+	public function all_property($id)
+	{
+		
+		//$promasters = $this->propertymaster->all($id);
+		$promasters = $this->customermaster->getCustomerProperty($id);
+		$result = array('data' => []);
+		//$result = array();
+		$i = 1;
+		foreach ($promasters as $value) {
+
+			$master_data = $this->db->get_where('tb_master', array('id' => $value['pro_master_id']))->row();
+			$category_data = $this->db->get_where('tb_property_category', array('id' => $value['pro_category_id']))->row();
+			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
+
+
+			$button = '<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '#customer-property" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+
+			$result['data'][] = array(
+				$i++,
+				$master_data->name,
+				$category_data->name,
+				$subcategory_data->name,
+				date('d M Y h:i:s a', strtotime($value['created_date'])),
+				$value['status'],
+				$button
+			);
+		}
+		echo json_encode($result);
+	}
 
 	public function add()
 	{
+		
+
 		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
 		$data['source'] = $this->customermaster->getSource();
 		$data['position'] = $this->customermaster->getPosition();

@@ -25,6 +25,55 @@
 					<div class="card">
 						<div class="card-body">
 							<form method="post" id="store-promas" enctype="multipart/form-data" action="<?php echo base_url() . 'admin/propertymaster/store'; ?>">
+								<?php if (isset($_GET['customer_id']) && $_GET['customer_id'] != '') { ?>
+									<input type="hidden" name="customer_id" value="<?= $_GET['customer_id'] ?>" />
+									<input type="hidden" name="redirect_to" value="customer">
+								<?php } elseif (isset($_GET['agent_id']) && $_GET['agent_id'] != '') { ?>
+									<input type="hidden" name="agent_id" value="<?= $_GET['agent_id'] ?>" />
+									<input type="hidden" name="redirect_to" value="agent">
+								<?php } else { ?>
+									<div class="row">
+										<div class="col-md-3">
+											<div class="mb-3">
+
+												<input class="form-check-input" type="radio" id="customer" name="customeragent" value="customer">
+												<label class="form-check-label" for="customer">Customer</label>
+											</div>
+
+										</div>
+										<div class="col-md-4">
+											<div class="mb-3">
+												<input class="form-check-input" type="radio" id="agent" name="customeragent" value="agent">
+												<label class="form-check-label" for="agent">Agent</label>
+											</div>
+
+										</div>
+									</div>
+									<div id='customer_div' style='display:none'>
+										<div class="col-md-5">
+											<div class="mb-3">
+												<label class="form-label">Customers<span class="text-danger">*</span></label>
+												<select data-toggle="select2" class="form-control select2" name="customer_id" data-width="100%">
+													<?php foreach ($customers as $cust) { ?>
+														<option value="<?= $cust['id'] ?>"><?= $cust['first_name'] ?> <?= $cust['last_name'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div id='agent_div' style='display:none'>
+										<div class="col-md-5">
+											<div class="mb-3">
+												<label class="form-label">Agent<span class="text-danger">*</span></label>
+												<select data-toggle="select2" class="form-control select2" name="agent_id" data-width="100%">
+													<?php foreach ($agents as $ag) { ?>
+														<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?> <?= $ag['last_name'] ?></option>
+													<?php } ?>
+												</select>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="mb-3">
@@ -38,7 +87,7 @@
 												<?php }
 												?>
 											</select>
-										
+
 											<span style="color: red;"><?= form_error('pro_master_id') ?></span>
 										</div>
 
@@ -81,7 +130,7 @@
 								</div>
 								<div class="row">
 									<div class="col-lg-12" id="form_genrator">
-									
+
 									</div>
 								</div>
 								<div class="row">
@@ -105,7 +154,7 @@
 									</div>
 								</div>
 							</form>
-							
+
 						</div> <!-- end card-body -->
 					</div> <!-- end card-->
 				</div> <!-- end col -->
@@ -115,7 +164,7 @@
 	</div> <!-- content -->
 </div>
 
-<script>	
+<script>
 	$(document).ready(function() {
 		$('#property_category').change(function() {
 			var categoryId = $(this).val();
@@ -142,44 +191,46 @@
 				$("#property_subcategory").empty();
 			}
 		});
-		$('#fetch_question').click(function(){		
+		$('#fetch_question').click(function() {
 			var master_id = $('#property_master').val();
 			var category_id = $('#property_category').val();
 			var subcategory_id = $('#property_subcategory').val();
-			if(master_id == ''){
-				error_message('','Please Select Master');
-			}
-			else if(category_id == ''){
-				error_message('','Please Select Category');
-			}
-			else if(subcategory_id == ''){
-				error_message('','Please Select Subcategory');
+			if (master_id == '') {
+				error_message('', 'Please Select Master');
+			} else if (category_id == '') {
+				error_message('', 'Please Select Category');
+			} else if (subcategory_id == '') {
+				error_message('', 'Please Select Subcategory');
 			}
 			//alert(master_id + ' '+category_id+' ' + subcategory_id);
-			$.ajax({ 
+			$.ajax({
 				// type: 'POST',
 				url: '<?php echo base_url('admin/Propertymaster/get_questions'); ?>',
 				type: 'POST',
-				data:{master_id: master_id, category_id: category_id, subcategory_id: subcategory_id},				
+				data: {
+					master_id: master_id,
+					category_id: category_id,
+					subcategory_id: subcategory_id
+				},
 				dataType: 'json',
 				success: function(data) {
 					debugger;
-					if(data.success == true){						
+					if (data.success == true) {
 						$('#form_genrator').html(data.html);
-						form_init();						
+						form_init();
 						$(".image_gallery").fileinput();
 					}
 				}
 			});
 		});
-		$(document).on('click','.add-button',function() {
+		$(document).on('click', '.add-button', function() {
 			// create a new select element
 			var name = $(this).attr('data-name');
 			var newSelect = $("<div id='videogallery'>" +
 				"<div class='row'>" +
 				"<div class='col-lg-10'>" +
 				"<div class='mb-3'>" +
-				"<input type='text' class='form-control' name='"+name+"' id='videogallery' placeholder='Enter Video Link'>" +
+				"<input type='text' class='form-control' name='" + name + "' id='videogallery' placeholder='Enter Video Link'>" +
 				"</div>" +
 				"</div>" +
 				"<div class='col-lg-2'>" +
@@ -191,6 +242,28 @@
 		$(document).on('click', '.remove-button', function() {
 			// remove the select element with the id 'question'
 			$(this).parent().parent('div').remove();
+		});
+		//customer
+		$('input[name=customeragent]').click(function() {
+
+			if (this.id == "customer") {
+				$("#customer_div").show('slow');
+
+			} else {
+				$("#customer_div").hide('slow');
+
+			}
+		});
+		//agent
+		$('input[name=customeragent]').click(function() {
+
+			if (this.id == "agent") {
+				$("#agent_div").show('slow');
+
+			} else {
+				$("#agent_div").hide('slow');
+
+			}
 		});
 	});
 </script>

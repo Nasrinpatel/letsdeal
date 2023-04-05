@@ -15,6 +15,8 @@ class Propertymaster extends CI_Controller
 	{
 		$data['page_name'] = 'property_master_view';
 		// $data['subcategory'] = $this->promast->all();
+		
+		$data['customers'] = $this->promast->getCustomer();
 		$data['master'] = $this->promast->getPromaster();
 		$data['category'] = $this->promast->getCategory();
 		$data['subcategory'] = $this->promast->getSubcategory();
@@ -207,6 +209,8 @@ class Propertymaster extends CI_Controller
 	}
 	public function add()
 	{
+		$data['customers'] = $this->promast->getCustomer();
+		$data['agents'] = $this->promast->getAgents();
 		$data['master'] = $this->promast->getPromaster();
 		$data['category'] = $this->promast->getCategory();
 		$data['subcategory'] = $this->promast->getSubcategory();
@@ -236,9 +240,14 @@ class Propertymaster extends CI_Controller
 			$response = $this->promast->saverecords($formArray);
 			
 			if ($response == true) {
-				$this->session->set_flashdata('success', 'Property Master Added Successfully.');
+				$this->session->set_flashdata('success', 'Property Added Successfully.');
 			} else {
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
+			}
+			if($formArray['redirect_to'] == 'customer'){
+				return redirect('admin/customermaster/edit/'.$formArray['customer_id'].'#customer-property');
+			}elseif($formArray['redirect_to'] == 'agent'){
+				return redirect('admin/Propertymaster/');
 			}
 			return redirect('admin/Propertymaster/');
 		}
@@ -251,6 +260,8 @@ class Propertymaster extends CI_Controller
 		$data = array();
 		$data['property'] = $propertymaster;
 		// $data['question'] = $this->mas->getQuestion();
+		$data['customers'] = $this->promast->getCustomer();
+		$data['agents'] = $this->promast->getAgents();
 		$data['master'] = $this->promast->getPromaster();
 		$data['category'] = $this->promast->getCategory();
 		$data['subcategory'] = $this->promast->getSubcategory();
@@ -283,11 +294,17 @@ class Propertymaster extends CI_Controller
 
 			$response = $this->promast->updaterecords($id, $formArray);
 			if ($response == true) {
-				$this->session->set_flashdata('success', 'Property Master Updated Successfully.');
+				$this->session->set_flashdata('success', 'Property Updated Successfully.');
 			} else {
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
+			if($formArray['redirect_to'] == 'customer'){
+				return redirect('admin/customermaster/edit/'.$formArray['customer_id'].'#customer-property');
+			}elseif($formArray['redirect_to'] == 'agent'){
+				return redirect('admin/Propertymaster/');
+			}
 			return redirect('admin/Propertymaster/');
+			
 			//print_r($response);die;
 		 }
 	}

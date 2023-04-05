@@ -17,6 +17,15 @@ class Propertymaster_model extends CI_model{
 	function saverecords($formArray)
 	{
 		$d=[];
+		$d['customer_id'] = $formArray['customer_id'];
+		$d['agent_id'] = $formArray['agent_id'];
+		if($formArray['customeragent']=='customer'){
+			$d['agent_id'] = null;
+		}
+		if($formArray['customeragent']=='agent'){			
+			$d['customer_id'] = null;
+		}
+		
 		$d['pro_master_id'] = $formArray['pro_master_id'];
 		$d['pro_category_id'] = $formArray['pro_category_id'];
 		$d['pro_subcategory_id'] = $formArray['pro_subcategory_id'];
@@ -149,7 +158,15 @@ class Propertymaster_model extends CI_model{
 		$this->db->delete($this->db_name);
 		return true;
 	}
-
+	
+	function getCustomer(){
+		$data = $this->db->get('tb_customer_master')->result_array();
+		return $data;
+	}
+	function getAgents(){
+		$data = $this->db->get('tb_agent_master')->result_array();
+		return $data;
+	}
 	function getPromaster(){
 		$data = $this->db->get('tb_master')->result_array();
 		return $data;
@@ -177,6 +194,14 @@ class Propertymaster_model extends CI_model{
 	{
 
 		$d = [];
+		$d['customer_id'] = $formArray['customer_id'];
+		$d['agent_id'] = $formArray['agent_id'];
+		if($formArray['customeragent']=='customer'){
+			$d['agent_id'] = null;
+		}
+		if($formArray['customeragent']=='agent'){			
+			$d['customer_id'] = null;
+		}
 		$d['pro_master_id'] = $formArray['pro_master_id'];
 		$d['pro_category_id'] = $formArray['pro_category_id'];
 		$d['pro_subcategory_id'] = $formArray['pro_subcategory_id'];

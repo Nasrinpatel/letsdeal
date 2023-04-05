@@ -298,7 +298,12 @@
 											Contact</a>
 										<a class="nav-link mt-2 py-2" id="customer-notes-tab" data-bs-toggle="pill" href="#customer-notes" role="tab" aria-controls="customer-notes" aria-selected="false">
 											<i class="mdi mdi-note d-block font-24"></i>
-											Note</a>
+											Note
+										</a>
+										<a class="nav-link mt-2 py-2" id="customer-property-tab" data-bs-toggle="pill" href="#customer-property" role="tab" aria-controls="customer-property" aria-selected="false">
+											<i class="mdi mdi-office-building d-block font-24"></i>
+											Property
+										</a>
 									</div>
 
 
@@ -335,12 +340,10 @@
 															<div class="mb-3">
 																<label class="form-label">Agents<span class="text-danger">*</span></label>
 																<select data-toggle="select2" title="Assigned" class="form-control select2" name="agent_id" data-width="100%">
-																<?php foreach ($agent as $ag) { ?>
-																<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?><?= $ag['last_name'] ?></option>
-															<?php } ?>
+																	<?php foreach ($agent as $ag) { ?>
+																	<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?><?= $ag['last_name'] ?></option>
+																	<?php } ?>
 																</select>
-
-
 															</div>
 														</div>
 													</div>
@@ -587,7 +590,66 @@
 												</div>
 											</div>
 										</div>
+										<div class="tab-pane fade" id="customer-property" role="tabpanel" aria-labelledby="customer-property-tab">
+											<div>
+												<div class="row justify-content-between mb-2">
+													<div class="col-auto">
+														<h4 class="header-title">Property</h4>
+													</div>
+													<div class="col-sm-6">
+														<div class="text-sm-end">
+														<!-- <a href="<?= base_url('admin/Customermaster/add') ?>" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i> Add New</a> -->
+														
+															<a href="<?= base_url('admin/Propertymaster/add') ?>?customer_id=<?=$customer->id?>" class="btn btn-danger waves-effect waves-light mb-2">Add Property</a>
+														</div>
 
+													</div>
+												</div>
+												<!-- end row-->
+												<div class="row my-4">
+													<div class="col-12">
+														<div class="card">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<?php if ($this->session->flashdata('success')) { ?>
+																			<div class="alert alert-success" role="alert">
+																				<?php
+																				echo $this->session->flashdata('success');
+																				?>
+																			</div>
+																		<?php } ?>
+																		<?php if ($this->session->flashdata('error')) { ?>
+																			<div class="alert alert-danger" role="alert">
+																				<?php
+																				echo $this->session->flashdata('error');
+																				?>
+																			</div>
+																		<?php } ?>
+																	</div>
+																</div>
+
+																<div class="table-responsive">
+																	<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="customer_property_datatable">
+																		<thead>
+																			<tr>
+																				<th>#</th>
+																				<th>Master Name</th>
+																				<th>Category</th>
+																				<th>Sub Category</th>
+																				<th>Create Date</th>
+																				<th>Status</th>
+																				<th style="width: 85px;">Action</th>
+																			</tr>
+																		</thead>
+																	</table>
+																</div>
+															</div> <!-- end card-body-->
+														</div> <!-- end card-->
+													</div> <!-- end col -->
+												</div>
+											</div>
+										</div>
 									</div> <!-- end col-->
 								</div> <!-- end row-->
 
@@ -624,7 +686,9 @@
 
 		var triggerEl = document.querySelector('#v-pills-tab a[href="'+hash+'"]')
 		bootstrap.Tab.getInstance(triggerEl).show() // Select tab by name
+		
 	});
+	
 	//all contact
 	var contact_table = $('#customer_contact_datatable').DataTable({
 		responsive: true,
@@ -723,9 +787,6 @@
 			});
 		}
 	});
-	$("#customer-contacts-tab").on('click',function(){
-		contact_table.ajax.reload(null, false);
-	});
 	//all Notes
 	var note_table = $('#customer_notes_datatable').DataTable({
 		responsive: true,
@@ -807,18 +868,48 @@
 			});
 		}
 	});
-	$("#customer-notes-tab").on('click',function(){
-		note_table.ajax.reload(null, false);
+
+
+	//all property
+	var property_table = $('#customer_property_datatable').DataTable({
+		responsive: true,
+		ajax: "<?php echo base_url('admin/Customermaster/all_property/' . $customer->id); ?>",
+		columnDefs: [
+		{ responsivePriority: 1, targets: 0 },
+		{ responsivePriority: 2, targets: 1},
+		{ responsivePriority: 3, targets: 5},
+		{ responsivePriority: 4, targets: 6},
+		{
+			"targets": 5,
+			"createdCell": function(td, cellData, rowData, row, col) {
+				if (rowData[5] == '1') {
+					$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
+				} else if (rowData[5] == '0') {
+					$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
+				}
+			}
+		}, ]
+	});
+	$(document).ready(function () {				
+		$("#customer-contacts-tab").on('click',function(){
+			contact_table.ajax.reload(null, false);
+		});
+		$("#customer-notes-tab").on('click',function(){
+			note_table.ajax.reload(null, false);
+		});
+		$("#customer-property-tab").on('click',function(){
+			property_table.ajax.reload(null, false);
+		});
+
+		var hash = window.location.hash;
+		$(hash+"-tab").trigger('click');
 	});
 
 	$('input[name=inquiry_type]').click(function() {
-
-	if (this.id == "agent") {
-		$("#agent_div").show('slow');
-		
-	} else {
-		$("#agent_div").hide('slow');
-		
-	}
+		if (this.id == "agent") {
+			$("#agent_div").show('slow');			
+		} else {
+			$("#agent_div").hide('slow');			
+		}
 	});		
 </script>
