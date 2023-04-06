@@ -187,7 +187,14 @@ class Propertymaster_model extends CI_model{
 		return $data;
 	}
 	function getPropertymaster($id){
-		$data = $this->db->where('id',$id)->get('tb_property_master')->row();
+		$this->db->select(['tb_property_master.*,`tb_customer_master`.`first_name` as customer_first_name,`tb_customer_master`.`last_name` as customer_last_name,`tb_agent_master`.`first_name` as agent_first_name,`tb_agent_master`.`last_name` as agent_last_name,`tb_master`.`name` as master_name,`tb_property_category`.`name` as property_category_name,`tb_property_subcategory`.`name` as property_subcategory_name']);
+		$this->db->join('tb_customer_master', 'tb_customer_master.id = tb_property_master.customer_id', 'left'); 
+		$this->db->join('tb_agent_master', 'tb_agent_master.id = tb_property_master.agent_id', 'left'); 
+		$this->db->join('tb_master', 'tb_master.id = tb_property_master.pro_master_id', 'left'); 
+		$this->db->join('tb_property_category', 'tb_property_category.id = tb_property_master.pro_category_id', 'left'); 
+		$this->db->join('tb_property_subcategory', 'tb_property_subcategory.id = tb_property_master.pro_subcategory_id', 'left'); 
+
+		$data = $this->db->where('tb_property_master.id',$id)->get('tb_property_master')->row();
 		return $data;
 	}
 	function updaterecords($id,$formArray)

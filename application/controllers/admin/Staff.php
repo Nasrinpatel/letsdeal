@@ -26,7 +26,8 @@ class Staff extends CI_Controller {
 		$result = array();
 		$i=1;
 		foreach ($staffs as $value) { 
-			$button = '<a href="'.base_url('admin/staff/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#staffedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+			$button = '<a href="'.base_url('admin/staff/staffdetails/' .$value['id']).'" class="action-icon view-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#staffview-modal"><i class="mdi mdi-eye-outline"></i></a>
+			<a href="'.base_url('admin/staff/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#staffedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
 			<a href="'.base_url('admin/staff/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 			$result['data'][] = array(
 				$i++,
@@ -69,6 +70,8 @@ class Staff extends CI_Controller {
 			return redirect('admin/staff/');
 		}
 	}
+	
+	
 
 	public function edit($id)
 	{
@@ -88,7 +91,12 @@ class Staff extends CI_Controller {
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}
 	}
-	
+	//staff details
+	public function staffdetails($id)
+	{
+		$data = $this->sta->getStaff($id);
+		echo json_encode($data);
+	}
 	public function delete($id)
 	{
 		$response = $this->sta->delete($id);

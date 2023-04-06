@@ -107,8 +107,8 @@ class Customermaster extends CI_Controller
 			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
 
 
-			$button = '<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '#customer-property" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '?customer_id='.$id.'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '?customer_id='.$id.'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
 
 			$result['data'][] = array(
 				$i++,

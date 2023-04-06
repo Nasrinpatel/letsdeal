@@ -44,8 +44,9 @@ class Propertymaster extends CI_Controller
 			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
 
 
-			$button = '<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="' . base_url('admin/Propertymaster/propertyDetails/' . $value['id']) . '" class="action-icon eye-btn"> <i class="mdi mdi-eye"></i>
+			<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
+			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i>';
 
 			$result['data'][] = array(
 				$i++,
@@ -54,7 +55,7 @@ class Propertymaster extends CI_Controller
 				$subcategory_data->name,
 				date('d M Y h:i:s a', strtotime($value['created_date'])),
 				$value['status'],
-				$button
+				$button   ,
 			);
 		}
 		echo json_encode($result);
@@ -252,7 +253,7 @@ class Propertymaster extends CI_Controller
 			return redirect('admin/Propertymaster/');
 		}
 	}
-
+	
 
 	public function edit($id)
 	{
@@ -271,6 +272,22 @@ class Propertymaster extends CI_Controller
 		$this->load->view('admin/index', $data);
 	}
 
+		//property details
+		public function propertyDetails($id)
+		{
+			$propertymaster = $this->promast->getPropertymaster($id);
+			$data = array();
+			$data['property'] = $propertymaster;
+			
+			$data['customers'] = $this->promast->getCustomer();
+			$data['master'] = $this->promast->getPromaster();
+			$data['category'] = $this->promast->getCategory();
+			$data['subcategory'] = $this->promast->getSubcategory();
+			$data['phases'] = $this->db->get_where('tb_phase_master',['status'=>1])->result_array();
+			
+			$data['page_name'] = 'property_master_details';
+			$this->load->view('admin/index',$data);
+		}
 
 	public function update($id)
 	{
@@ -315,9 +332,15 @@ class Propertymaster extends CI_Controller
 		$response = $this->promast->delete($id);
 
 		if ($response == true) {
-			$this->session->set_flashdata('success', 'Form Master Deleted Successfully.');
+			$this->session->set_flashdata('success', 'Property Deleted Successfully.');
 		} else {
 			$this->sesssion->set_flashdata('error', 'Something went wrong. Please try again');
+		}
+		if(isset($_GET['customer_id']) && $_GET['customer_id'] != ''){
+			return redirect('admin/customermaster/edit/'.$_GET['customer_id'].'#customer-property');
+		}
+		elseif(isset($_GET['agent_id']) && $_GET['agent_id'] != ''){
+			return redirect('admin/agentmaster/edit/'.$_GET['agent_id'].'#agent-property');
 		}
 		return redirect('admin/Propertymaster/');
 	}
