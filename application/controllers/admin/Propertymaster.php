@@ -44,9 +44,9 @@ class Propertymaster extends CI_Controller
 			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
 
 
-			$button = '<a href="' . base_url('admin/Propertymaster/propertyDetails/' . $value['id']) . '" class="action-icon eye-btn"> <i class="mdi mdi-eye"></i>
-			<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i>';
+			$button = '<a href="' . base_url('admin/Propertymaster/propertyDetails/' . $value['id']) . '" class="action-icon eye-btn"> <i class="mdi mdi-eye text-warning"></i>
+			<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i>';
 
 			$result['data'][] = array(
 				$i++,
@@ -114,9 +114,9 @@ class Propertymaster extends CI_Controller
 																$source_options=[];
 															}
 															if($que['question_answer_inputtype']=='Textbox'){
-																$html .= '<input type="text" name="answer_'.$phase['id'].'_'.$que['id'].'" class="form-control" id="userName1" name="userName1" value="" required>';
+																$html .= '<input type="text" name="answer_'.$phase['id'].'_'.$que['id'].'" class="form-control" id="userName1" name="userName1" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}elseif($que['question_answer_inputtype']=='Dropdown'){
-																$html .= '<select class="form-select" name="answer_'.$phase['id'].'_'.$que['id'].'" required>
+																$html .= '<select class="form-select" name="answer_'.$phase['id'].'_'.$que['id'].'" '.(($que['is_require'] == 1) ? 'required' : '').'>
 																		<option>Select Option</option>';
 																	foreach($source_options as $source_option){
 																		$html .= '<option value="'.$source_option['id'].'">'.$source_option['name'].'</option>';
@@ -125,52 +125,52 @@ class Propertymaster extends CI_Controller
 															}elseif($que['question_answer_inputtype']=='Checkbox'){	
 																foreach($source_options as $source_option){
 																	$html .= '<div class="form-check form-check-inline">';
-																		$html .= '<input class="form-check-input" type="checkbox" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="'.$source_option['id'].'">';
+																		$html .= '<input class="form-check-input" type="checkbox" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="'.$source_option['id'].'" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 																		$html .= '<label class="form-check-label" for="userName1">'.$source_option['name'].'</label><br>';              								 
 																	$html .= '</div>';
 																}                						
 															}elseif($que['question_answer_inputtype']=='Radio'){														
 																foreach($source_options as $source_option){
 																	$html .= '<div class="form-check form-check-inline">';
-																		$html .= '<input class="form-check-input" type="radio" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="'.$source_option['id'].'">';
+																		$html .= '<input class="form-check-input" type="radio" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="'.$source_option['id'].'" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 																		$html .= '<label class="form-check-label" for="userName1">'.$source_option['name'].'</label><br>';										
 																	$html .= '</div>';
 																}					
 															}elseif($que['question_answer_inputtype']=='Date'){	
-																$html .= '<input type="date" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';
+																$html .= '<input type="date" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}elseif($que['question_answer_inputtype']=='Textarea'){	
-																$html .= '<textarea class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" required></textarea>';
+																$html .= '<textarea class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" '.(($que['is_require'] == 1) ? 'required' : '').'></textarea>';
 															}elseif($que['question_answer_inputtype']=='File'){	
-																$html .= '<input type="file" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';
+																$html .= '<input type="file" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}elseif($que['question_answer_inputtype']=='Number'){	
-																$html .= '<input type="number" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                       
+																$html .= '<input type="number" class="form-control" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';                                                                                     
 															}elseif($que['question_answer_inputtype']=='Phone'){	
-																$html .= '<input type="tel" class="form-control" placeholder="Enter Phone number" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
+																$html .= '<input type="tel" class="form-control" placeholder="Enter Phone number" id="userName1"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';                                                                                     
 															}  
 															elseif($que['question_answer_inputtype']=='Email'){	
-																$html .= '<input type="email" class="form-control" id="userName1" placeholder="Enter Email Address"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
+																$html .= '<input type="email" class="form-control" id="userName1" placeholder="Enter Email Address"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';                                                                                      
 															} 
 															elseif($que['question_answer_inputtype']=='Link'){	
-																$html .= '<input type="url" class="form-control" id="userName1" placeholder="Enter Link"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" required>';                                                                                      
+																$html .= '<input type="url" class="form-control" id="userName1" placeholder="Enter Link"  name="answer_'.$phase['id'].'_'.$que['id'].'" value="" '.(($que['is_require'] == 1) ? 'required' : '').'>';                                                                                     
 															} 
 															elseif($que['question_answer_inputtype'] == 'Image') {
-																$html .= '<input type="file" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="image/*" required>';
+																$html .= '<input type="file" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="image/*" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}
 															elseif($que['question_answer_inputtype'] == 'Video 360') {
-																$html .= '<input type="url" class="form-control" placeholder="Enter Vieo 360 Link" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="video/*" required>';
+																$html .= '<input type="url" class="form-control" placeholder="Enter Vieo 360 Link" name="answer_'.$phase['id'].'_'.$que['id'].'" accept="video/*" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}
 															elseif($que['question_answer_inputtype'] == 'Google Map') {
-																$html .= '<div class="row"><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Latitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Longitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" required></div></div>';
+																$html .= '<div class="row"><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Latitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" '.(($que['is_require'] == 1) ? 'required' : '').'></div><div class="col-md-6"><input type="text" class="form-control" placeholder="Enter Longitude"  name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="" '.(($que['is_require'] == 1) ? 'required' : '').'></div></div>';
 															}
 															elseif($que['question_answer_inputtype'] == 'Image Gallery') {
-																$html .= '<input class="image_gallery" name="answer_'.$phase['id'].'_'.$que['id'].'[]" type="file" multiple>';
+																$html .= '<input class="image_gallery" name="answer_'.$phase['id'].'_'.$que['id'].'[]" type="file" multiple '.(($que['is_require'] == 1) ? 'required' : '').'>';
 															}
 															elseif($que['question_answer_inputtype'] == 'Video Gallery') {
 																$html .= '<div id="videogallery">';
 																$html .= '<div class="row">';
 																$html .= '<div class="col-lg-10">';
 																$html .= '<div class="mb-3">';
-																$html .= '<input type="url" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" id="videogallery" placeholder="Enter Video Link">';
+																$html .= '<input type="url" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" id="videogallery" placeholder="Enter Video Link" '.(($que['is_require'] == 1) ? 'required' : '').'>';
 																$html .= '</div>';
 																$html .= '</div>';
 																$html .= '<div class="col-lg-2">';
@@ -246,7 +246,7 @@ class Propertymaster extends CI_Controller
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
 			if($formArray['redirect_to'] == 'customer'){
-				return redirect('admin/customermaster/edit/'.$formArray['customer_id'].'#customer-property');
+				return redirect('admin/customermaster/'.$formArray['page'].'/'.$formArray['customer_id'].'#customer-property');
 			}elseif($formArray['redirect_to'] == 'agent'){
 				return redirect('admin/Propertymaster/');
 			}
@@ -316,7 +316,7 @@ class Propertymaster extends CI_Controller
 				$this->session->set_flashdata('error', 'Something went wrong. Please try again');
 			}
 			if($formArray['redirect_to'] == 'customer'){
-				return redirect('admin/customermaster/edit/'.$formArray['customer_id'].'#customer-property');
+				return redirect('admin/customermaster/'.$formArray['page'].'/'.$formArray['customer_id'].'#customer-property');
 			}elseif($formArray['redirect_to'] == 'agent'){
 				return redirect('admin/Propertymaster/');
 			}
@@ -337,11 +337,20 @@ class Propertymaster extends CI_Controller
 			$this->sesssion->set_flashdata('error', 'Something went wrong. Please try again');
 		}
 		if(isset($_GET['customer_id']) && $_GET['customer_id'] != ''){
-			return redirect('admin/customermaster/edit/'.$_GET['customer_id'].'#customer-property');
+			return redirect('admin/customermaster/'.$_GET['page'].'/'.$_GET['customer_id'].'#customer-property');
 		}
 		elseif(isset($_GET['agent_id']) && $_GET['agent_id'] != ''){
 			return redirect('admin/agentmaster/edit/'.$_GET['agent_id'].'#agent-property');
 		}
 		return redirect('admin/Propertymaster/');
 	}
+	public function update_status($id,$status){
+		$response = $this->promast->update_status($id,$status);
+		if ($response == true) {
+			echo json_encode(array('success'=>true,'message'=>'Property Status Updated Successfully.'));
+		} else {
+			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
+		}
+	}
+
 }

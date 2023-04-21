@@ -39,8 +39,8 @@
 						$sub_category_names[]=$sub_category['name'];
 					}
 
-					$button = '<a href="'.base_url('admin/formmaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-					<a href="'.base_url('admin/formmaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+					$button = '<a href="'.base_url('admin/formmaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+					<a href="'.base_url('admin/formmaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 					$result['data'][] = array(
 						$i++,
 						$master_data->name,

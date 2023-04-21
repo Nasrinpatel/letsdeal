@@ -25,9 +25,10 @@
 					<div class="card">
 						<div class="card-body">
 							<form method="post" id="store-promas" enctype="multipart/form-data" action="<?php echo base_url() . 'admin/propertymaster/store'; ?>">
+								<input type="hidden" name="page" value="<?= @$_GET['page'] ?>">
 								<?php if (isset($_GET['customer_id']) && $_GET['customer_id'] != '') { ?>
 									<input type="hidden" name="customer_id" value="<?= $_GET['customer_id'] ?>" />
-									<input type="hidden" name="redirect_to" value="customer">
+									<input type="hidden" name="redirect_to" value="customer">			
 								<?php } elseif (isset($_GET['agent_id']) && $_GET['agent_id'] != '') { ?>
 									<input type="hidden" name="agent_id" value="<?= $_GET['agent_id'] ?>" />
 									<input type="hidden" name="redirect_to" value="agent">
@@ -43,8 +44,8 @@
 										</div>
 										<div class="col-md-4">
 											<div class="mb-3">
-												<input class="form-check-input" type="radio" id="agent" name="customeragent" value="agent">
-												<label class="form-check-label" for="agent">Agent</label>
+												<input class="form-check-input" type="radio" id="agent" name="customeragent" checked value="agent">
+												<label class="form-check-label" for="agent">Channel Partner</label>
 											</div>
 
 										</div>
@@ -55,7 +56,7 @@
 												<label class="form-label">Customers<span class="text-danger">*</span></label>
 												<select data-toggle="select2" class="form-control select2" name="customer_id" data-width="100%">
 													<?php foreach ($customers as $cust) { ?>
-														<option value="<?= $cust['id'] ?>"><?= $cust['first_name'] ?> <?= $cust['last_name'] ?></option>
+														<option value="<?= $cust['id'] ?>"><?= $cust['first_name'] ?> <?= $cust['last_name'] ?>   <?= $cust['phone'] ?></option>
 													<?php } ?>
 												</select>
 											</div>
@@ -64,10 +65,10 @@
 									<div id='agent_div' style='display:none'>
 										<div class="col-md-5">
 											<div class="mb-3">
-												<label class="form-label">Agent<span class="text-danger">*</span></label>
+												<label class="form-label">Channel Partner <span class="text-danger">*</span></label>
 												<select data-toggle="select2" class="form-control select2" name="agent_id" data-width="100%">
 													<?php foreach ($agents as $ag) { ?>
-														<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?> <?= $ag['last_name'] ?></option>
+														<option value="<?= $ag['id'] ?>"><?= $ag['first_name'] ?> <?= $ag['last_name'] ?> <?= $ag['nick_name'] ? ' (' . $ag['nick_name'] . ')' : '' ?>  <?= $ag['phone'] ?></option>
 													<?php } ?>
 												</select>
 											</div>

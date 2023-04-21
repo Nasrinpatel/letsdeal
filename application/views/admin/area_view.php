@@ -2,7 +2,7 @@
 	<!-- Start Page Content here -->
 	<!-- ============================================================== -->
 	<!--Add Modal -->
-	<div class="modal fade" id="source-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="area-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
@@ -10,16 +10,26 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" id="store-posi" action="<?php echo base_url() . 'admin/source/store'; ?>">
+					<form method="post" id="store-area" action="<?php echo base_url() . 'admin/area/store'; ?>">
+					<div class="mb-3">
+							<label for="area" class="form-label">Select City</label>
+							<select class="form-select" name="city_id" id="area">
+								<option value="">Select City</option>
+								<?php foreach ($cites as $ci) { ?>
+									<option value="<?= $ci['id'] ?>"><?= $ci['name'] ?></option>
+								<?php } ?>
+							</select>
+							<span style="color: red;"><?= form_error('city_id') ?></span>
 
+						</div>
 						<div class="mb-3">
-							<label for="name" class="form-label">Name</label>
-							<input type="text" class="form-control" name="name" id="name" placeholder="Enter source name">
+							<label for="name" class="form-label">Area Name</label>
+							<input type="text" class="form-control" name="name" id="name" placeholder="Enter Area name">
 							<?= form_error('name')  ?>
 						</div>
 						<div class="mb-3">
-							<label for="posi_status" class="form-label">Status</label>
-							<select class="form-select" name="status" id="posi_status">
+							<label for="area_status" class="form-label">Status</label>
+							<select class="form-select" name="status" id="area_status">
 								<option selected="">Select Status</option>
 								<option value="1" selected>Active</option>
 								<option value="0">Inactive</option>
@@ -36,24 +46,36 @@
 	</div><!-- /.modal -->
 
 	<!-- Edit Modal -->
-	<div class="modal fade" id="sourceedit-modal" tabindex="-1" role="dialog" aria-hidden="true">
+	<div class="modal fade" id="areaedit-modal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header bg-light">
-					<h4 class="modal-title" id="myCenterModalLabel2">Edit Source</h4>
+					<h4 class="modal-title" id="myCenterModalLabel2">Edit Area</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
 				</div>
 				<div class="modal-body p-4">
-					<form method="post" id="update_source" action="#">
-						<input type="hidden" name="id" id="edit_posi_id" />
+					<form method="post" id="update_area" action="#">
+						<input type="hidden" name="id" id="edit_area_id" />
 						<div class="mb-3">
-							<label for="name" class="form-label">Name</label>
-							<input type="text" class="form-control" name="name" id="name" value="" placeholder="Enter Source name">
+						<label for="city" class="form-label">Select City</label>
+							<select class="form-select" name="city_id" id="city">
+								<option value="">Select City</option>
+								<?php foreach ($cites as $ci) { ?>
+									<option value="<?= $ci['id'] ?>"><?= $ci['name'] ?></option>
+								<?php } ?>
+							</select>
+							
+							<span style="color: red;"><?= form_error('city_id') ?></span>
+
+						</div>
+						<div class="mb-3">
+							<label for="name" class="form-label">Area Name</label>
+							<input type="text" class="form-control" name="name" id="name" value="" placeholder="Enter Area name">
 							<?= form_error('name')  ?>
 						</div>
 						<div class="mb-3">
-							<label for="source_status" class="form-label">Status</label>
-							<select class="form-select" name="status" id="source_status">
+							<label for="area_status" class="form-label">Status</label>
+							<select class="form-select" name="status" id="area_status">
 								<option selected="">Select Status</option>
 								<option value="1">Active</option>
 								<option value="0">Inactive</option>
@@ -81,11 +103,11 @@
 								<ol class="breadcrumb m-0">
 									<!-- <li class="breadcrumb-item"><a href="javascript: void(0);">UBold</a></li>
 									<li class="breadcrumb-item"><a href="javascript: void(0);">CRM</a></li> -->
-									<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#source-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+									<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#area-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
 
 								</ol>
 							</div>
-							<h4 class="page-title">Inquiry Source</h4>
+							<h4 class="page-title">Area Master</h4>
 						</div>
 					</div>
 				</div>
@@ -116,7 +138,7 @@
 								</div>
 								<div class="row mb-2">
 									<!-- <div class="col-sm-8">
-										<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#source-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
+										<button type="button" class="btn btn-danger waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#area-modal"><i class="mdi mdi-plus-circle me-1"></i> Add New</button>
 									</div> -->
 									<div class="col-sm-4">
 										<div class="text-sm-end mt-2 mt-sm-0">
@@ -128,14 +150,15 @@
 								</div>
 
 								<div class="table-responsive">
-									<table class="table table-centered table-nowrap table-striped" id="source_datatable">
+									<table class="table table-centered table-nowrap table-striped" id="area_datatable">
 										<thead>
 											<tr>
 
 												<th>#</th>
-												<th>Source Name</th>
+												<th>Area Name</th>
 												<th>Create Date</th>
 												<th>Status</th>
+												
 												<th style="width: 85px;">Action</th>
 											</tr>
 										</thead>
@@ -155,9 +178,9 @@
 		</div> <!-- content -->
 	</div>
 	<script>
-		var table = $('#source_datatable').DataTable({
+		var table = $('#area_datatable').DataTable({
 			responsive: true,
-			ajax: "<?php echo base_url('admin/Source/all'); ?>",
+			ajax: "<?php echo base_url('admin/Area/all'); ?>",
 			"columnDefs": [{
 				"targets": 3,
 				"createdCell": function(td, cellData, rowData, row, col) {
@@ -174,21 +197,22 @@
 		$(document).on('click', ".edit-btn", function() {
 			var id = $(this).attr('data-id');
 			$.ajax({
-				url: '<?php echo base_url() ?>admin/Source/edit/' + id,
+				url: '<?php echo base_url() ?>admin/Area/edit/' + id,
 				type: "POST",
 				dataType: "json",
 				success: function(data) {
-					$("#sourceedit-modal #edit_posi_id").val(data.id);
-					$('#sourceedit-modal #name').val(data.name);
-					$("#sourceedit-modal #source_status").val(data.status);
+					$("#areaedit-modal #edit_area_id").val(data.id);
+					$('#areaedit-modal #city').val(data.city_id);
+					$('#areaedit-modal #name').val(data.name);
+					$("#areaedit-modal #area_status").val(data.status);
 				}
 			});
 		});
-		$("#update_source").submit(function(o) {
+		$("#update_area").submit(function(o) {
 			o.preventDefault();
-			var id = $('#edit_posi_id').val();
+			var id = $('#edit_area_id').val();
 			$.ajax({
-				url: '<?php echo base_url() ?>admin/Source/update/' + id,
+				url: '<?php echo base_url() ?>admin/Area/update/' + id,
 				type: "POST",
 				data: $(this).serialize(),
 				dataType: "json",
@@ -200,7 +224,7 @@
 			});
 
 		});
-		$('#store-posi').validate({
+		$('#store-area').validate({
 			rules: {
 				name: "required",
 				status: "required"
@@ -209,5 +233,6 @@
 
 			}
 		});
+		
 		
 	</script>

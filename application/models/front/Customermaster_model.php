@@ -80,6 +80,7 @@ class Customermaster_model extends CI_model{
 		$data = $this->db->get('tb_position_master')->result_array();
 		return $data;
 	}
+	
 	function getSource(){
 		$data = $this->db->get('tb_source_master')->result_array();
 		return $data;
@@ -89,10 +90,21 @@ class Customermaster_model extends CI_model{
 		return $data;
 	}
 	function getAgent(){
-		$data = $this->db->get('tb_customer_master')->result_array();
+		$data = $this->db->get('tb_agent_master')->result_array();
 		return $data;
 	}
-	
+	function getPositionByID($id){
+		$data = $this->db->get_where('tb_position_master',['id'=>$id])->row();
+		return $data;
+	}
+	function getSourceByID($id){
+		$data = $this->db->get_where('tb_source_master',['id'=>$id])->row();
+		return $data;
+	}
+	function getStaffByID($id){
+		$data = $this->db->get_where('tbl_staff_master',['id'=>$id])->row();
+		return $data;
+	}
 	function updaterecords($id,$formArray)
 	{
 		$this->db->where('id',$id);

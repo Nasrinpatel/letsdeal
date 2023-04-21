@@ -32,6 +32,7 @@
 									<div class="card-body">
 
 										<form method="post" action="<?php echo base_url('admin/Propertymaster/update/' . $property->id); ?>" enctype="multipart/form-data">
+										<input type="hidden" name="page" value="<?= @$_GET['page'] ?>">
 										<?php if (isset($_GET['customer_id']) && $_GET['customer_id'] != '') { ?>
 											<input type="hidden" name="customer_id" value="<?= $_GET['customer_id'] ?>" />
 											<input type="hidden" name="redirect_to" value="customer">
@@ -51,7 +52,7 @@
 												<div class="col-md-4">
 													<div class="mb-3">
 														<input class="form-check-input" type="radio" id="agent" name="customeragent" <?= $property->agent_id != '' ? 'checked' : ''; ?> value="agent">
-														<label class="form-check-label" for="agent">Agent</label>
+														<label class="form-check-label" for="agent">Channel Partner </label>
 													</div>
 
 												</div>
@@ -72,9 +73,9 @@
 											<div id='agent_div' style='display:none'>
 												<div class="col-md-5">
 													<div class="mb-3">
-														<label class="form-label">Agent<span class="text-danger">*</span></label>
+														<label class="form-label">Channel Partner <span class="text-danger">*</span></label>
 														<select data-toggle="select2" class="form-control select2" name="agent_id" data-width="100%">
-															<option value="">Select Agent</option>
+															<option value="">Select Channel Partner </option>
 															<?php foreach ($agents as $ag) { ?>
 																<option value="<?= $ag['id'] ?>"<?= ($property->agent_id == $ag['id']) ? 'selected' : '' ?>><?= $ag['first_name'] ?> <?= $ag['last_name'] ?></option>
 															<?php } ?>
@@ -86,8 +87,8 @@
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="mb-3">
-														<label for="masters" class="form-label">Select Master</label>
-														<select class="form-select select2" name="pro_master_id" id="masters">
+														<label for="property_master" class="form-label">Select Master</label>
+														<select class="form-select select2" name="pro_master_id" id="property_master">
 															<option value="">Select Master</option>
 															<?php foreach ($master as $mas) : ?>
 
@@ -192,7 +193,7 @@
 																										<input type="hidden" name="answer_option_ids_<?= $phase['id'] ?>_<?= $que['question_id'] ?>[]" value="<?= array_keys($option)[0] ?>">
 																									<?php }
 																									if ($que['question_answer_inputtype'] == 'Textbox') { ?>
-																										<input type="text" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" class="form-control" id="userName1" name="userName1" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="text" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="userName1" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Dropdown') { ?>
 																										<select class="form-select" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>">
 																											<option>Select Option</option>
@@ -221,32 +222,32 @@
 																										<?php $i++;
 																										}
 																									} elseif ($que['question_answer_inputtype'] == 'Date') { ?>
-																										<input type="date" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="date" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Textarea') { ?>
 																										<textarea class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>"><?= ($answers['options']) ? array_keys($answers['options'][0])[0] : '' ?></textarea>
 																									<?php } elseif ($que['question_answer_inputtype'] == 'File') { ?>
-																										<input type="file" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="file" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																										<!-- <?php if (!empty($artist['artist']->press_kit)) { ?>
 																												<a href="<?= base_url() . 'assets/images/' . $phase['id']->press_kit ?>" class="px-1 py-0 mb-4 color-pink-dark" target="_blank"><b>View File</b></a>
 																											<?php } ?> -->
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Number') { ?>
-																										<input type="number" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="number" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Phone') { ?>
-																										<input type="tel" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="tel" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Email') { ?>
-																										<input type="email" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="email" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Link') { ?>
-																										<input type="url" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="url" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Image') { ?>
-																										<input type="file" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" accept="image/*">
+																										<input type="file" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" accept="image/*">
 																										<a class="btn btn-primary mt-1" href="<?= base_url('uploads/property/') . array_keys($answers['options'][0])[0] ?>" target="_blank">View Old File</a>
 																										<input type="hidden" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Video 360') { ?>
-																										<input type="url" class="form-control" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" accept="video/*" value="<?= array_keys($answers['options'][0])[0] ?>">
+																										<input type="url" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" id="userName1" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" accept="video/*" value="<?= array_keys($answers['options'][0])[0] ?>">
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Google Map') { ?>
 																										<div class="row">
-																											<div class="col-md-6"><input type="text" class="form-control" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>"></div>
-																											<div class="col-md-6"><input type="text" class="form-control" name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="<?= array_keys($answers['options'][1])[0] ?>"></div>
+																											<div class="col-md-6"><input type="text" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($answers['options'][0])[0] ?>"></div>
+																											<div class="col-md-6"><input type="text" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" name="answer_'.$phase['id'].'_'.$que['id'].'[]" value="<?= array_keys($answers['options'][1])[0] ?>"></div>
 																										</div>
 																									<?php } elseif ($que['question_answer_inputtype'] == 'Image Gallery') { ?>
 																										<input class="image_gallery" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>[]" type="file" multiple>
@@ -268,7 +269,7 @@
 																												<div class="row">
 																													<div class="col-lg-10">
 																														<div class="mb-3">
-																															<input type="url" class="form-control" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($option)[0] ?>" id="videogallery">
+																															<input type="url" class="form-control <?= ($que['is_require'] == 1) ? 'required' : '' ?>" name="answer_<?= $phase['id'] ?>_<?= $que['question_id'] ?>" value="<?= array_keys($option)[0] ?>" id="videogallery">
 																														</div>
 																													</div>
 																													<div class="col-lg-2">

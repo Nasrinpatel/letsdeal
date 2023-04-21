@@ -24,8 +24,8 @@
 				$result = array('data'=>[]);
 				$i=1;
 				foreach ($masters as $value) { 
-					$button = '<a href="'.base_url('admin/masters/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#mastersedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-					<a href="'.base_url('admin/masters/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+					$button = '<a href="'.base_url('admin/masters/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#mastersedit-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+					<a href="'.base_url('admin/masters/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 					$result['data'][] = array(
 						$i++,
 						$value['code'],

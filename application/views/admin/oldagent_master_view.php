@@ -11,7 +11,7 @@
 								<a href="<?= base_url('admin/Agentmaster/add') ?>" class="btn btn-danger waves-effect waves-light"><i class="mdi mdi-plus-circle me-1"></i> Add New</a>
 							</ol>
 						</div>
-						<h4 class="page-title">Channel Partner</h4>
+						<h4 class="page-title">Agent Master</h4>
 					</div>
 				</div>
 			</div>
@@ -44,14 +44,13 @@
 									<thead>
 									<tr>
 										<th>#</th>
-									
 										<th>Name</th>
-										<th>Mobile</th>
+										<th>Phone</th>
 										<th>Email</th>
 										<th>Company</th>
 										<th>Source</th>
 										<th>Position</th>
-										<th>Team Name</th>
+										<th>Staff Name</th>
 										<th>Status</th>
 										<th style="width: 85px;">Action</th>
 									</tr>
@@ -111,8 +110,8 @@
 						<input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name">
 					</div>
 					<div class="mb-3">
-						<label for="phone" class="form-label">Mobile</label>
-						<input type="text" maxlength="14" class="form-control" name="phone" id="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Enter Mobile">
+						<label for="phone" class="form-label">Phone</label>
+						<input type="text" maxlength="14" class="form-control" name="phone" id="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="Enter Phone">
 					</div>
 					<div class="mb-3">
 						<label for="company" class="form-label">Company Name</label>
@@ -140,11 +139,11 @@
 		ajax: "<?php echo base_url('admin/Agentmaster/all'); ?>",
 		"columnDefs": [
 			{
-				"targets": 8,
+				"targets": 7,
 				"createdCell": function(td, cellData, rowData, row, col) {
-					if (rowData[8] == '1') {							
+					if (rowData[7] == '1') {							
 						$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-					} else if (rowData[8] == '0') {
+					} else if (rowData[7] == '0') {
 						$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
 					}
 				}

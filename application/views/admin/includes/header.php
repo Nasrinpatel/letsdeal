@@ -320,9 +320,11 @@
 								<a href="<?= base_url('admin/Country') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Country</a>
 								<a href="<?= base_url('admin/State') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> State</a>
 								<a href="<?= base_url('admin/City') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> City</a>
+								<a href="<?= base_url('admin/Area') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Area</a>
+
 								 <a href="<?= base_url('admin/Phase') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Phase master</a>
 								<!--<a href="<?= base_url('admin/Status') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Status master</a> -->
-								<a href="<?= base_url('admin/Source') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Source master</a>
+								<a href="<?= base_url('admin/Source') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i>Inquiry Source master</a>
 								<!-- <a href="<?= base_url('admin/Staff') ?>" class="dropdown-item"><i class="fe-bookmark me-1"></i> Staff master</a> -->
 
 								
@@ -346,13 +348,13 @@
 						</li>
 						<li>
 							<a class="nav-link" href="<?= base_url('admin/Staff') ?>" id="topnav-dashboard">
-								<i class="fe-bookmark me-1"></i> Staff Master
+								<i class="fe-bookmark me-1"></i> Team Master
 							</a>
 
 						</li>
 						<li>
 							<a class="nav-link" href="<?= base_url('admin/Agentmaster') ?>" id="topnav-dashboard">
-								<i class="fe-bookmark me-1"></i> Agent Master
+								<i class="fe-bookmark me-1"></i> Channel Partner
 							</a>
 
 						</li>

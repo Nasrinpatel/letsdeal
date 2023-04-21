@@ -29,8 +29,8 @@ class State extends CI_Controller {
 			// $this->db->where('id',$value['country_id']);
 			// $q = $this->db->get('tb_state_master')->row();
 			
-			$button = '<a href="'.base_url('admin/state/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#stateedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/state/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/state/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#stateedit-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="'.base_url('admin/state/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				// $q->name,

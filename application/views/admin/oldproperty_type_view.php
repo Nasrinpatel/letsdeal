@@ -170,7 +170,7 @@
 											</td>
 
 											<td>
-												<a href="<?= base_url('admin/propertytype/edit/' .$pro['id']) ?>" class="action-icon edit-btn" data-id="<?= $pro['id'] ?>" data-bs-toggle="modal" data-bs-target="#propertyedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
+												<a href="<?= base_url('admin/propertytype/edit/' .$pro['id']) ?>" class="action-icon edit-btn" data-id="<?= $pro['id'] ?>" data-bs-toggle="modal" data-bs-target="#propertyedit-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
 												<a href="<?= base_url('admin/propertytype/delete/' .$pro['id']) ?>" class="action-icon"> <i class="mdi mdi-delete"></i></a>
 											</td>
 										</tr>

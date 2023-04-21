@@ -31,19 +31,21 @@ class Customermaster extends CI_Controller
 			$source_data = $this->db->get_where('tb_source_master',array('id'=>$value['source_id']))->row();
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
 			$staff_data = $this->db->get_where('tbl_staff_master',array('id'=>$value['assigned_id']))->row();
-
-			$button = '<a href="'.base_url('admin/customermaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$agent_data = $this->db->get_where('tb_agent_master',array('id'=>$value['agent_id']))->row();
+			$button = '<a href="' . base_url('admin/customermaster/customerDetails/' . $value['id']) . '" class="action-icon eye-btn"> <i class="mdi mdi-eye text-warning"></i>
+			<a href="'.base_url('admin/customermaster/edit/' .$value['id']).'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline text-success text-success"></i></a>
+			<a href="'.base_url('admin/customermaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
+				($value['agent_id'] == '' || $value['inquiry_type'] == 'direct')?'-':$agent_data->first_name.' '.$agent_data->last_name.' '.(($agent_data->nick_name=="") ? '' : '('.$agent_data->nick_name.')'),
 				$value['first_name'].' '.$value['last_name'],
 				$value['phone'],
 				$value['email'],
 				$value['company_name'],
 				($source_data != null)?$source_data->name:'',
 				($position_data != null)?$position_data->name:'',
-				($staff_data != null)?$staff_data->first_name.' '.$staff_data->last_name:'',
 				$value['status'],
+				($staff_data != null)?$staff_data->first_name.' '.$staff_data->last_name:'',
 				$button
 			);
 		}
@@ -58,8 +60,8 @@ class Customermaster extends CI_Controller
 		foreach ($contacts as $value) { 
 			$position_data = $this->db->get_where('tb_position_master',array('id'=>$value['position_id']))->row();
 
-			$button = '<a href="'.base_url('admin/customermaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-contact-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id'].'/'.$id).'#customer-contacts" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/customermaster/edit_contact/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-contact-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="'.base_url('admin/customermaster/delete_contact/' .$value['id'].'/'.$id).'#customer-contacts" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['first_name'].' '.$value['last_name'],				
@@ -80,8 +82,8 @@ class Customermaster extends CI_Controller
 		$i=1;
 		foreach ($notes as $value) { 
 
-			$button = '<a href="'.base_url('admin/customermaster/edit_note/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-notes-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/customermaster/delete_note/' .$value['id'].'/'.$id).'#customer-notes" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/customermaster/edit_note/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#edit-customer-notes-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="'.base_url('admin/customermaster/delete_note/' .$value['id'].'/'.$id).'#customer-notes" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,			
 				$value['name'],
@@ -92,7 +94,7 @@ class Customermaster extends CI_Controller
 		}
 		echo json_encode($result);
 	}
-	public function all_property($id)
+	public function all_property($id,$page)
 	{
 		
 		//$promasters = $this->propertymaster->all($id);
@@ -107,22 +109,24 @@ class Customermaster extends CI_Controller
 			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
 
 
-			$button = '<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '?customer_id='.$id.'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '?customer_id='.$id.'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="' . base_url('admin/Propertymaster/propertyDetails/' . $value['id']) . '?customer_id='.$id.'&page='.$page.'" class="action-icon eye-btn"> <i class="mdi mdi-eye text-warning"></i>
+			<a href="' . base_url('admin/Propertymaster/edit/' . $value['id']) . '?customer_id='.$id.'&page='.$page.'" class="action-icon edit-btn"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="' . base_url('admin/Propertymaster/delete/' . $value['id']) . '?customer_id='.$id.'&page='.$page.'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 
 			$result['data'][] = array(
+				$value['id'],
 				$i++,
 				$master_data->name,
 				$category_data->name,
 				$subcategory_data->name,
 				date('d M Y h:i:s a', strtotime($value['created_date'])),
-				$value['status'],
+				$value['status'], 
 				$button
 			);
 		}
 		echo json_encode($result);
 	}
-
+	
 	public function add()
 	{
 		
@@ -140,11 +144,15 @@ class Customermaster extends CI_Controller
 	{		
 		
 		$this->form_validation->set_rules('inquiry_type', 'Inquiry type','required');
+		$this->form_validation->set_rules('agent_id', 'Agent','required');
 		$this->form_validation->set_rules('source_id', 'Source','required');
-		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
-		$this->form_validation->set_rules('position_id', 'Position','required');
+		// if($this->input->post('inquiry_type') != 'direct'){
+		// 	$this->form_validation->set_rules('assigned_id', 'Assigned','required');
+		// }
+		// $this->form_validation->set_rules('position_id', 'Position','required');
 		$this->form_validation->set_rules('first_name', 'First name','required');
-		$this->form_validation->set_rules('last_name', 'Last name','required');		
+		$this->form_validation->set_rules('last_name', 'Last name','required');	
+		//$this->form_validation->set_rules('nick_name', 'Nick name','required');		
 		$this->form_validation->set_rules('phone', 'Phone','required');
 		$this->form_validation->set_rules('email', 'Email','required');
 		$this->form_validation->set_rules('company_name', 'Company name','required');
@@ -155,11 +163,17 @@ class Customermaster extends CI_Controller
 		} else {
 			$formArray = array();
 			$formArray['inquiry_type'] = $this->input->post('inquiry_type');
+			$formArray['agent_id'] = $this->input->post('agent_id');
 			$formArray['source_id'] = $this->input->post('source_id');
-			$formArray['assigned_id'] = $this->input->post('assigned_id');
-			$formArray['position_id'] = $this->input->post('position_id');
+			// if($formArray['inquiry_type']=='direct'){
+			// 	$formArray['assigned_id'] = null;
+			// }else{
+			// 	$formArray['assigned_id'] = $this->input->post('assigned_id');
+			// }
+			// $formArray['position_id'] = $this->input->post('position_id');
 			$formArray['first_name'] = $this->input->post('first_name');
 			$formArray['last_name'] = $this->input->post('last_name');
+			// $formArray['nick_name'] = $this->input->post('nick_name');
 			$formArray['phone'] = $this->input->post('phone');
 			$formArray['email'] = $this->input->post('email');
 			$formArray['company_name'] = $this->input->post('company_name');
@@ -176,6 +190,36 @@ class Customermaster extends CI_Controller
 			return redirect('admin/Customermaster/');
 		}
 		
+	}
+	//Customer details
+	public function customerDetails($id)
+	{
+		$data['customer'] = $this->customermaster->getCustomer($id);
+		// $data['contacts'] = $this->customermaster->getCustomerContact($id);
+		// $data['sourcemaster'] = $this->customermaster->getSourceMaster();
+		$data['source'] = $this->customermaster->getSourceByID($data['customer']->source_id);
+		$data['position'] = $this->customermaster->getPosition();
+		$data['position_data'] = $this->customermaster->getPositionByID($data['customer']->position_id);
+		$data['staff'] = $this->customermaster->getStaffByID($data['customer']->assigned_id);
+		// $data['agent'] = $this->customermaster->getAgent();
+
+		$data['page_name'] = 'customer_master_details';
+		$this->load->view('admin/index',$data);
+	}
+	public function edit($id)
+	{
+		$data['customer'] = $this->customermaster->getCustomer($id);
+		// $data['contacts'] = $this->customermaster->getCustomerContact($id);
+		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
+		$data['source'] = $this->customermaster->getSource();
+		$data['position'] = $this->customermaster->getPosition();
+		$data['staff'] = $this->customermaster->getStaff();
+		$data['agent'] = $this->customermaster->getAgent();
+		$data['source_data'] = $this->customermaster->getSourceByID($data['customer']->source_id);
+		$data['position_data'] = $this->customermaster->getPositionByID($data['customer']->position_id);
+		$data['staff_data'] = $this->customermaster->getStaffByID($data['customer']->assigned_id);
+		$data['page_name'] = 'customer_master_edit';
+		$this->load->view('admin/index', $data);
 	}
 	//Contact master
 	public function store_contact()
@@ -200,18 +244,7 @@ class Customermaster extends CI_Controller
 		}	
 	}
 
-	public function edit($id)
-	{
-		$data['customer'] = $this->customermaster->getCustomer($id);
-		// $data['contacts'] = $this->customermaster->getCustomerContact($id);
-		$data['sourcemaster'] = $this->customermaster->getSourceMaster();
-		$data['source'] = $this->customermaster->getSource();
-		$data['position'] = $this->customermaster->getPosition();
-		$data['staff'] = $this->customermaster->getStaff();
-		$data['agent'] = $this->customermaster->getAgent();
-		$data['page_name'] = 'customer_master_edit';
-		$this->load->view('admin/index', $data);
-	}
+	
 	
 	public function edit_contact($id)
 	{	
@@ -221,11 +254,15 @@ class Customermaster extends CI_Controller
 
 	public function update($id){
 		$this->form_validation->set_rules('inquiry_type', 'Inquiry type','required');
+		$this->form_validation->set_rules('agent_id', 'Agent','required');
 		$this->form_validation->set_rules('source_id', 'Source','required');
-		$this->form_validation->set_rules('assigned_id', 'Assigned','required');
+		if($this->input->post('inquiry_type') != 'direct'){
+			$this->form_validation->set_rules('assigned_id', 'Assigned','required');
+		}
 		$this->form_validation->set_rules('position_id', 'Position','required');
 		$this->form_validation->set_rules('first_name', 'First name','required');
-		$this->form_validation->set_rules('last_name', 'Last name','required');		
+		$this->form_validation->set_rules('last_name', 'Last name','required');
+		//$this->form_validation->set_rules('nick_name', 'Nick Name','required');		
 		$this->form_validation->set_rules('phone', 'Phone','required');
 		$this->form_validation->set_rules('email', 'Email','required');
 		$this->form_validation->set_rules('company_name', 'Company name','required');
@@ -237,11 +274,17 @@ class Customermaster extends CI_Controller
 		}else{
 			$formArray = array();
 			$formArray['inquiry_type'] = $this->input->post('inquiry_type');
+			$formArray['agent_id'] = $this->input->post('agent_id');
 			$formArray['source_id'] = $this->input->post('source_id');
-			$formArray['assigned_id'] = $this->input->post('assigned_id');
+			if($formArray['inquiry_type']=='direct'){
+				$formArray['assigned_id'] = null;
+			}else{
+				$formArray['assigned_id'] = $this->input->post('assigned_id');
+			}
 			$formArray['position_id'] = $this->input->post('position_id');
 			$formArray['first_name'] = $this->input->post('first_name');
 			$formArray['last_name'] = $this->input->post('last_name');
+			// $formArray['nick_name'] = $this->input->post('nick_name');
 			$formArray['phone'] = $this->input->post('phone');
 			$formArray['email'] = $this->input->post('email');
 			$formArray['company_name'] = $this->input->post('company_name');
@@ -279,6 +322,7 @@ class Customermaster extends CI_Controller
 			echo json_encode(array('success'=>false,'message'=>'Something went wrong. Please try again'));
 		}
 	}
+	
 	//Note master
 	public function store_note()
 	{	

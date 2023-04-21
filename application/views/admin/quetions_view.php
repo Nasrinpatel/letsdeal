@@ -68,6 +68,24 @@
 									?>
 								</select>
 							</div>
+							<div class="row mb-4">
+							<label for="required">Is this Question required?</label>
+							<br><br>
+								<div class="col-6">
+									<div class="form-check">
+										<input type="radio" id="required" name="is_require" value="1"  class="form-check-input">
+										<label class="form-check-label" for="required">Required</label>
+									</div>
+								</div>
+								<div class="col-6">
+								<div class="form-check">
+										<input type="radio" id="optional" name="is_require" value="0" checked class="form-check-input">
+										<label class="form-check-label" for="optional">Optional</label>
+									</div>
+								</div>
+							</div>
+							
+
 							<div class="mb-3">
 								<label for="question_status" class="form-label">Status</label>
 								<select class="form-select" name="status" id="question_status">
@@ -106,7 +124,23 @@
 
 								<!-- <?= form_error('name')  ?> -->
 							</div>
+							<!-- <div class="mb-3">
+								<label for="required">Is this Question required?</label>
+								<br>
+								<div class="mt-3">
+									<div class="form-check">
+										<input type="radio" id="required" name="is_require" value="1"  class="form-check-input">
+										<label class="form-check-label" for="required">Required</label>
+									</div>
+									<div class="form-check">
+										<input type="radio" id="optional" name="is_require" value="0" checked class="form-check-input">
+										<label class="form-check-label" for="optional">Optional</label>
+									</div>
+								</div>
 
+							</div> -->
+							
+							
 							<div class="mb-3">
 								<label for="edit_question_answer_inputtype" class="form-label">Q&A Input type</label>
 								<select class="form-select select2" name="question_answer_inputtype" id="edit_question_answer_inputtype">
@@ -140,6 +174,22 @@
 									<?php }
 									?>
 								</select>
+							</div>
+							<div class="row mb-4">
+							<label for="edit_required">Is this Question required?</label>
+							<br><br>
+								<div class="col-6">
+									<div class="form-check">
+										<input type="radio" id="required" name="is_require" value="1"  class="form-check-input">
+										<label class="form-check-label" for="required">Required</label>
+									</div>
+								</div>
+								<div class="col-6">
+								<div class="form-check">
+										<input type="radio" id="optional" name="is_require" value="0" checked class="form-check-input">
+										<label class="form-check-label" for="optional">Optional</label>
+									</div>
+								</div>
 							</div>
 
 							<div class="mb-3">
@@ -274,7 +324,8 @@
 						$("#questionedit-modal #edit_question_id").val(data.id);
 						$('#questionedit-modal #question').val(data.question);
 						$('#questionedit-modal #edit_question_answer_inputtype').val(data.question_answer_inputtype);
-						$("#questionedit-modal #question_status").val(data.status);
+						$('#questionedit-modal #edit_required').val(data.is_require);
+						$('#questionedit-modal #question_status').val(data.status);
 
 						// Show/hide the Source Type dropdown based on the selected Q&A Input Type
 						$('#questionedit-modal #edit_question_answer_inputtype').trigger('change');

@@ -29,8 +29,8 @@ class Questionmaster extends CI_Controller {
 			$this->db->where('id',$value['source_id']);
 			$q = $this->db->get('source_category_master')->row();
 			
-			$button = '<a href="'.base_url('admin/questionmaster/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#questionedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/questionmaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/questionmaster/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#questionedit-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="'.base_url('admin/questionmaster/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['question'],
@@ -55,8 +55,8 @@ class Questionmaster extends CI_Controller {
 			$formArray = array();
 			$formArray['question'] = $this->input->post('question');
 			$formArray['question_answer_inputtype'] = $this->input->post('question_answer_inputtype');
-			 $formArray['source_id'] = $this->input->post('source_id');
-		
+			$formArray['source_id'] = $this->input->post('source_id');
+			$formArray['is_require'] = $this->input->post('is_require');
 			$formArray['status'] = $this->input->post('status');
 		
 			$response = $this->ques->saverecords($formArray);

@@ -8,10 +8,10 @@
 					<div class="page-title-box">
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
-								<a type="button" href="<?=base_url('admin/Agentmaster')?>" class="btn btn-success" style="float:right;" >Back</a>
+								<a type="button" href="<?= base_url('admin/Agentmaster') ?>" class="btn btn-success" style="float:right;">Back</a>
 							</ol>
 						</div>
-						<h4 class="page-title">Agent Master</h4>
+						<h4 class="page-title">Channel Partner</h4>
 					</div>
 				</div>
 			</div>
@@ -21,34 +21,29 @@
 					<div class="card">
 						<div class="card-body">
 							<form method="post" id="store-promas" action="<?php echo base_url() . 'admin/Agentmaster/store'; ?>">
-								<!-- <?php 
-								print_r($_POST);
-								validation_errors(); ?> -->
+							<?php
+										//print_r($_POST);
+										//print_r (validation_errors()); ?>
 								
 								<div class="row">
 									<div class="col-md-4">
-										<label class="form-label">Source<span class="text-danger">*</span></label>
-										<select data-toggle="select2" class="form-control select2" name="source_id" data-width="100%">
-											<option value=''>Select Source</option>
-											<?php foreach ($source as $sou) { ?>
+										<label class="form-label">Inquiry Source</label>
+											<select data-toggle="select2" class="form-control select2" name="source_id" data-width="100%">
+												<option value=''>Select Source</option>
+												<?php foreach ($source as $sou) { ?>
 													<option value="<?= $sou['id'] ?>"><?= $sou['name'] ?></option>
-											<?php } ?>
-										</select>
-										<span style="color: red;"><?= form_error('source_id') ?></span>
+												<?php } ?>
+											</select>
+											<span style="color: red;"><?= form_error('source_id') ?></span>
 									</div>
 									<div class="col-md-4">
 										<div class="mb-3">
-											<label class="form-label">Assigned<span class="text-danger">*</span></label>
-											<!-- <select data-toggle="select2" title="Assigned" class="form-control select2" name="assigned_id" data-width="100%">
-												<option value=''>Select Assigned</option>
-												<option value="Mohit soni">Mohit soni</option>
-												<option value="Nihar soni">Nihar soni</option>
-												<option value="Nasrin Patel">Nasrin Patel</option>
-											</select> -->
+											<label class="form-label">Assigned</label>
+										
 											<select data-toggle="select2" title="Assigned" class="form-control select2" name="assigned_id" data-width="100%">
 												<option value=''>Select Assigned</option>
 												<?php foreach ($staff as $sta) { ?>
-													<option value="<?= $sta['id'] ?>"><?= $sta['first_name'] ?>  <?= $sta['last_name'] ?></option>
+													<option value="<?= $sta['id'] ?>"><?= $sta['first_name'] ?> <?= $sta['last_name'] ?></option>
 												<?php }
 												?>
 											</select>
@@ -70,26 +65,33 @@
 									</div> <!-- end row -->
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="mb-3">
 											<label for="billing-first-name" class="form-label">First Name<span class="text-danger">*</span></label>
 											<input class="form-control" type="text" placeholder="Enter your first name" name="first_name" id="billing-first-name" />
 										</div>
 										<span style="color: red;"><?= form_error('first_name') ?></span>
 									</div>
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="mb-3">
 											<label for="billing-last-name" class="form-label">Last Name<span class="text-danger">*</span></label>
 											<input class="form-control" type="text" placeholder="Enter your last name" name="last_name" id="billing-last-name" />
 										</div>
 										<span style="color: red;"><?= form_error('last_name') ?></span>
 									</div>
+									<div class="col-md-4">
+										<div class="mb-3">
+											<label for="billing-nick-name" class="form-label">Nick Name<span class="text-danger">*</span></label>
+											<input class="form-control" type="text" placeholder="Enter your Nick name" name="nick_name" id="billing-nick-name" />
+										</div>
+										<!-- <span style="color: red;"><?= form_error('nick_name') ?></span> -->
+									</div>
 								</div> <!-- end row -->
 								<div class="row">
 
 									<div class="col-md-6">
 										<div class="mb-3">
-											<label for="billing-phone" class="form-label">Phone <span class="text-danger">*</span></label>
+											<label for="billing-phone" class="form-label">Mobile <span class="text-danger">*</span></label>
 											<input class="form-control" type="text" name="phone" placeholder="(xx) xxx xxxx xxx" id="billing-phone" />
 										</div>
 										<span style="color: red;"><?= form_error('phone') ?></span>
@@ -120,6 +122,20 @@
 										<span style="color: red;"><?= form_error('description') ?></span>
 									</div>
 								</div> <!-- end row -->
+								<!-- <div class="row">
+									<div class="col-12">
+										<div class="mb-3">
+											<label class="form-label">Inquiry Source</label>
+											<select data-toggle="select2" class="form-control select2" name="source_id" data-width="100%">
+												<option value=''>Select Source</option>
+												<?php foreach ($source as $sou) { ?>
+													<option value="<?= $sou['id'] ?>"><?= $sou['name'] ?></option>
+												<?php } ?>
+											</select>
+											<span style="color: red;"><?= form_error('source_id') ?></span>
+										</div>
+									</div>
+								</div>  -->
 								<div class="mb-3">
 									<label for="city_status" class="form-label">Status</label>
 									<select class="form-select" name="status" id="city_status">
@@ -147,18 +163,25 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#firstname').bind('keyup blur', function () {
-					var node = $(this);
-					node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
-				}
-		);
-		$('#lastname').bind('keyup blur', function () {
-					var node = $(this);
-					node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
-				}
-		);
+		$('#firstname').bind('keyup blur', function() {
+			var node = $(this);
+			node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
+		});
+		$('#lastname').bind('keyup blur', function() {
+			var node = $(this);
+			node.val(node.val().replace(/[^a-zA-Z ]/g, ''));
+		});
 	});
+	$('input[name=inquiry_type]').click(function() {
 
+		if (this.id == "agent") {
+			$("#agent_div").show('slow');
+
+		} else {
+			$("#agent_div").hide('slow');
+
+		}
+	});
 </script>
 <script>
 	$(document).ready(function() {
@@ -168,7 +191,7 @@
 	});
 </script>
 <style>
-	.select2 .selection .select2-selection--single .select2-selection__rendered{
+	.select2 .selection .select2-selection--single .select2-selection__rendered {
 		line-height: 1.5rem;
 	}
 </style>

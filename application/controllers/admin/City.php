@@ -26,8 +26,8 @@ class City extends CI_Controller {
 		$result = array();
 		$i=1;
 		foreach ($cites as $value) { 
-			$button = '<a href="'.base_url('admin/city/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#cityedit-modal"><i class="mdi mdi-square-edit-outline"></i></a>
-			<a href="'.base_url('admin/city/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete"></i></a>';
+			$button = '<a href="'.base_url('admin/city/edit/' .$value['id']).'" class="action-icon edit-btn" data-id="'.$value['id'].'" data-bs-toggle="modal" data-bs-target="#cityedit-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="'.base_url('admin/city/delete/' .$value['id']).'" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$value['name'],

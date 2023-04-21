@@ -25,6 +25,7 @@
 
 <link href="<?= base_url('assets/') ?>css/select2-bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="<?= base_url('assets/') ?>css/fileinput.css" rel="stylesheet" type="text/css" />
+<link href="<?= base_url('assets/') ?>css/switchery.min.css" rel="stylesheet" type="text/css" />
 <!-- <link href="<?php echo base_url(); ?>assets/css/select2/select2-bootstrap.min.css" rel="stylesheet"> -->
 <style>
 	label.error {

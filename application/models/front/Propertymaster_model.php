@@ -439,5 +439,7 @@ class Propertymaster_model extends CI_model{
 		$query = $this->db->get();
 		return $query->result_array();
 	}
-
+	function update_status($id,$status){
+		return $this->db->update($this->db_name,['status'=>$status],['id'=>$id]);
+	}
 }

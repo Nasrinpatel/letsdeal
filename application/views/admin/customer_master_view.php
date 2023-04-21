@@ -44,14 +44,16 @@
 									<thead>
 									<tr>
 										<th>#</th>
+										<th>From</th>
 										<th>Name</th>
 										<th>Phone</th>
 										<th>Email</th>
 										<th>Company</th>
 										<th>Source</th>
 										<th>Position</th>
-										<th>Staff Name</th>
 										<th>Status</th>
+										<th>Staff Name</th>
+										
 										<th style="width: 85px;">Action</th>
 									</tr>
 									</thead>
