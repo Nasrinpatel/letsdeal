@@ -324,10 +324,6 @@
 				<form method="post" id="store-specialistarea" action="<?php echo base_url() . 'admin/Agentmaster/store_specialistarea'; ?>">
 					<input type="hidden" name="agent_id" value="<?= $agent->id ?>">
 					<div class="row">
-
-				
-
-
 						<div class="mb-3">
 							<label for="state_id" class="form-label">Select State</label>
 							<select class="form-select" name="state_id" id="state_id">
@@ -400,14 +396,15 @@
 					<input type="hidden" name="specialistarea_id" id="specialistarea_id">
 					<div class="row">
 						<div class="mb-3">
-							<label for="pro_category_id" class="form-label">Select Category</label>
-							<select class="form-select" name="pro_category_id" id="pro_category_id">
-								<option value="">Select Category</option>
-								<?php foreach ($category as $cat) { ?>
-									<option value="<?= $cat['id'] ?>"><?= $cat['name'] ?></option>
+							<label for="state_id" class="form-label">Select State</label>
+							<select class="form-select" name="state_id" id="state_id">
+								<option value="">Select State</option>
+								<?php foreach ($states as $sta) { ?>
+									<option value="<?= $sta['id'] ?>"><?= $sta['name'] ?></option>
 								<?php } ?>
 							</select>
-							<span style="color: red;"><?= form_error('pro_category_id') ?></span>
+							<span style="color: red;"><?= form_error('state_id') ?></span>
+
 
 						</div>
 					</div>
@@ -415,18 +412,30 @@
 					<div class="row">
 
 						<div class="mb-3">
-							<label for="pro_subcategory_id" class="form-label">Select Sub Category</label>
-							<select class="form-select" name="pro_subcategory_id" id="pro_subcategory_id">
-								<option value="">Select Sub Category</option>
+							<label for="city_id" class="form-label">Select City</label>
+							<select class="form-select" name="city_id" id="city_id">
+								<option value="">Select City</option>
 							</select>
-							<span style="color: red;"><?= form_error('pro_subcategory_id') ?></span>
+							<span style="color: red;"><?= form_error('city_id') ?></span>
+
+						</div>
+
+					</div>
+					<div class="row">
+
+						<div class="mb-3">
+							<label for="area_id" class="form-label">Select Area</label>
+							<select class="form-select" name="area_id" id="area_id">
+								<option value="">Select Area</option>
+							</select>
+							<span style="color: red;"><?= form_error('area_id') ?></span>
 
 						</div>
 
 					</div>
 					<div class="mb-3">
-						<label for="contact_status" class="form-label">Status</label>
-						<select class="form-select" name="status" id="contact_status">
+						<label for="city_status" class="form-label">Status</label>
+						<select class="form-select" name="status" id="specialistarea_status">
 							<option selected="">Select Status</option>
 							<option value="1" selected>Active</option>
 							<option value="0">Inactive</option>
@@ -1443,7 +1452,6 @@
 			});
 			$(document).ready(function() {
 				$('#edit-agent-specialistfor-modal #pro_category_id').change(function() {
-					debugger;
 					var categoryId = $(this).val();
 					if (categoryId != '') {
 						$.ajax({
@@ -1539,10 +1547,10 @@
 						dataType: "json",
 						success: function(data) {
 							$("#edit-agent-specialistfor-modal #specialistfor_id").val(data.id);
-							$('#edit-agent-specialistfor-modal #pro_category_id').val(data.pro_category_id).trigger('change');
-							
-							debugger;
-							$('#edit-agent-specialistfor-modal #pro_subcategory_id').val(data.pro_subcategory_id);
+							$('#edit-agent-specialistfor-modal #pro_category_id').val(data.pro_category_id).trigger('change');	
+							setTimeout(function () {
+								$('#edit-agent-specialistfor-modal #pro_subcategory_id').val(data.pro_subcategory_id);						
+							},250);
 							$("#edit-agent-specialistfor-modal #specialistfor_status").val(data.status);
 						}
 					});
@@ -1600,7 +1608,7 @@
 				}
 			});
 			$(document).ready(function() {
-				$('#edit-agent-specialistfor-modal #state_id').change(function() {
+				$('#edit-agent-specialistarea-modal #state_id').change(function() {
 					debugger;
 					var state_id = $(this).val();
 					if (state_id != '') {
@@ -1613,16 +1621,17 @@
 							dataType: 'json',
 							success: function(response) {
 								var len = response.length;
-								$("#edit-agent-specialistfor-modal #city_id").empty();
+								$("#edit-agent-specialistarea-modal #city_id").empty();
+								$("#store-specialistarea #city_id").append("<option value=''>Select City</option>");
 								for (var i = 0; i < len; i++) {
 									var id = response[i]['id'];
 									var name = response[i]['name'];
-									$("#edit-agent-specialistfor-modal #city_id").append("<option value='" + id + "'>" + name + "</option>");
+									$("#edit-agent-specialistarea-modal #city_id").append("<option value='" + id + "'>" + name + "</option>");
 								}
 							}
 						});
 					} else {
-						$("#edit-agent-specialistfor-modal #city_id").empty();
+						$("#edit-agent-specialistarea-modal #city_id").empty();
 					}
 				});
 			});
@@ -1653,7 +1662,7 @@
 				}
 			});
 			$(document).ready(function() {
-				$('#edit-agent-specialistfor-modal #city_id').change(function() {
+				$('#edit-agent-specialistarea-modal #city_id').change(function() {
 					debugger;
 					var city_id = $(this).val();
 					if (city_id != '') {
@@ -1666,16 +1675,17 @@
 							dataType: 'json',
 							success: function(response) {
 								var len = response.length;
-								$("#edit-agent-specialistfor-modal #area_id").empty();
+								$("#edit-agent-specialistarea-modal #area_id").empty();
+								$("#edit-agent-specialistarea-modal #area_id").append("<option value=''>Select Area</option>");
 								for (var i = 0; i < len; i++) {
 									var id = response[i]['id'];
 									var name = response[i]['name'];
-									$("#edit-agent-specialistfor-modal #area_id").append("<option value='" + id + "'>" + name + "</option>");
+									$("#edit-agent-specialistarea-modal #area_id").append("<option value='" + id + "'>" + name + "</option>");
 								}
 							}
 						});
 					} else {
-						$("#edit-agent-specialistfor-modal #area_id").empty();
+						$("#edit-agent-specialistarea-modal #area_id").empty();
 					}
 				});
 			});
@@ -1753,10 +1763,13 @@
 						dataType: "json",
 						success: function(data) {
 							$("#edit-agent-specialistarea-modal #specialistarea_id").val(data.id);
-							$('#edit-agent-specialistarea-modal #pro_category_id').val(data.pro_category_id).trigger('change');
-							
-							debugger;
-							$('#edit-agent-specialistarea-modal #pro_subcategory_id').val(data.pro_subcategory_id);
+							$('#edit-agent-specialistarea-modal #state_id').val(data.state_id).trigger('change');
+							setTimeout(function () {
+								$('#edit-agent-specialistarea-modal #city_id').val(data.city_id).trigger('change');		
+								setTimeout(function () {
+									$('#edit-agent-specialistarea-modal #area_id').val(data.area_id).trigger('change');		
+								},250);	
+							},250);										
 							$("#edit-agent-specialistarea-modal #specialistarea_status").val(data.status);
 						}
 					});

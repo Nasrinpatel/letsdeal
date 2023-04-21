@@ -333,9 +333,8 @@ class Agentmaster extends CI_Controller
 		foreach ($specialistfor as $value) {
 			$category_data = $this->db->get_where('tb_property_category', array('id' => $value['pro_category_id']))->row();
 			$subcategory_data = $this->db->get_where('tb_property_subcategory', array('id' => $value['pro_subcategory_id']))->row();
-			//$button = '<a href="' . base_url('admin/agentmaster/edit_specialistfor/' . $value['id']) . '" class="action-icon edit-btn" data-id="' . $value['id'] . '" data-bs-toggle="modal" data-bs-target="#edit-agent-specialistfor-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
-
-			$button = '<a href="' . base_url('admin/agentmaster/delete_specialistfor/' . $value['id'] . '/' . $id) . '#agent-specialistfor" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
+			$button = '<a href="' . base_url('admin/agentmaster/edit_specialistfor/' . $value['id']) . '" class="action-icon edit-btn" data-id="' . $value['id'] . '" data-bs-toggle="modal" data-bs-target="#edit-agent-specialistfor-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+			<a href="' . base_url('admin/agentmaster/delete_specialistfor/' . $value['id'] . '/' . $id) . '#agent-specialistfor" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$category_data->name,
@@ -419,9 +418,8 @@ class Agentmaster extends CI_Controller
 			$city_data = $this->db->get_where('tb_city_master', array('id' => $value['city_id']))->row();
 			$area_data = $this->db->get_where('tb_area_master', array('id' => $value['area_id']))->row();
 
-			//$button = '<a href="' . base_url('admin/agentmaster/edit_specialistarea/' . $value['id']) . '" class="action-icon edit-btn" data-id="' . $value['id'] . '" data-bs-toggle="modal" data-bs-target="#edit-agent-specialistarea-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
-
-			$button = '<a href="' . base_url('admin/agentmaster/delete_specialistarea/' . $value['id'] . '/' . $id) . '#agent-specialistarea" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
+			$button = '<a href="' . base_url('admin/agentmaster/edit_specialistarea/' . $value['id']) . '" class="action-icon edit-btn" data-id="' . $value['id'] . '" data-bs-toggle="modal" data-bs-target="#edit-agent-specialistarea-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
+				<a href="' . base_url('admin/agentmaster/delete_specialistarea/' . $value['id'] . '/' . $id) . '#agent-specialistarea" class="action-icon delete-btn"> <i class="mdi mdi-delete text-danger"></i></a>';
 			$result['data'][] = array(
 				$i++,
 				$state_data->name,
