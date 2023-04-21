@@ -417,7 +417,7 @@ class Agentmaster extends CI_Controller
 		foreach ($specialistarea as $value) {
 			$state_data = $this->db->get_where('tb_state_master', array('id' => $value['state_id']))->row();
 			$city_data = $this->db->get_where('tb_city_master', array('id' => $value['city_id']))->row();
-			$area_data = $this->db->get_where('tb_agent_specialist_area', array('id' => $value['area_id']))->row();
+			$area_data = $this->db->get_where('tb_area_master', array('id' => $value['area_id']))->row();
 
 			//$button = '<a href="' . base_url('admin/agentmaster/edit_specialistarea/' . $value['id']) . '" class="action-icon edit-btn" data-id="' . $value['id'] . '" data-bs-toggle="modal" data-bs-target="#edit-agent-specialistarea-modal"><i class="mdi mdi-square-edit-outline text-success"></i></a>
 
@@ -458,6 +458,12 @@ class Agentmaster extends CI_Controller
 	{
 		$state_id = $this->input->post('state_id');
 		$cities = $this->agentmaster->getCityByState($state_id);
+		echo json_encode($cities);
+	}
+	public function getAreaByCity()
+	{
+		$city_id = $this->input->post('city_id');
+		$cities = $this->agentmaster->getAreaByCity($city_id);
 		echo json_encode($cities);
 	}
 	//Specialist Area edit

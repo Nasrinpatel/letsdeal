@@ -329,8 +329,8 @@
 
 
 						<div class="mb-3">
-							<label for="state" class="form-label">Select State</label>
-							<select class="form-select" name="state_id" id="state">
+							<label for="state_id" class="form-label">Select State</label>
+							<select class="form-select" name="state_id" id="state_id">
 								<option value="">Select State</option>
 								<?php foreach ($states as $sta) { ?>
 									<option value="<?= $sta['id'] ?>"><?= $sta['name'] ?></option>
@@ -1104,7 +1104,6 @@
 																				<tr>
 																					
 																					<th>#</th>
-
 																					<th>Category</th>
 																					<th>Sub Category</th>
 																					<th>Create Date</th>
@@ -1160,7 +1159,6 @@
 																		<table class="table table-centered table-nowrap table-striped dt-responsive nowrap" style="width:100%" id="agent_specialistarea_datatable">
 																			<thead>
 																				<tr>
-																					<th></th>
 																					<th>#</th>
 																					<th>State</th>
 																					<th>City</th>
@@ -1419,7 +1417,6 @@
 			});
 
 			//all specialistfor property
-
 			$(document).on('change','#store-specialistfor #pro_category_id',function() {
 				var categoryId = $(this).val();
 				if (categoryId != '') {
@@ -1484,12 +1481,16 @@
 						targets: 1
 					},
 					{
+						responsivePriority: 2,
+						targets: 2
+					},
+					{
 						responsivePriority: 3,
-						targets: 3
+						targets: 4
 					},
 					{
 						responsivePriority: 4,
-						targets: 4
+						targets: 5
 					},
 					{
 						"targets": 4,
@@ -1571,17 +1572,114 @@
 				}
 			});
 
-
-
-
-
-
-
-
-
-
-		//all specialist Area
-		var specialistarea_table = $('#agent_specialistarea_datatable').DataTable({
+			//all specialist Area
+			//on state change fetch city
+			$(document).on('change','#agent-specialistarea-modal #state_id',function() {
+				var state_id = $(this).val();
+				if (state_id != '') {
+					$.ajax({
+						url: '<?php echo base_url() . "admin/Agentmaster/getCityByState"; ?>',
+						type: 'post',
+						data: {
+							state_id: state_id
+						},
+						dataType: 'json',
+						success: function(response) {
+							var len = response.length;
+							$("#store-specialistarea #city_id").empty();
+							$("#store-specialistarea #city_id").append("<option value=''>Select City</option>");
+							for (var i = 0; i < len; i++) {
+								var id = response[i]['id'];
+								var name = response[i]['name'];
+								$("#store-specialistarea #city_id").append("<option value='" + id + "'>" + name + "</option>");
+							}
+						}
+					});
+				} else {
+					$("#store-specialistarea #city_id").empty();
+				}
+			});
+			$(document).ready(function() {
+				$('#edit-agent-specialistfor-modal #state_id').change(function() {
+					debugger;
+					var state_id = $(this).val();
+					if (state_id != '') {
+						$.ajax({
+							url: '<?php echo base_url() . "admin/Agentmaster/getCityByState"; ?>',
+							type: 'post',
+							data: {
+								state_id: state_id
+							},
+							dataType: 'json',
+							success: function(response) {
+								var len = response.length;
+								$("#edit-agent-specialistfor-modal #city_id").empty();
+								for (var i = 0; i < len; i++) {
+									var id = response[i]['id'];
+									var name = response[i]['name'];
+									$("#edit-agent-specialistfor-modal #city_id").append("<option value='" + id + "'>" + name + "</option>");
+								}
+							}
+						});
+					} else {
+						$("#edit-agent-specialistfor-modal #city_id").empty();
+					}
+				});
+			});
+			//on city change fetch area
+			$(document).on('change','#agent-specialistarea-modal #city_id',function() {
+				var city_id = $(this).val();
+				if (city_id != '') {
+					$.ajax({
+						url: '<?php echo base_url() . "admin/Agentmaster/getAreaByCity"; ?>',
+						type: 'post',
+						data: {
+							city_id: city_id
+						},
+						dataType: 'json',
+						success: function(response) {
+							var len = response.length;
+							$("#store-specialistarea #area_id").empty();
+							$("#store-specialistarea #area_id").append("<option value=''>Select Area</option>");
+							for (var i = 0; i < len; i++) {
+								var id = response[i]['id'];
+								var name = response[i]['name'];
+								$("#store-specialistarea #area_id").append("<option value='" + id + "'>" + name + "</option>");
+							}
+						}
+					});
+				} else {
+					$("#store-specialistarea #area_id").empty();
+				}
+			});
+			$(document).ready(function() {
+				$('#edit-agent-specialistfor-modal #city_id').change(function() {
+					debugger;
+					var city_id = $(this).val();
+					if (city_id != '') {
+						$.ajax({
+							url: '<?php echo base_url() . "admin/Agentmaster/getAreaByCity"; ?>',
+							type: 'post',
+							data: {
+								city_id: city_id
+							},
+							dataType: 'json',
+							success: function(response) {
+								var len = response.length;
+								$("#edit-agent-specialistfor-modal #area_id").empty();
+								for (var i = 0; i < len; i++) {
+									var id = response[i]['id'];
+									var name = response[i]['name'];
+									$("#edit-agent-specialistfor-modal #area_id").append("<option value='" + id + "'>" + name + "</option>");
+								}
+							}
+						});
+					} else {
+						$("#edit-agent-specialistfor-modal #area_id").empty();
+					}
+				});
+			});
+			var specialistarea_table = $('#agent_specialistarea_datatable').DataTable({
 				responsive: true,
 				ajax: "<?php echo base_url('admin/Agentmaster/all_specialistarea/' . $agent->id); ?>",
 				"columnDefs": [{
@@ -1594,18 +1692,26 @@
 					},
 					{
 						responsivePriority: 3,
+						targets: 2
+					},
+					{
+						responsivePriority: 3,
 						targets: 3
 					},
 					{
-						responsivePriority: 4,
-						targets: 4
+						responsivePriority: 2,
+						targets: 5
 					},
 					{
-						"targets": 4,
+						responsivePriority: 2,
+						targets: 6
+					},
+					{
+						"targets": 5,
 						"createdCell": function(td, cellData, rowData, row, col) {
-							if (rowData[4] == '1') {
+							if (rowData[5] == '1') {
 								$(td).html('<span class="badge bg-soft-success text-success">Active</span>');
-							} else if (rowData[4] == '0') {
+							} else if (rowData[5] == '0') {
 								$(td).html('<span class="badge bg-soft-danger text-danger">Inactive</span>');
 							}
 						}

@@ -66,6 +66,12 @@ class Agentmaster_model extends CI_model{
 		$data = $this->db->get('tb_city_master')->result_array();
 		return $data;
 	}
+	function getAreaByCity($city_id)
+	{
+		$this->db->where('city_id', $city_id);
+		$data = $this->db->get('tb_area_master')->result_array();
+		return $data;
+	}
 	function getCategory(){
 		$data = $this->db->get('tb_property_category')->result_array();
 		return $data;
